@@ -1,0 +1,13 @@
+{
+  "name": "coding-foding",
+  "private": true,
+  "workspaces": ["apps/web", "packages/*"],
+  "scripts": {
+    "dev": "npm run dev -w @cf/web",
+    "build": "npm run build -w @cf/web",
+    "lint": "npm run lint -w @cf/web",
+    "typecheck": "npm run typecheck -w @cf/web",
+    "test": "npm run test -w @cf/web"
+  },
+  "engines": { "node": ">=20.11" }
+}

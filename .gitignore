@@ -1,0 +1,23 @@
+node_modules
+.next
+.next-build
+*.tsbuildinfo
+next-env.d.ts
+test-results
+playwright-report
+.env*.local
+
+# env / secrets (keep .env.example)
+.env
+.env.*
+!.env.example
+
+# Go
+apps/api/bin/
+*.out
+coverage.*
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
