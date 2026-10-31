@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "title": "Coding Foding — Learn how to learn",
+    "description": "যে কেউ শিখতে পারে। Programming, DSA, OS, networking, system design, projects আর interview prep — সব একটা path এ, সাথে পুরো Bangladesh এর leaderboard।"
+  },
+  "nav": {
+    "problems": "Problems",
+    "leaderboard": "Leaderboard",
+    "plan": "Plan",
+    "signIn": "Sign in",
+    "skip": "Content এ চলে যাও",
+    "theme": "Theme",
+    "language": "ভাষা",
+    "menu": "Menu",
+    "learn": "Learn",
+    "blogs": "Blogs",
+    "learnItems": {
+      "programming": "Programming",
+      "dsa": "DSA",
+      "os": "Operating System",
+      "networking": "Networking Fundamentals",
+      "system-design": "System Design",
+      "frontend-system-design": "Frontend System Design",
+      "backend-first-principles": "Backend First Principles"
+    },
+    "learnDesc": {
+      "programming": "একটা language নাও, fluent হও",
+      "dsa": "Pattern, problem, visualizer",
+      "os": "Process, thread, memory",
+      "networking": "TCP/IP, HTTP, DNS, TLS",
+      "system-design": "LLD + HLD",
+      "frontend-system-design": "Rendering, state, performance, design system",
+      "backend-first-principles": "Request, storage, concurrency — একদম গোড়া থেকে"
+    },
+    "problemItems": {
+      "dsa": "DSA",
+      "ai-ml": "AI / ML"
+    },
+    "problemDesc": {
+      "dsa": "Topic-wise practice ladder",
+      "ai-ml": "Model, math আর ML coding"
+    },
+    "planItems": {
+      "next": "Next",
+      "horizon": "Horizon",
+      "plan": "Plan"
+    },
+    "planDesc": {
+      "next": "আমরা এরপর কী আনছি",
+      "horizon": "সামনের কয়েক মাসে যা আসছে",
+      "plan": "আমাদের long-term plan"
+    },
+    "openMenu": "Menu খোলো",
+    "closeMenu": "Menu বন্ধ করো",
+    "appearance": "Appearance",
+    "font": "Font",
+    "mono": "Mono"
+  },
+  "theme": {
+    "system": "System",
+    "midnight": "Midnight",
+    "obsidian": "Obsidian",
+    "paper": "Paper",
+    "dracula": "Dracula",
+    "solarized": "Solarized",
+    "matrix": "Matrix"
+  },
+  "fonts": {
+    "default": "Modern",
+    "friendly": "Friendly",
+    "anek": "Anek",
+    "bookish": "Bookish",
+    "terminal": "JetBrains Mono",
+    "fira": "Fira Code",
+    "plex-mono": "IBM Plex Mono",
+    "space-mono": "Space Mono"
+  },
+  "journey": {
+    "eyebrow": "The journey",
+    "title": "Learn how to learn.",
+    "sub": "এটা সোজা রাস্তা না, ups আর downs সহ একটা path। Scroll করো, নিজেই হেঁটে দেখো।",
+    "dsaHint": "এখানে সবাই আটকায়, তুমি একা না 💪",
+    "peakHint": "উপর থেকে view টা দেখো 🎉",
+    "finish": "তুমি শিখতে শিখে গেছ 🎉",
+    "topics": "{count} টা topic",
+    "hours": "~{hours} ঘণ্টা",
+    "explore": "Explore",
+    "progress": "Journey progress",
+    "listLabel": "Path এর milestone গুলো",
+    "milestones": {
+      "why": {
+        "label": "why?",
+        "title": "Why?",
+        "desc": "CS fundamentals কেন দরকার, এগুলো কী কী দরজা খুলে দেয়, আর লেগে থাকার mindset।"
+      },
+      "programming": {
+        "label": "Programming",
+        "title": "Programming",
+        "desc": "C/C++, Go, Java, Python বা JS — একটা নাও, আর শুধু syntax না, সত্যিকারের fluent হও।"
+      },
+      "dsa": {
+        "label": "DSA",
+        "title": "Data Structures & Algorithms",
+        "desc": "Topic-wise problem, pattern, visualizer আর difficulty ladder। পুরো path এর সবচেয়ে গভীর valley।"
+      },
+      "os": {
+        "label": "OS",
+        "title": "Operating System",
+        "desc": "Process, thread, memory, scheduling আর concurrency — তোমার code আসলে কীভাবে run হয়।"
+      },
+      "networking": {
+        "label": "Networking",
+        "title": "Networking Fundamentals",
+        "desc": "OSI/TCP-IP, HTTP, DNS, TLS আর socket — enter চাপলে আসলে কী হয়।"
+      },
+      "system-design": {
+        "label": "System design",
+        "title": "System Design",
+        "desc": "Real system design করো দুই layer এ — class থেকে শুরু করে পুরো architecture পর্যন্ত।",
+        "parts": {
+          "lld": {
+            "short": "LLD",
+            "title": "Low Level Design",
+            "desc": "Class, SOLID, design pattern, UML, clean interface।"
+          },
+          "hld": {
+            "short": "HLD",
+            "title": "High Level Design",
+            "desc": "Scalability, database, caching, queue, trade-off।"
+          }
+        }
+      },
+      "goal": {
+        "label": "Goal",
+        "title": "তুমি শিখতে শিখে গেছ",
+        "desc": "Path আসলে কখনো শেষ হয় না — এখন তুমি জানো পরের জিনিসটা কীভাবে বেছে নিয়ে climb করতে হয়।"
+      }
+    },
+    "goalHint": "এবার নিজের পরের step বেছে নাও।",
+    "whatsNext": "এরপর কী"
+  },
+  "lost": {
+    "eyebrow": "আগে → এখন",
+    "title": "হারিয়ে যাওয়া বন্ধ। এবার path ধরে হাঁটো।",
+    "before": {
+      "label": "আগে",
+      "caption": "আগে YouTube এ track হারিয়ে ফেলতাম",
+      "desc": "Random video, অর্ধেক দেখা playlist, আর এরপর কী শিখব তার কোনো idea নেই।"
+    },
+    "after": {
+      "label": "এখন",
+      "caption": "Step by step, learn how to learn",
+      "desc": "একটা path, ছোট ছোট step, আর সবসময় জানো পরের step কোনটা।"
+    },
+    "sad": "sad",
+    "understood": "understood",
+    "steps": "Step {n}"
+  },
+  "leaderboard": {
+    "eyebrow": "Top 1% in BD 🇧🇩",
+    "title": "Bangladesh এর leaderboard",
+    "sub": "সব division মিলিয়ে XP দিয়ে live ranking।",
+    "all": "পুরো BD",
+    "rank": "Rank",
+    "learner": "Learner",
+    "xp": "XP",
+    "streak": "Streak",
+    "solved": "Solved",
+    "days": "{count} দিন",
+    "viewAll": "পুরো leaderboard দেখো",
+    "live": "Live",
+    "demo": "Preview data",
+    "divisions": {
+      "dhaka": "ঢাকা",
+      "chattogram": "চট্টগ্রাম",
+      "rajshahi": "রাজশাহী",
+      "khulna": "খুলনা",
+      "barishal": "বরিশাল",
+      "sylhet": "সিলেট",
+      "rangpur": "রংপুর",
+      "mymensingh": "ময়মনসিংহ"
+    }
+  },
+  "mostNeeded": {
+    "eyebrow": "Most needed",
+    "title": "এরপর কী বানাব?",
+    "sub": "Community vote দেয়। সবচেয়ে বেশি vote পাওয়া topic আগে লেখা হয়।",
+    "upvote": "{topic} এ upvote দাও",
+    "removeVote": "{topic} থেকে vote সরাও",
+    "votes": "{count} vote"
+  },
+  "roadmap": {
+    "eyebrow": "Next · Horizon · Plan",
+    "title": "আমরা এরপর কী আনছি",
+    "sub": "আমাদের public roadmap — Coding Foding এ কোন content, video আর feature আসছে।",
+    "stages": {
+      "next": {
+        "title": "Next",
+        "when": "সামনের কয়েক সপ্তাহে আসছে"
+      },
+      "horizon": {
+        "title": "Horizon",
+        "when": "সামনের কয়েক মাসে আসছে"
+      },
+      "plan": {
+        "title": "Plan",
+        "when": "আমাদের long-term plan"
+      }
+    },
+    "kinds": {
+      "video": "Video",
+      "article": "Article",
+      "feature": "Feature",
+      "problems": "Problems",
+      "interactive": "Interactive",
+      "community": "Community",
+      "event": "Event",
+      "product": "Product"
+    },
+    "progress": "Progress",
+    "feedback": "কোনোটা আগে চাও?",
+    "feedbackCta": "Most needed এ vote দাও"
+  },
+  "stats": {
+    "eyebrow": "Numbers",
+    "learners": "জন learner path এ আছে",
+    "problems": "টা problem solve হয়েছে",
+    "lessons": "টা lesson, bn + en এ",
+    "hired": "জন job পেয়েছে",
+    "testimonials": [
+      {
+        "quote": "আগে এক tutorial থেকে আরেকটায় লাফাতাম। Path টা প্রথমবার বলে দিল এরপর কী করব — আর DSA আর impossible লাগে না।",
+        "name": "Nusrat J.",
+        "role": "Intern → Junior SWE"
+      },
+      {
+        "quote": "তিন বছর code ship করার পরেও যে gap গুলো ছিল, OS আর networking deep-dive গুলো সেগুলো ধরিয়ে দিল।",
+        "name": "Tanvir A.",
+        "role": "Backend Engineer"
+      },
+      {
+        "quote": "এখানে mentoring করলে নিজেও sharp থাকি। System design case study গুলো অনেক paid course এর চেয়ে ভালো।",
+        "name": "Farhana R.",
+        "role": "Senior Engineer"
+      }
+    ]
+  },
+  "cta": {
+    "title": "তোমার path শুরু হয় একটা প্রশ্ন দিয়ে: why?",
+    "sub": "শুরু করা free। কোনো card লাগবে না। শুধু তুমি আর path।",
+    "button": "Journey শুরু করো"
+  },
+  "footer": {
+    "tagline": "যা দরকার সব, একটাই path এ।",
+    "product": "Product",
+    "community": "Community",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "projects": "Projects",
+    "interview": "Interview",
+    "made": "Bangladesh এ ❤️ দিয়ে বানানো"
+  }
+}

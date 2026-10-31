@@ -1,0 +1,337 @@
+@import "tailwindcss";
+
+/* ───────── Design tokens ─────────
+   Every theme defines the same variables; components only ever read tokens.
+   Text/background pairs are chosen to pass WCAG AA (≥4.5:1 body, ≥3:1 large/UI). */
+:root,
+[data-theme="midnight"] {
+  --bg: #0e0f1a;
+  --bg-elev: #161827;
+  --bg-elev-2: #1d2033;
+  --fg: #e8e9f3;
+  --muted: #a3a7bd;
+  --border: #2a2d45;
+  --accent-1: #9b85ff;
+  --accent-2: #00d4a6;
+  --on-accent: #0e0f1a;
+  --glow: rgb(124 92 255 / 0.55);
+  --path-from: var(--accent-1);
+  --path-to: var(--accent-2);
+  --path-ghost: rgb(232 233 243 / 0.12);
+  --path-glow: 1;
+  --grid: rgb(255 255 255 / 0.035);
+  --danger: #ff7a90;
+  color-scheme: dark;
+}
+
+/* True-black OLED dark with warm amber accents. */
+[data-theme="obsidian"] {
+  --bg: #000000;
+  --bg-elev: #0d0d0f;
+  --bg-elev-2: #17171a;
+  --fg: #f4f1ea;
+  --muted: #a8a49c;
+  --border: #26252a;
+  --accent-1: #ff9f5a;
+  --accent-2: #ffd66b;
+  --on-accent: #120a02;
+  --glow: rgb(255 159 90 / 0.45);
+  --path-ghost: rgb(244 241 234 / 0.12);
+  --path-glow: 1;
+  --grid: rgb(255 255 255 / 0.03);
+  --danger: #ff7a7a;
+  color-scheme: dark;
+}
+
+[data-theme="paper"] {
+  --bg: #fbf8f1;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #f3eee2;
+  --fg: #1f2330;
+  --muted: #5a5f70;
+  --border: #e3dccb;
+  --accent-1: #5b3fe0;
+  --accent-2: #00806a;
+  --on-accent: #ffffff;
+  --glow: rgb(91 63 224 / 0.25);
+  --path-ghost: rgb(31 35 48 / 0.12);
+  --path-glow: 0;
+  /* ink pen on notebook paper */
+  --path-from: #26304f;
+  --path-to: #3d3aa8;
+  --grid: rgb(70 110 200 / 0.12); /* notebook ruling */
+  --danger: #c0264a;
+  color-scheme: light;
+}
+
+[data-theme="dracula"] {
+  --bg: #282a36;
+  --bg-elev: #303241;
+  --bg-elev-2: #383a4c;
+  --fg: #f8f8f2;
+  --muted: #b9bdd6;
+  --border: #44475a;
+  --accent-1: #bd93f9;
+  --accent-2: #50fa7b;
+  --on-accent: #1d1e27;
+  --glow: rgb(189 147 249 / 0.5);
+  --path-ghost: rgb(248 248 242 / 0.12);
+  --path-glow: 1;
+  --grid: rgb(255 255 255 / 0.03);
+  --danger: #ff5555;
+  color-scheme: dark;
+}
+
+[data-theme="solarized"] {
+  --bg: #002b36;
+  --bg-elev: #073642;
+  --bg-elev-2: #0b4050;
+  --fg: #fdf6e3;
+  --muted: #a7b5b5;
+  --border: #1d4f5c;
+  --accent-1: #9ea3f0;
+  --accent-2: #2aa198;
+  --on-accent: #002b36;
+  --glow: rgb(42 161 152 / 0.45);
+  --path-ghost: rgb(253 246 227 / 0.12);
+  --path-glow: 1;
+  --grid: rgb(255 255 255 / 0.03);
+  --danger: #ff6f6b;
+  color-scheme: dark;
+}
+
+[data-theme="matrix"] {
+  --bg: #020a04;
+  --bg-elev: #06140a;
+  --bg-elev-2: #0a1e10;
+  --fg: #b7f5c4;
+  --muted: #6fd08a;
+  --border: #13361d;
+  --accent-1: #00ff66;
+  --accent-2: #7cffb2;
+  --on-accent: #020a04;
+  --glow: rgb(0 255 102 / 0.5);
+  --path-ghost: rgb(0 255 102 / 0.12);
+  --path-glow: 1;
+  --grid: rgb(0 255 102 / 0.05);
+  --danger: #ff6b6b;
+  color-scheme: dark;
+}
+
+/* ───────── User-selectable fonts (Latin family first, Bangla family second) ───────── */
+:root,
+[data-font="default"] { --font-ui: var(--font-inter), var(--font-hind); }
+[data-font="friendly"] { --font-ui: var(--font-nunito), var(--font-baloo); }
+[data-font="anek"] { --font-ui: var(--font-anek-latin), var(--font-anek-bangla); }
+[data-font="bookish"] { --font-ui: var(--font-source-serif), var(--font-tiro); }
+[data-font="terminal"] { --font-ui: var(--font-jetbrains), var(--font-hind); }
+[data-font="fira"] { --font-ui: var(--font-fira), var(--font-hind); }
+[data-font="plex-mono"] { --font-ui: var(--font-plex-mono), var(--font-hind); }
+[data-font="space-mono"] { --font-ui: var(--font-space-mono), var(--font-anek-bangla); }
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elev: var(--bg-elev);
+  --color-elev-2: var(--bg-elev-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--border);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-ui), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
+  --font-hand: var(--font-caveat), var(--font-hind), cursive;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+/* Bangla glyphs carry matra/kar above and below the line — give them room. */
+html[lang="bn"] body {
+  line-height: 1.8;
+}
+html[lang="bn"] :is(h1, h2, h3) {
+  line-height: 1.35;
+}
+/* Matrix goes mono by default, but an explicit font choice wins. */
+[data-theme="matrix"][data-font="default"] body {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent-1) 35%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* Paper theme: ruled notebook lines + red margin instead of a grid. */
+[data-theme="paper"] .bg-grid {
+  background-image:
+    linear-gradient(90deg, transparent 63px, rgb(220 80 80 / 0.25) 63px, rgb(220 80 80 / 0.25) 65px, transparent 65px),
+    linear-gradient(var(--grid) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 32px;
+}
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+/* View-transition theme switch: the new snapshot is revealed by a clip-path circle. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.logo-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.4s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.logo-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ───────── Corner doodles: a slow, lazy drift (transform only) ───────── */
+@keyframes doodle-float {
+  from { transform: translateY(0) rotate(-2deg); }
+  to { transform: translateY(-8px) rotate(3deg); }
+}
+.doodle { animation: doodle-float 6s ease-in-out infinite alternate; }
+
+/* ───────── "Before → After" section ───────── */
+@keyframes tile-jitter {
+  0%, 100% { transform: translate(0, 0) rotate(var(--r, 0deg)); }
+  50% { transform: translate(2px, -3px) rotate(calc(var(--r, 0deg) + 4deg)); }
+}
+.yt-tile { transform-box: fill-box; transform-origin: center; animation: tile-jitter 2.4s ease-in-out infinite; }
+.step-node circle,
+.step-node text {
+  transition: fill 0.3s ease, stroke 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.step-node .node-core { fill: var(--accent-2); stroke: var(--accent-2); }
+.step-node .node-num { fill: var(--on-accent); }
+.step-node .node-halo { fill: color-mix(in oklab, var(--accent-2) 22%, transparent); }
+.step-node[data-reached="false"] .node-core { fill: var(--bg-elev); stroke: var(--border); transform: scale(0.85); }
+.step-node[data-reached="false"] .node-num { fill: var(--muted); }
+.step-node[data-reached="false"] .node-halo { transform: scale(0); }
+.walker .mouth-sad { opacity: 0; }
+.walker[data-mood="sad"] .mouth-sad { opacity: 1; }
+.walker[data-mood="sad"] .mouth-happy { opacity: 0; }
+.understood-label { transition: opacity 0.4s ease, transform 0.4s ease; }
+[data-done="false"] .understood-label { opacity: 0.35; }
+[data-done="true"] .understood-label { opacity: 1; }
+
+/* ───────── Journey dots ───────── */
+.journey-dot .dot-core,
+.journey-dot .dot-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease, fill 0.3s ease;
+}
+.journey-dot .dot-core { fill: var(--accent-2); }
+.journey-dot .dot-ring { opacity: 0.55; }
+.journey-dot text { transition: opacity 0.35s ease; }
+.journey-dot[data-reached="false"] .dot-core { fill: var(--muted); transform: scale(0.7); }
+.journey-dot[data-reached="false"] .dot-ring { opacity: 0; transform: scale(0.3); }
+.journey-dot[data-reached="false"] text { opacity: 0.5; }
+.journey-dot[data-reached="true"] .dot-ring { filter: drop-shadow(0 0 10px var(--glow)); }
+
+.journey-zone-hint { opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+[data-zone="dsa"] .journey-zone-hint[data-zone-for="dsa"],
+[data-zone="peak"] .journey-zone-hint[data-zone-for="peak"],
+[data-zone="finish"] .journey-zone-hint[data-zone-for="finish"],
+[data-animated="false"] .journey-zone-hint[data-zone-for="finish"] { opacity: 1; transform: none; }
+
+@keyframes hud-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.hud-in { animation: hud-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* ───────── Journey stick figure ───────── */
+/* Pivot limbs at the hip / shoulder in the figure's own user units. */
+.walker .leg { transform-box: view-box; transform-origin: 0 -42px; }
+.walker .arm { transform-box: view-box; transform-origin: 0 -66px; }
+@keyframes leg-a {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(26deg); }
+}
+@keyframes leg-b {
+  0%, 100% { transform: rotate(14deg); }
+  50% { transform: rotate(-26deg); }
+}
+.walker.is-walking .leg-a { animation: leg-a 0.55s ease-in-out infinite; }
+.walker.is-walking .leg-b { animation: leg-b 0.55s ease-in-out infinite; }
+.walker.is-walking .arm-a { animation: leg-b 0.55s ease-in-out infinite; }
+.walker.is-walking .arm-b { animation: leg-a 0.55s ease-in-out infinite; }
+.walker.is-struggling.is-walking .leg-a,
+.walker.is-struggling.is-walking .leg-b,
+.walker.is-struggling.is-walking .arm-a,
+.walker.is-struggling.is-walking .arm-b {
+  animation-duration: 1.1s; /* DSA valley: heavy steps */
+}
+.walker .sweat { opacity: 0; transition: opacity 0.3s; }
+.walker.is-struggling .sweat { opacity: 1; }
+@keyframes drip {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(10px); opacity: 0; }
+}
+.walker.is-struggling .sweat path { animation: drip 0.9s ease-in infinite; }
+.walker.is-struggling .sweat path:nth-child(2) { animation-delay: 0.45s; }
+.walker .arm-cheer { opacity: 0; }
+.walker.is-cheering .arm-cheer { opacity: 1; }
+.walker.is-cheering .arm-a,
+.walker.is-cheering .arm-b { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

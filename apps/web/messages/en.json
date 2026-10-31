@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "title": "Coding Foding — Learn how to learn",
+    "description": "A path-based learning platform for anyone who wants to learn: programming, DSA, OS, networking, system design, projects and interview prep — with a Bangladesh-wide leaderboard."
+  },
+  "nav": {
+    "problems": "Problems",
+    "leaderboard": "Leaderboard",
+    "plan": "Plan",
+    "signIn": "Sign in",
+    "skip": "Skip to content",
+    "theme": "Theme",
+    "language": "Language",
+    "menu": "Menu",
+    "learn": "Learn",
+    "blogs": "Blogs",
+    "learnItems": {
+      "programming": "Programming",
+      "dsa": "DSA",
+      "os": "Operating System",
+      "networking": "Networking Fundamentals",
+      "system-design": "System Design",
+      "frontend-system-design": "Frontend System Design",
+      "backend-first-principles": "Backend First Principles"
+    },
+    "learnDesc": {
+      "programming": "Pick a language, get fluent",
+      "dsa": "Patterns, problems, visualizer",
+      "os": "Processes, threads, memory",
+      "networking": "TCP/IP, HTTP, DNS, TLS",
+      "system-design": "LLD + HLD",
+      "frontend-system-design": "Rendering, state, performance, design systems",
+      "backend-first-principles": "Requests, storage & concurrency from scratch"
+    },
+    "problemItems": {
+      "dsa": "DSA",
+      "ai-ml": "AI / ML"
+    },
+    "problemDesc": {
+      "dsa": "Topic-wise practice ladder",
+      "ai-ml": "Models, math & ML coding"
+    },
+    "planItems": {
+      "next": "Next",
+      "horizon": "Horizon",
+      "plan": "Plan"
+    },
+    "planDesc": {
+      "next": "What we ship next",
+      "horizon": "Coming in a few months",
+      "plan": "Our long-term plan"
+    },
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "appearance": "Appearance",
+    "font": "Font",
+    "mono": "Mono"
+  },
+  "theme": {
+    "system": "System",
+    "midnight": "Midnight",
+    "obsidian": "Obsidian",
+    "paper": "Paper",
+    "dracula": "Dracula",
+    "solarized": "Solarized",
+    "matrix": "Matrix"
+  },
+  "fonts": {
+    "default": "Modern",
+    "friendly": "Friendly",
+    "anek": "Anek",
+    "bookish": "Bookish",
+    "terminal": "JetBrains Mono",
+    "fira": "Fira Code",
+    "plex-mono": "IBM Plex Mono",
+    "space-mono": "Space Mono"
+  },
+  "journey": {
+    "eyebrow": "The journey",
+    "title": "Learn how to learn.",
+    "sub": "It's not a straight line — it's a path with hills and valleys. Scroll and walk it.",
+    "dsaHint": "Everyone gets stuck here. You're not alone 💪",
+    "peakHint": "View from the top 🎉",
+    "finish": "You learned how to learn 🎉",
+    "topics": "{count} topics",
+    "hours": "~{hours} h",
+    "explore": "Explore",
+    "progress": "Journey progress",
+    "listLabel": "Milestones on the path",
+    "milestones": {
+      "why": {
+        "label": "why?",
+        "title": "Why?",
+        "desc": "Why CS fundamentals matter, what they unlock, and the mindset to keep going."
+      },
+      "programming": {
+        "label": "Programming",
+        "title": "Programming",
+        "desc": "Pick C/C++, Go, Java, Python or JS and get truly fluent — not just syntax."
+      },
+      "dsa": {
+        "label": "DSA",
+        "title": "Data Structures & Algorithms",
+        "desc": "Topic-wise problems, patterns, a visualizer and a difficulty ladder. The hardest valley."
+      },
+      "os": {
+        "label": "OS",
+        "title": "Operating System",
+        "desc": "Processes, threads, memory, scheduling and concurrency — how your code actually runs."
+      },
+      "networking": {
+        "label": "Networking",
+        "title": "Networking Fundamentals",
+        "desc": "OSI/TCP-IP, HTTP, DNS, TLS and sockets — what happens when you hit enter."
+      },
+      "system-design": {
+        "label": "System design",
+        "title": "System Design",
+        "desc": "Design real systems in two layers — from classes up to whole architectures.",
+        "parts": {
+          "lld": {
+            "short": "LLD",
+            "title": "Low Level Design",
+            "desc": "Classes, SOLID, design patterns, UML, clean interfaces."
+          },
+          "hld": {
+            "title": "High Level Design",
+            "short": "HLD",
+            "desc": "Scalability, databases, caching, queues, trade-offs."
+          }
+        }
+      },
+      "goal": {
+        "label": "Goal",
+        "title": "You learned how to learn",
+        "desc": "The path never really ends — now you know how to pick the next thing and climb it."
+      }
+    },
+    "goalHint": "Pick what's next for you.",
+    "whatsNext": "What's next"
+  },
+  "lost": {
+    "eyebrow": "Before → After",
+    "title": "Stop getting lost. Start walking a path.",
+    "before": {
+      "label": "Before",
+      "caption": "I used to lose track on YouTube",
+      "desc": "Random videos, half-watched playlists, and no idea what comes next."
+    },
+    "after": {
+      "label": "With Coding Foding",
+      "caption": "Step by step — learn how to learn",
+      "desc": "One path, small steps, and you always know the next one."
+    },
+    "sad": "sad",
+    "understood": "understood",
+    "steps": "Step {n}"
+  },
+  "leaderboard": {
+    "eyebrow": "Top 1% in BD 🇧🇩",
+    "title": "The Bangladesh leaderboard",
+    "sub": "Live ranking by XP across every division.",
+    "all": "All BD",
+    "rank": "Rank",
+    "learner": "Learner",
+    "xp": "XP",
+    "streak": "Streak",
+    "solved": "Solved",
+    "days": "{count}d",
+    "viewAll": "View full leaderboard",
+    "live": "Live",
+    "demo": "Preview data",
+    "divisions": {
+      "dhaka": "Dhaka",
+      "chattogram": "Chattogram",
+      "rajshahi": "Rajshahi",
+      "khulna": "Khulna",
+      "barishal": "Barishal",
+      "sylhet": "Sylhet",
+      "rangpur": "Rangpur",
+      "mymensingh": "Mymensingh"
+    }
+  },
+  "mostNeeded": {
+    "eyebrow": "Most needed",
+    "title": "What should we build next?",
+    "sub": "The community votes. The top topics get written first.",
+    "upvote": "Upvote {topic}",
+    "removeVote": "Remove vote for {topic}",
+    "votes": "{count} votes"
+  },
+  "roadmap": {
+    "eyebrow": "Next · Horizon · Plan",
+    "title": "What we're building next",
+    "sub": "Our public roadmap — the content, videos and features coming to Coding Foding.",
+    "stages": {
+      "next": {
+        "title": "Next",
+        "when": "Shipping in the next few weeks"
+      },
+      "horizon": {
+        "title": "Horizon",
+        "when": "Coming in the next few months"
+      },
+      "plan": {
+        "title": "Plan",
+        "when": "Our long-term plan"
+      }
+    },
+    "kinds": {
+      "video": "Video",
+      "article": "Article",
+      "feature": "Feature",
+      "problems": "Problems",
+      "interactive": "Interactive",
+      "community": "Community",
+      "event": "Event",
+      "product": "Product"
+    },
+    "progress": "Progress",
+    "feedback": "Want something sooner?",
+    "feedbackCta": "Vote on what's most needed"
+  },
+  "stats": {
+    "eyebrow": "Numbers",
+    "learners": "learners on the path",
+    "problems": "problems solved",
+    "lessons": "lessons in bn + en",
+    "hired": "got hired",
+    "testimonials": [
+      {
+        "quote": "I used to jump between tutorials. The path finally told me what to do next — and DSA stopped feeling impossible.",
+        "name": "Nusrat J.",
+        "role": "Intern → Junior SWE"
+      },
+      {
+        "quote": "The OS and networking deep-dives fixed gaps I didn't know I had after three years of shipping code.",
+        "name": "Tanvir A.",
+        "role": "Backend Engineer"
+      },
+      {
+        "quote": "Mentoring here keeps me sharp. The system design case studies are better than most paid courses.",
+        "name": "Farhana R.",
+        "role": "Senior Engineer"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Your path starts with one question: why?",
+    "sub": "Free to start. No credit card. Just you and the path.",
+    "button": "Start your journey"
+  },
+  "footer": {
+    "tagline": "Everything you need, in one path.",
+    "product": "Product",
+    "community": "Community",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "projects": "Projects",
+    "interview": "Interview",
+    "made": "Made with ❤️ in Bangladesh"
+  }
+}
