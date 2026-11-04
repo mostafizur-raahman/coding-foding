@@ -4,57 +4,135 @@
     "description": "যে কেউ শিখতে পারে। Programming, DSA, OS, networking, system design, projects আর interview prep — সব একটা path এ, সাথে পুরো Bangladesh এর leaderboard।"
   },
   "nav": {
-    "problems": "Problems",
-    "leaderboard": "Leaderboard",
-    "plan": "Plan",
     "signIn": "Sign in",
     "skip": "Content এ চলে যাও",
     "theme": "Theme",
     "language": "ভাষা",
     "menu": "Menu",
     "learn": "Learn",
-    "blogs": "Blogs",
-    "learnItems": {
-      "programming": "Programming",
-      "dsa": "DSA",
-      "os": "Operating System",
-      "networking": "Networking Fundamentals",
-      "system-design": "System Design",
-      "frontend-system-design": "Frontend System Design",
-      "backend-first-principles": "Backend First Principles"
-    },
-    "learnDesc": {
-      "programming": "একটা language নাও, fluent হও",
-      "dsa": "Pattern, problem, visualizer",
-      "os": "Process, thread, memory",
-      "networking": "TCP/IP, HTTP, DNS, TLS",
-      "system-design": "LLD + HLD",
-      "frontend-system-design": "Rendering, state, performance, design system",
-      "backend-first-principles": "Request, storage, concurrency — একদম গোড়া থেকে"
-    },
-    "problemItems": {
-      "dsa": "DSA",
-      "ai-ml": "AI / ML"
-    },
-    "problemDesc": {
-      "dsa": "Topic-wise practice ladder",
-      "ai-ml": "Model, math আর ML coding"
-    },
-    "planItems": {
-      "next": "Next",
-      "horizon": "Horizon",
-      "plan": "Plan"
-    },
-    "planDesc": {
-      "next": "আমরা এরপর কী আনছি",
-      "horizon": "সামনের কয়েক মাসে যা আসছে",
-      "plan": "আমাদের long-term plan"
-    },
     "openMenu": "Menu খোলো",
     "closeMenu": "Menu বন্ধ করো",
     "appearance": "Appearance",
     "font": "Font",
-    "mono": "Mono"
+    "mono": "Mono",
+    "careers": "Careers",
+    "pricing": "Pricing",
+    "practice": "Practice",
+    "interview": "Interview",
+    "community": "Community",
+    "soon": "শীঘ্রই",
+    "menus": {
+      "learn": {
+        "items": {
+          "backend-first-principles": {
+            "label": "Backend First Principles",
+            "desc": "Request, storage, concurrency — একদম গোড়া থেকে"
+          },
+          "programming": {
+            "label": "Programming",
+            "desc": "একটা language নাও, fluent হও"
+          },
+          "dsa": {
+            "label": "DSA",
+            "desc": "Pattern, problem, visualizer"
+          },
+          "os": {
+            "label": "Operating System",
+            "desc": "Process, thread, memory"
+          },
+          "networking": {
+            "label": "Networking",
+            "desc": "TCP/IP, HTTP, DNS, TLS"
+          },
+          "devops-cloud": {
+            "label": "DevOps & Cloud",
+            "desc": "Linux, Docker, CI/CD, Kubernetes আর AWS"
+          },
+          "system-design": {
+            "label": "System Design",
+            "desc": "LLD, HLD আর একটা project"
+          },
+          "frontend-system-design": {
+            "label": "Frontend System Design",
+            "desc": "Rendering, state, performance, design system"
+          }
+        },
+        "feature": {
+          "eyebrow": "এখান থেকে শুরু",
+          "title": "Backend First Principles",
+          "body": "একটা request আসলে কীভাবে চলে — HTTP, routing, CORS — একদম শূন্য থেকে, bn + en এ।",
+          "cta": "Track শুরু করো"
+        }
+      },
+      "practice": {
+        "items": {
+          "dsa": {
+            "label": "DSA problems",
+            "desc": "Topic ধরে ধরে, easy থেকে hard"
+          },
+          "ai-ml": {
+            "label": "AI / ML problems",
+            "desc": "Math, model আর ML coding"
+          },
+          "system-design": {
+            "label": "System Design Problems",
+            "desc": "Parking lot থেকে WhatsApp, শুরু থেকে শেষ পর্যন্ত সমাধান"
+          },
+          "build-to-hire": {
+            "label": "Build to Hire",
+            "desc": "যে বাস্তব project চাকরি এনে দেয়"
+          }
+        }
+      },
+      "interview": {
+        "items": {
+          "prep": {
+            "label": "Interview Prep",
+            "desc": "পরের interview এর জন্য সপ্তাহ ধরে ধরে plan"
+          },
+          "questions": {
+            "label": "Most Common Questions",
+            "desc": "Company গুলো বারবার যা জিজ্ঞেস করে, উত্তর সহ"
+          },
+          "experiences": {
+            "label": "Interview Experiences",
+            "desc": "Learner দের নিজের মুখে real interview round"
+          },
+          "stories": {
+            "label": "Success Stories",
+            "desc": "প্রথম line of code থেকে offer letter পর্যন্ত"
+          }
+        },
+        "feature": {
+          "eyebrow": "অন্যদের সাহায্য করো",
+          "title": "তোমার interview experience share করো",
+          "body": "কোন company, কয়টা round, কী জিজ্ঞেস করেছে — তোমার গল্প পরের জনকে তৈরি হয়ে ঢুকতে সাহায্য করবে।",
+          "cta": "Share করো"
+        }
+      },
+      "community": {
+        "items": {
+          "leaderboard": {
+            "label": "Leaderboard",
+            "desc": "পুরো Bangladesh, division আর district এর board"
+          },
+          "blogs": {
+            "label": "Blogs",
+            "desc": "Team এর deep dive আর notes"
+          },
+          "roadmap": {
+            "label": "Roadmap",
+            "desc": "কী এসেছে, এরপর কী আসছে"
+          }
+        },
+        "feature": {
+          "eyebrow": "তোমার vote",
+          "title": "এরপর আমরা কী বানাবো?",
+          "body": "তোমার সবচেয়ে দরকারি topic এ vote দাও — উপরের গুলো roadmap এ আগে আসে।",
+          "cta": "Vote দাও"
+        }
+      }
+    }
   },
   "theme": {
     "system": "System",
@@ -89,8 +167,8 @@
     "listLabel": "Path এর milestone গুলো",
     "milestones": {
       "why": {
-        "label": "why?",
-        "title": "Why?",
+        "label": "Start with why?",
+        "title": "Start with why?",
         "desc": "CS fundamentals কেন দরকার, এগুলো কী কী দরজা খুলে দেয়, আর লেগে থাকার mindset।"
       },
       "programming": {
@@ -116,17 +194,27 @@
       "system-design": {
         "label": "System design",
         "title": "System Design",
-        "desc": "Real system design করো দুই layer এ — class থেকে শুরু করে পুরো architecture পর্যন্ত।",
+        "desc": "দুই layer এ আসল system design করো, class থেকে পুরো architecture পর্যন্ত, তারপর নিজের বানানো system scale করা। পাশাপাশি classic problem দিয়ে practice।",
         "parts": {
           "lld": {
             "short": "LLD",
             "title": "Low Level Design",
-            "desc": "Class, SOLID, design pattern, UML, clean interface।"
+            "desc": "Intro, OOP, class relationship, principle, SOLID, design pattern।"
           },
           "hld": {
             "short": "HLD",
             "title": "High Level Design",
             "desc": "Scalability, database, caching, queue, trade-off।"
+          },
+          "problems": {
+            "short": "PRB",
+            "title": "Design Problems",
+            "desc": "Practice section এ: URL shortener, WhatsApp, Pathao, mobile wallet।"
+          },
+          "project": {
+            "short": "PRJ",
+            "title": "Build and Scale",
+            "desc": "একটা আসল system বানাও, load test করো, তারপর scale করো।"
           }
         }
       },
@@ -138,6 +226,21 @@
     },
     "goalHint": "এবার নিজের পরের step বেছে নাও।",
     "whatsNext": "এরপর কী"
+  },
+  "live": {
+    "title": "এখন path এ কে কোথায়",
+    "here": "তুমি এখন",
+    "peopleHere": "জন এই মুহূর্তে এখানে",
+    "total": "মোট {count} জন path এ",
+    "notes": {
+      "why": "কেন শিখছ জানলে কঠিন দিনেও থামবে না।",
+      "programming": "একটা language নাও। চওড়া না, গভীরে যাও।",
+      "dsa": "এখানে সবাই একটু আটকে যায় — তুমি একা না 💪",
+      "os": "এবার দেখবে তোমার code আসলে কীভাবে run হয়।",
+      "networking": "প্রতিটা request এর একটা গল্প আছে। সেটা জানো।",
+      "system-design": "LLD + HLD — file না, system দিয়ে ভাবো।",
+      "goal": "তুমি শিখতে শিখে গেছ। এরপর কী?"
+    }
   },
   "lost": {
     "eyebrow": "আগে → এখন",
@@ -165,11 +268,9 @@
     "learner": "Learner",
     "xp": "XP",
     "streak": "Streak",
-    "solved": "Solved",
     "days": "{count} দিন",
     "viewAll": "পুরো leaderboard দেখো",
     "live": "Live",
-    "demo": "Preview data",
     "divisions": {
       "dhaka": "ঢাকা",
       "chattogram": "চট্টগ্রাম",
@@ -179,21 +280,45 @@
       "sylhet": "সিলেট",
       "rangpur": "রংপুর",
       "mymensingh": "ময়মনসিংহ"
-    }
+    },
+    "pageTitle": "বাংলাদেশের leaderboard",
+    "pageSub": "XP অনুযায়ী সবার ranking। Division বা জেলা দিয়ে filter করে দেখো তোমার আশেপাশে কে এগিয়ে।",
+    "district": "জেলা",
+    "allDistricts": "সব জেলা",
+    "prev": "আগের",
+    "next": "পরের",
+    "page": "Page {n}",
+    "showing": "{total} জনের মধ্যে {from}–{to}",
+    "emptyAll": "এখনো কেউ XP পায়নি। একটা lesson শেষ করো, তুমিই প্রথম হবে।",
+    "emptyHere": "এখান থেকে এখনো কেউ board এ নেই। তুমিই প্রথম হও!",
+    "yourRank": "তোমার rank",
+    "notRanked": "এই board এ তুমি এখনো নেই। XP পেলেই ranking এ চলে আসবে।",
+    "topPercent": "Top {p}%",
+    "signInToSee": "Rank দেখতে sign in করো",
+    "you": "তুমি",
+    "unavailable": "এই মুহূর্তে leaderboard load করা যাচ্ছে না। একটু পরে আবার দেখো।"
   },
   "mostNeeded": {
     "eyebrow": "Most needed",
     "title": "এরপর কী বানাব?",
     "sub": "Community vote দেয়। সবচেয়ে বেশি vote পাওয়া topic আগে লেখা হয়।",
     "upvote": "{topic} এ upvote দাও",
-    "removeVote": "{topic} থেকে vote সরাও",
-    "votes": "{count} vote"
+    "votes": "{count} vote",
+    "voted": "তুমি {topic} এ vote দিয়েছো",
+    "already": "এটায় তুমি আগেই vote দিয়েছো। প্রত্যেকে একবারই, আর সেটা থেকে যায়।",
+    "thanks": "ধন্যবাদ! তোমার vote গোনা হয়েছে।",
+    "failed": "Vote save করা গেল না",
+    "error": "এখন topic গুলো load করা গেল না।"
   },
   "roadmap": {
-    "eyebrow": "Next · Horizon · Plan",
+    "eyebrow": "Shipped · Next · Horizon · Plan",
     "title": "আমরা এরপর কী আনছি",
     "sub": "আমাদের public roadmap — Coding Foding এ কোন content, video আর feature আসছে।",
     "stages": {
+      "shipped": {
+        "title": "Shipped",
+        "when": "এর মধ্যেই চলে এসেছে"
+      },
       "next": {
         "title": "Next",
         "when": "সামনের কয়েক সপ্তাহে আসছে"
@@ -219,7 +344,11 @@
     },
     "progress": "Progress",
     "feedback": "কোনোটা আগে চাও?",
-    "feedbackCta": "Most needed এ vote দাও"
+    "feedbackCta": "Most needed এ vote দাও",
+    "empty": "এখানে এখনো কিছু নেই।",
+    "loadError": "Roadmap load করা গেল না, একটু পরে আবার দেখো।",
+    "shippedOn": "Shipped · {date}",
+    "open": "দেখো"
   },
   "stats": {
     "eyebrow": "Numbers",
@@ -259,6 +388,1418 @@
     "terms": "Terms",
     "projects": "Projects",
     "interview": "Interview",
-    "made": "Bangladesh এ ❤️ দিয়ে বানানো"
+    "made": "Bangladesh এ ❤️ দিয়ে বানানো",
+    "more": "আরো"
+  },
+  "youVsYou": {
+    "you": "তুমি",
+    "successful": "successful people",
+    "later": "কাল থেকে শুরু করবো…",
+    "day": "দিন {n}",
+    "work": [
+      "রাত জেগে practice",
+      "১০০০ টা bug",
+      "reject হওয়া interview",
+      "প্রতিদিন ১ টা problem"
+    ],
+    "cap1": "ওদের আছে success, তোমার আছে distraction ভরা phone।",
+    "cap2": "তুমি ওদের success দেখো, তার নিচের hard work টা দেখো না।",
+    "cap3": "Phone রাখো, প্রতিদিন 1% ভালো হও: success শুধু সময়ের ব্যাপার",
+    "factNote": "gym এর মতো, দিনে 1% মানে বছরে 37 গুণ",
+    "cap4": "আর একদিন তুমিও ওদের একজন।"
+  },
+  "course": {
+    "chapters": "Stations",
+    "parts": "Parts",
+    "time": "পড়ার সময়",
+    "languages": "Languages",
+    "progress": "তোমার progress",
+    "hours": "{range} ঘণ্টা",
+    "hoursLong": "{range} ঘণ্টা",
+    "done": "শেষ",
+    "ticket": "Route ticket",
+    "ticketFrom": "শুরু",
+    "ticketTo": "শেষ",
+    "part": "Part {n}",
+    "station": "Station {n} / {total}",
+    "transfer": "Part {n} এর জন্য এখানে বদলাও →",
+    "start": "পড়া শুরু করো",
+    "finishTitle": "Terminal",
+    "comingSoon": "এই chapter টা লেখা চলছে।",
+    "comingSoonSub": "Route ঠিক হয়ে গেছে; পুরো walkthrough শীঘ্রই এখানে আসবে।",
+    "back": "Route এ ফিরে যাও",
+    "prev": "আগের stop",
+    "next": "পরের stop",
+    "walkThink": "ডান দিয়ে গেলে মনে হয় ভালো হতো 🤔",
+    "walkGo": "বিসমিল্লাহ!",
+    "fallback": "এই chapter টার বাংলা version এখনো আসেনি, তাই English টা দেখাচ্ছি।",
+    "onThisPage": "এই chapter এ",
+    "lockedTitle": "Part {n} Pro দের জন্য",
+    "lockedSub": "প্রতিটা course এর Part 1 free। এই chapter আর এর পরের সব part পড়তে Pro নাও — সাথে পড়তে পড়তে XP পাবে।",
+    "lockedCta": "Pro নাও",
+    "lockedSignIn": "Sign in করো",
+    "lockedSignInSub": "আগেই Pro নিয়েছো? Sign in করে পড়া চালিয়ে যাও।",
+    "lockedFree": "Part 1 free তে শুরু করো →",
+    "lockedError": "Chapter টা load করা গেল না।",
+    "lockedRetry": "আবার চেষ্টা করো",
+    "quotes": [
+      "কেউ বিশ্বাস না করলে, *unbelievable* কিছু করে দেখাও।",
+      "চুপচাপ কাজ করে যাও, তোমার *success* ই কথা বলবে।",
+      "রোজ একটা *ছোট step*, \"পরে করবো\" র চেয়ে অনেক ভালো।",
+      "Confused লাগছে? ঠিক আছে, *learning* এর সময় এমনই লাগে।",
+      "প্রত্যেক expert একসময় beginner ছিল, শুধু *হাল ছাড়েনি*।",
+      "আজকের bug, কালকের *skill*।",
+      "Slow হলেও সমস্যা নেই, শুধু *থেমো না*।",
+      "শুরু করার best সময় ছিল গতকাল, আর তারপরের best সময় হলো *এখন*।",
+      "Error message টা মন দিয়ে পড়ো, ওটা তোমাকে *help* করতেই এসেছে।",
+      "বড় dream দেখো, ছোট করে শুরু করো, আজই *ship* করো।"
+    ]
+  },
+  "bfp": {
+    "eyebrow": "Course",
+    "title": "Backend First Principles",
+    "sub": "একটা request কে follow করো, socket এ তার bytes পৌঁছানো থেকে শুরু করে একশো machine থেকে serve হওয়া পর্যন্ত। প্রতিটা stop এ শুধু how না, why ও — code সহ।",
+    "note": "একটা request, শুরু থেকে শেষ ↓",
+    "from": "একটা socket",
+    "to": "planet scale",
+    "groups": {
+      "on-the-wire": {
+        "title": "On the Wire",
+        "sub": "bytes এর stream কীভাবে এমন request হয় যার উত্তর তোমার code দিতে পারে"
+      },
+      "memory-and-muscle": {
+        "title": "Memory & Muscle",
+        "sub": "data কোথায় থাকে, আর কোন worker রা সেটা নড়াচড়া করে"
+      },
+      "living-in-prod": {
+        "title": "Living in Prod",
+        "sub": "আসল traffic আসলেও visible, safe আর fast থাকা"
+      },
+      "beyond-one-machine": {
+        "title": "Beyond One Machine",
+        "sub": "অনেক service কে package করা, test করা আর জোড়া লাগানো"
+      }
+    },
+    "finish": "পুরো line টা ঘুরে আসো, তারপর কোনো backend আর জাদু মনে হবে না।"
+  },
+  "auth": {
+    "brand": "Coding Foding",
+    "titleBefore": "শেখো",
+    "titleAfter": "first principles থেকে।",
+    "words": [
+      "HTTP",
+      "Caching",
+      "Kafka",
+      "DSA",
+      "System Design"
+    ],
+    "subLogin": "তোমার email আর password দিয়ে sign in করো",
+    "subSignup": "তোমার free Coding Foding account খোলো",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailHint": "Email টা যে তোমার, সেটা confirm করতে একটা ৬ সংখ্যার code পাঠাবো।",
+    "continue": "এগিয়ে যাও",
+    "working": "একটু দাঁড়াও…",
+    "codeTitle": "Inbox চেক করো",
+    "codeSub": "{email} এ একটা ৬ সংখ্যার code পাঠিয়েছি। ১০ মিনিট পর এটা expire হয়ে যাবে।",
+    "code": "Code",
+    "verify": "Code মিলিয়ে দেখো",
+    "resend": "নতুন code পাঠাও",
+    "resendIn": "{s} সেকেন্ড পর নতুন code পাঠাতে পারবে",
+    "resent": "নতুন code পাঠিয়েছি।",
+    "changeEmail": "অন্য email দাও",
+    "profileTitle": "শেষ একটা ধাপ",
+    "profileSub": "নিজের সম্পর্কে একটু বলো, যাতে তোমার route টা তোমার মতো হয়।",
+    "name": "তোমার নাম",
+    "phone": "Phone (চাইলে দাও)",
+    "phonePlaceholder": "01XXXXXXXXX",
+    "phoneHint": "শুধু account এর জরুরি খবরের জন্য। কাউকে দেখানো হবে না।",
+    "district": "জেলা",
+    "districtPlaceholder": "তোমার জেলা বাছো",
+    "districtHint": "এটা দিয়ে তুমি তোমার division এর leaderboard এ থাকবে।",
+    "interestsLabel": "কী শিখতে চাও?",
+    "interestsHint": "এক বা একাধিক বাছো।",
+    "interests": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "dsa": "DSA",
+      "system-design": "System Design",
+      "databases": "Databases",
+      "devops": "DevOps",
+      "ai-ml": "AI / ML",
+      "mobile": "Mobile",
+      "security": "Security",
+      "competitive-programming": "Competitive Programming"
+    },
+    "finish": "আমার route শুরু করো",
+    "newUser": "নতুন?",
+    "signUp": "Account খোলো",
+    "haveAccount": "আগে থেকেই account আছে?",
+    "signIn": "Sign in করো",
+    "legal": "এগিয়ে গেলে তুমি রাজি হচ্ছো প্রতিদিন একটু কিছু শিখতে। Leaderboard এ সবার সাথে ভালো ব্যবহার করো।",
+    "errors": {
+      "invalid_email": "Email টা ঠিক মনে হচ্ছে না।",
+      "invalid_code": "Code টা ভুল, নয়তো মেয়াদ শেষ।",
+      "too_many_attempts": "অনেকবার ভুল code দিয়েছো। নতুন একটা code পাঠাও।",
+      "invalid_token": "এই link এর মেয়াদ শেষ, নয়তো আগেই ব্যবহার হয়ে গেছে। নতুন একটা চাও।",
+      "invalid_name": "তোমার নাম দাও (৬৪ character এর মধ্যে)।",
+      "invalid_phone": "01712345678 এর মতো একটা বাংলাদেশি mobile number দাও।",
+      "invalid_district": "List থেকে তোমার জেলা বাছো।",
+      "invalid_interests": "অন্তত একটা জিনিস বাছো যা শিখতে চাও।",
+      "email_taken": "এই email এ আগেই account আছে। Password দিয়ে sign in করো।",
+      "rate_limited": "অনেকগুলো code চাওয়া হয়ে গেছে। কয়েক মিনিট পরে আবার চেষ্টা করো।",
+      "validation_failed": "কিছু ঘর আরেকবার দেখো।",
+      "network": "এই মুহূর্তে server এ পৌঁছানো যাচ্ছে না। একটু পরে আবার চেষ্টা করো।",
+      "generic": "কিছু একটা গড়বড় হয়েছে। আবার চেষ্টা করো।",
+      "invalid_stage": "Journey র কোন ধাপে আছো সেটা বাছো।",
+      "district_locked": "জেলা একবার দিলে আর বদলানো যায় না।",
+      "invalid_credentials": "Email বা password ভুল।",
+      "account_locked": "অনেকবার ভুল হয়েছে। কয়েক মিনিট পরে আবার চেষ্টা করো।",
+      "weak_password": "Password ১০ থেকে ১২৮ character এর মধ্যে হতে হবে।"
+    },
+    "signOut": "Sign out",
+    "xp": "{xp} XP",
+    "photo": {
+      "add": "Profile ছবি দাও",
+      "change": "ছবি বদলাও",
+      "remove": "ছবি সরাও",
+      "uploading": "Upload হচ্ছে…",
+      "type": "JPEG, PNG বা WebP ছবি দাও।",
+      "tooBig": "ছবি ৫ MB এর মধ্যে হতে হবে।",
+      "dims": "ছবিটার pixel অনেক বেশি।",
+      "slow": "অনেকবার upload হয়ে গেছে। পরে আবার চেষ্টা করো।",
+      "failed": "ছবি বদলানো গেল না। আবার চেষ্টা করো।",
+      "cooldown": "৩০ দিনে একবারই ছবি বদলানো যায়।"
+    },
+    "stageLabel": "Journey র কোন ধাপে আছো এখন?",
+    "stageHint": "এখন যেটা নিয়ে কাজ করছো সেটা বাছো। পরে menu থেকে যখন খুশি বদলাতে পারবে।",
+    "stageMenu": "আমি এখন আছি",
+    "password": "Password",
+    "passwordHint": "কমপক্ষে ১০ টা character। ছোট একটা বাক্য দিলে সবচেয়ে ভালো।",
+    "show": "দেখাও",
+    "hide": "লুকাও",
+    "loginButton": "Sign in করো",
+    "forgotLink": "Password ভুলে গেছো?",
+    "forgotTitle": "Password reset করো",
+    "forgotSub": "তোমার email দাও, নতুন password বাছার একটা link পাঠিয়ে দেবো।",
+    "forgotButton": "Reset link পাঠাও",
+    "forgotSent": "{email} এ account থাকলে একটা reset link যাচ্ছে। Link টা ৩০ মিনিট কাজ করবে।",
+    "backToLogin": "Sign in এ ফিরে যাও",
+    "resetTitle": "নতুন password বাছো",
+    "newPassword": "নতুন password",
+    "passwordAgain": "আবার লেখো",
+    "passwordMismatch": "দুইটা password মিলছে না।",
+    "resetButton": "নতুন password save করো",
+    "resetDone": "Password set হয়ে গেছে। সব device থেকে sign out করা হয়েছে, নতুন password দিয়ে আবার sign in করো।",
+    "resetInvalid": "এই reset link এর মেয়াদ শেষ, নয়তো আগেই ব্যবহার হয়ে গেছে। নতুন একটা চাও।",
+    "welcomeBack": "স্বাগতম, {name}! 👋",
+    "welcomeNew": "Account তৈরি হয়ে গেছে, {name}। চলো শুরু করি! 🎉",
+    "signedOut": "Sign out হয়ে গেছো।",
+    "getPro": "Pro নাও ✦",
+    "renewPro": "Pro বাড়াও",
+    "adminPayments": "Payments review (admin)",
+    "adminPanel": "Admin panel"
+  },
+  "profile": {
+    "title": "তোমার profile",
+    "sub": "তোমার তথ্য বদলাও। Email যেমন আছে তেমনই থাকবে।",
+    "ranksTitle": "তুমি কোথায় আছো",
+    "national": "পুরো বাংলাদেশ",
+    "division": "{name} division",
+    "district": "{name} জেলা",
+    "rankOf": "{total} জনের মধ্যে",
+    "noRank": "এখনো rank নেই",
+    "topPercent": "Top {p}%",
+    "noDistrict": "নিচে জেলা বাছলে এই rank দেখাবে।",
+    "detailsTitle": "তোমার তথ্য",
+    "email": "Email",
+    "emailHint": "Email বদলানো যায় না। এটা দিয়েই তুমি sign in করো।",
+    "language": "Email এর ভাষা",
+    "save": "Save করো",
+    "saving": "Save হচ্ছে…",
+    "saved": "Save হয়ে গেছে।",
+    "nothing": "এখনো কিছু বদলাওনি।",
+    "photoTitle": "Profile ছবি",
+    "photoNext": "আবার ছবি বদলাতে পারবে {date} তারিখে।",
+    "photoRule": "৩০ দিনে একবার ছবি বদলানো যায়।",
+    "menuLink": "Profile ও settings",
+    "signInFirst": "Profile দেখতে sign in করো।",
+    "districtLocked": "জেলা একবার দিলে আর বদলানো যায় না।",
+    "photoSaved": "নতুন ছবি বসে গেছে।",
+    "photoRemoved": "ছবি সরানো হয়েছে।",
+    "tooMany": "অল্প সময়ে অনেকবার বদলেছো। একটু পরে আবার চেষ্টা করো।"
+  },
+  "toast": {
+    "close": "বন্ধ করো"
+  },
+  "lesson": {
+    "stamp": "Station stamp",
+    "title": "Chapter শেষ করো, +{xp} XP নাও",
+    "doneTitle": "Chapter শেষ! +{xp} XP পেয়েছো 🎉",
+    "signInSub": "পড়তে login লাগবে না, কিন্তু progress save করতে sign in করো।",
+    "readySub": "পড়া শেষ হলে Complete চাপো, XP তোমার।",
+    "doneSub": "XP leaderboard এ যোগ হয়ে গেছে। পরের stop এ চলো।",
+    "signIn": "Sign in করো",
+    "completed": "Completed",
+    "completing": "Save হচ্ছে…",
+    "complete": "Complete করো · +{xp} XP",
+    "gained": "+{xp} XP! Chapter complete 🎉",
+    "alreadyDone": "এই chapter এর XP আগেই পেয়েছো।",
+    "failed": "Save করা গেল না, আবার চেষ্টা করো।",
+    "askTitle": "Station {n} কি শেষ?",
+    "askSub": "Complete করলে +{xp} XP পাবে। শুধু Next চাপলে chapter টা complete হবে না, পরে এসে করতে পারবে।",
+    "askComplete": "Complete",
+    "askNext": "শুধু Next",
+    "askBoth": "Complete + Next · +{xp} XP",
+    "askClose": "বন্ধ করো",
+    "titleFree": "Chapter শেষ করো",
+    "doneTitleFree": "Chapter শেষ! 🎉",
+    "readySubFree": "পড়া শেষ হলে Complete চাপো, progress save হবে। XP শুধু Pro তে — Pro থাকলে এই chapter এ +{xp} XP পেতে।",
+    "doneSubFree": "Progress save হয়ে গেছে। Pro নিলে এরপর থেকে প্রতিটা chapter এ XP আর leaderboard এ জায়গা।",
+    "getPro": "Pro নিয়ে XP পাও →",
+    "completeFree": "Complete করো",
+    "gainedFree": "Chapter complete 🎉",
+    "askSubFree": "Complete করলে progress save হবে। শুধু Next চাপলে chapter টা complete হবে না, পরে এসে করতে পারবে।",
+    "askBothFree": "Complete + Next"
+  },
+  "careers": {
+    "eyebrow": "Careers",
+    "pageTitle": "Job board",
+    "pageSub": "Bangladesh এর tech company গুলোর open role, এক জায়গায়। Department দিয়ে filter করো, পছন্দ হলে এক click এ apply।",
+    "note": "শেখা → build করা → চাকরি ✦",
+    "filterLabel": "Department দিয়ে filter",
+    "all": "সব",
+    "showing": "{count} টা open role",
+    "departments": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "mobile": "Mobile",
+      "data-ai": "Data & AI",
+      "devops": "DevOps & Cloud",
+      "qa": "QA & Testing",
+      "design": "Design",
+      "product": "Product"
+    },
+    "types": {
+      "full-time": "Full-time",
+      "part-time": "Part-time",
+      "internship": "Internship",
+      "contract": "Contract"
+    },
+    "levels": {
+      "intern": "Intern",
+      "junior": "Junior",
+      "mid": "Mid-level",
+      "senior": "Senior",
+      "lead": "Lead"
+    },
+    "workplaces": {
+      "onsite": "অফিসে",
+      "hybrid": "Hybrid",
+      "remote": "Remote"
+    },
+    "negotiable": "আলোচনা সাপেক্ষে",
+    "perMonth": "প্রতি মাসে",
+    "perMonthShort": "/মাস",
+    "today": "আজকে",
+    "daysAgo": "{count} দিন আগে",
+    "verified": "Verified company",
+    "demo": "Demo",
+    "applied": "Apply করা হয়েছে",
+    "loadError": "Job গুলো load করা গেল না।",
+    "retry": "আবার চেষ্টা করো",
+    "emptyHand": "এখনো কিছু নেই…",
+    "empty": "এই department এ এখন কোনো open role নেই।",
+    "seeAll": "সব job দেখো",
+    "pagination": "Page",
+    "prev": "আগের",
+    "next": "পরের",
+    "browseFree": "দেখতে login লাগবে না।",
+    "signInToApply": "Apply করতে sign in করো",
+    "backToJobs": "সব job এ ফিরে যাও",
+    "goneHand": "Role টা বন্ধ হয়ে গেছে",
+    "gone": "এই job টা আর open নেই বা খুঁজে পাওয়া যাচ্ছে না।",
+    "salary": "Salary",
+    "department": "Department",
+    "level": "Level",
+    "posted": "Post করা",
+    "aboutRole": "Role টা কেমন",
+    "youWill": "তুমি যা করবে",
+    "youHave": "যা লাগবে",
+    "skills": "Skills",
+    "aboutCompany": "{name} সম্পর্কে",
+    "companySize": "{size} জন",
+    "applyTitle": "এই role এ apply করো",
+    "signInSub": "Job দেখতে login লাগে না, কিন্তু apply করতে account লাগবে।",
+    "noAccount": "Account নেই?",
+    "signUp": "Sign up করো",
+    "companyCannotApply": "Company account দিয়ে apply করা যায় না।",
+    "appliedSub": "{company} তোমার profile আর note দেখতে পাবে।",
+    "moreJobs": "আরো job দেখো",
+    "applySub": "তোমার profile (নাম, district, XP, interests) company র কাছে যাবে।",
+    "noteLabel": "Company কে ছোট্ট একটা note (optional)",
+    "notePlaceholder": "কেন এই role টা তোমার জন্য? কোনো project এর link থাকলে দাও।",
+    "apply": "Apply করো",
+    "applying": "পাঠানো হচ্ছে…",
+    "profileShared": "একবার apply করলে আর বদলানো যাবে না।",
+    "appliedToast": "Apply হয়ে গেছে! {company} এর কাছে পৌঁছে গেছে 🎉",
+    "alreadyApplied": "এই job এ আগেই apply করেছো।",
+    "applyFailed": "Apply করা গেল না, আবার চেষ্টা করো।",
+    "companiesEyebrow": "Company দের জন্য",
+    "companiesTitle": "Hire করো এমন মানুষ যারা শিখে দেখিয়েছে",
+    "companiesPost": "Job post করো, এখানেই apply পাবে",
+    "companiesHire": "Leaderboard আর profile দেখে সরাসরি hire করো",
+    "companiesSoon": "Company account শীঘ্রই আসছে"
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "pageTitle": "শেখাটা সিরিয়াসলি নাও",
+    "pageSub": "Free তে শুরু করো। পুরো path খুলতে Pro নাও — এক কাপ চা আর একটা burger এর দামে পুরো মাস।",
+    "note": "launch offer: ৳499 না, ৳299 ✦",
+    "periodLabel": "Billing period",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "yearlyBadge": "আরো 20% ছাড়",
+    "freeName": "Free",
+    "forever": "সবসময়",
+    "freeSub": "Path টা কেমন সেটা দেখে নাও, কোনো card বা payment লাগবে না।",
+    "freeCta": "Free তে শুরু করো",
+    "proName": "Pro",
+    "popular": "সবচেয়ে জনপ্রিয়",
+    "perMonth": "/মাস",
+    "perYear": "/বছর",
+    "off": "{pct}% ছাড়",
+    "yearlyMath": "মাসে মাত্র {perMonth} — monthly এর চেয়ে বছরে {save} বাঁচাও",
+    "monthlyNote": "যেকোনো সময় বন্ধ করো, auto-renew নেই",
+    "proCta": "Pro নাও",
+    "renewCta": "Pro বাড়াও",
+    "payWith": "bKash বা Nagad দিয়ে pay করো",
+    "perks": {
+      "free1": "Roadmap আর journey path",
+      "free2": "পুরো Programming course, আর বাকি প্রতিটা course এর Part 1",
+      "free3": "Streak, আর leaderboard এ নাম",
+      "free4": "Careers portal এ job দেখা আর apply",
+      "pro1": "প্রতিটা course এর সব part, নতুনগুলোও",
+      "pro2": "শেষ করা প্রতিটা chapter এ XP",
+      "pro3": "নতুন chapter সবার আগে",
+      "pro4": "Profile আর leaderboard এ Pro badge",
+      "pro5": "এক payment, কোনো auto-renew নেই",
+      "pro6": "Problem set আর তাদের detailed solution"
+    },
+    "loadError": "দাম load করা গেল না, একটু পরে আবার চেষ্টা করো।",
+    "howTitle": "Payment কীভাবে হয়",
+    "how1Title": "Send Money করো",
+    "how1Body": "Checkout এ যে amount আর number দেখাবে, bKash বা Nagad app থেকে সেখানে Send Money করো।",
+    "how2Title": "TrxID দাও",
+    "how2Body": "Payment এর SMS বা app এ যে Transaction ID আসে, সেটা checkout এ বসিয়ে submit করো।",
+    "how3Title": "Pro চালু",
+    "how3Body": "আমরা 5 মিনিট থেকে 1 দিনের মধ্যে verify করি। হয়ে গেলে email আসবে, সব access খুলে যাবে।",
+    "faqTitle": "প্রশ্ন আছে?",
+    "faq1Q": "Verify হতে কত সময় লাগে?",
+    "faq1A": "সাধারণত কয়েক মিনিট, সর্বোচ্চ 1 দিন। আমরা হাতে হাতে প্রতিটা TrxID statement এর সাথে মিলিয়ে দেখি, তাই একটু সময় লাগে।",
+    "faq2Q": "ভুল TrxID দিলে কী হবে?",
+    "faq2A": "Payment reject হবে আর কারণসহ email পাবে। Checkout এ গিয়ে সঠিক TrxID দিয়ে আবার submit করো — টাকা আবার পাঠাতে হবে না।",
+    "faq3Q": "Auto-renew হবে?",
+    "faq3A": "না। মেয়াদ শেষ হলে নিজে থেকে কোনো টাকা কাটবে না। আগে renew করলে বাকি দিনগুলোর সাথে নতুন সময় যোগ হবে।",
+    "faq4Q": "Coupon কোথায় দেব?",
+    "faq4A": "Checkout এর দ্বিতীয় step এ। Coupon এর ছাড় launch price এর উপরে বসে, আর total আগে থেকেই দেখতে পাবে।"
+  },
+  "checkout": {
+    "eyebrow": "Checkout",
+    "pageTitle": "Pro নাও",
+    "pageSub": "Plan বাছো, coupon থাকলে দাও, bKash বা Nagad এ টাকা পাঠিয়ে TrxID দাও। বাকিটা আমরা দেখছি।",
+    "stepPlan": "Plan",
+    "stepCoupon": "Coupon code (থাকলে)",
+    "stepPay": "টাকা পাঠাও",
+    "stepTrx": "Payment এর তথ্য দাও",
+    "couponPlaceholder": "যেমন LAUNCH20",
+    "couponApply": "Apply",
+    "couponRemove": "সরাও",
+    "couponApplied": "{code} বসেছে — {pct}% ছাড়",
+    "methods": {
+      "bkash": "bKash",
+      "nagad": "Nagad"
+    },
+    "noMethods": "এই মুহূর্তে payment নেওয়া বন্ধ আছে, একটু পরে আবার চেষ্টা করো।",
+    "pay1": "{app} app খোলো, Send Money তে যাও",
+    "pay2": "এই number এ:",
+    "pay3": "ঠিক এই amount:",
+    "pay4": "Payment শেষে SMS এ যে TrxID আসবে সেটা নিচে দাও",
+    "copied": "Copy হয়েছে",
+    "payerLabel": "যে number থেকে পাঠিয়েছ",
+    "trxLabel": "Transaction ID (TrxID)",
+    "trxHint": "SMS এ থাকে, যেমন 9A7B6C5D4E",
+    "summary": "Order summary",
+    "planLine": "Pro · {plan}",
+    "launchDiscount": "Launch offer",
+    "couponLine": "Coupon {code}",
+    "total": "মোট",
+    "access": "{days} দিনের Pro access",
+    "submit": "Payment submit করো",
+    "submitting": "পাঠানো হচ্ছে…",
+    "reviewTime": "5 মিনিট থেকে 1 দিনের মধ্যে verify হয়ে Pro চালু হবে।",
+    "submitted": "Payment submit হয়েছে! Verify হলে email পাবে।",
+    "pendingHand": "একটু অপেক্ষা…",
+    "pendingTitle": "তোমার payment review এ আছে",
+    "pendingSub": "আমরা TrxID টা statement এর সাথে মিলিয়ে দেখছি। সাধারণত 5 মিনিট, সর্বোচ্চ 1 দিন লাগে। হয়ে গেলে email পাবে।",
+    "keepLearning": "ততক্ষণ পড়তে থাকো →",
+    "proActive": "তোমার Pro চালু আছে {date} পর্যন্ত। এখন কিনলে ওই তারিখের পর থেকে সময় যোগ হবে।",
+    "rejectedTitle": "আগের payment টা verify হয়নি।",
+    "rejectedReason": "কারণ: {reason}।",
+    "rejectedRetry": "সঠিক TrxID দিয়ে আবার submit করো, টাকা আবার পাঠাতে হবে না।",
+    "errors": {
+      "payer": "একটা Bangladeshi mobile number দাও (01XXXXXXXXX)",
+      "trx": "TrxID এ 8–20 টা অক্ষর/সংখ্যা থাকে, আবার দেখে দাও",
+      "invalid_trx_id": "TrxID টা ঠিক মনে হচ্ছে না",
+      "trx_used": "এই TrxID আগেই submit হয়েছে",
+      "coupon_not_found": "এই coupon টা নেই",
+      "coupon_expired": "Coupon এর মেয়াদ শেষ",
+      "coupon_not_for_plan": "এই coupon এই plan এ চলে না",
+      "coupon_used_up": "Coupon টা সবাই ব্যবহার করে ফেলেছে",
+      "coupon_already_used": "এই coupon তুমি আগেই ব্যবহার করেছ",
+      "payments_closed": "এই payment method এখন বন্ধ",
+      "rate_limited": "অনেকবার চেষ্টা হয়েছে, একটু পরে আবার করো",
+      "failed": "Submit করা গেল না, আবার চেষ্টা করো"
+    }
+  },
+  "admin": {
+    "pageTitle": "Payments",
+    "pageSub": "Match each TrxID with the bKash/Nagad statement, then approve or reject.",
+    "forbidden": "Admins only.",
+    "empty": "Nothing here.",
+    "tabs": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "plans": {
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "method": "Method",
+    "payer": "From",
+    "reason": "Reason",
+    "reasonPlaceholder": "e.g. TrxID not found in statement",
+    "approve": "Approve · {days} days",
+    "reject": "Reject",
+    "confirmReject": "Reject",
+    "cancel": "Cancel",
+    "approved": "Approved — {name} is Pro now",
+    "rejected": "Rejected, the buyer was emailed",
+    "failed": "Something went wrong"
+  },
+  "adminPanel": {
+    "eyebrow": "Admin",
+    "title": "Admin panel",
+    "forbidden": "শুধু admin রা দেখতে পারে।",
+    "signIn": "Sign in করো",
+    "navLabel": "Admin section",
+    "nav": {
+      "payments": "Payments",
+      "roadmap": "Roadmap",
+      "coupons": "Coupons",
+      "users": "Users",
+      "settings": "Settings",
+      "overview": "Dashboard",
+      "topics": "Topics",
+      "jobs": "Jobs",
+      "activity": "Activity"
+    },
+    "settings": {
+      "title": "Payment number",
+      "sub": "Checkout এ learner রা যে number এ Send Money করবে।",
+      "on": "Checkout এ দেখাবে",
+      "off": "ফাঁকা — checkout এ এই method বন্ধ",
+      "note": "01712345678 এর মতো 11 digit number দাও। কোনো method বন্ধ করতে ঘরটা ফাঁকা রাখো। Cache এর কারণে checkout এ পুরনো number সর্বোচ্চ 5 মিনিট দেখাতে পারে।",
+      "save": "Save করো",
+      "saving": "Save হচ্ছে…",
+      "saved": "Payment number save হয়েছে",
+      "failed": "Save করা গেল না"
+    },
+    "coupons": {
+      "title": "Coupons",
+      "sub": "Checkout এ learner রা যে discount code দেয়।",
+      "new": "নতুন coupon",
+      "empty": "এখনো কোনো coupon নেই।",
+      "off": "{pct}% ছাড়",
+      "inactive": "বন্ধ",
+      "expired": "মেয়াদ শেষ",
+      "usedUp": "সব use হয়ে গেছে",
+      "plans": {
+        "monthly": "Monthly",
+        "yearly": "Yearly"
+      },
+      "allPlans": "সব plan",
+      "used": "{n} বার use",
+      "until": "{date} পর্যন্ত",
+      "noEnd": "মেয়াদ নেই",
+      "edit": "Edit",
+      "code": "Code",
+      "percent": "কত % ছাড় (1–90)",
+      "max": "সর্বোচ্চ কত বার",
+      "unlimited": "Unlimited",
+      "plansLabel": "কোন plan এ চলবে",
+      "validUntil": "কবে পর্যন্ত (ফাঁকা = সবসময়)",
+      "note": "Note (শুধু admin দেখে)",
+      "notePlaceholder": "যেমন Eid campaign",
+      "activeLabel": "চালু",
+      "create": "Coupon বানাও",
+      "save": "Save করো",
+      "saving": "Save হচ্ছে…",
+      "cancel": "বাদ দাও",
+      "created": "{code} বানানো হয়েছে",
+      "updated": "{code} save হয়েছে",
+      "failed": "Save করা গেল না"
+    },
+    "users": {
+      "title": "Users",
+      "sub": "সব account। খোঁজো, filter করো, নতুন বানাও, বদলাও, Pro দাও, বা ban করো।",
+      "new": "নতুন user",
+      "search": "নাম, email বা username খোঁজো…",
+      "count": "{n} জন user",
+      "empty": "কোনো user মেলেনি।",
+      "prev": "আগের",
+      "next": "পরের",
+      "page": "{of} এর মধ্যে {n} নম্বর page",
+      "tabs": {
+        "all": "সব",
+        "pro": "Pro",
+        "free": "Free",
+        "banned": "Banned",
+        "companies": "Company",
+        "admins": "Admin"
+      },
+      "col": {
+        "user": "User",
+        "type": "ধরন",
+        "plan": "Plan",
+        "status": "অবস্থা",
+        "joined": "যোগ দিয়েছে"
+      },
+      "badge": {
+        "admin": "Admin",
+        "company": "Company",
+        "learner": "Learner",
+        "banned": "Banned",
+        "active": "Active"
+      },
+      "until": "{date} পর্যন্ত",
+      "free": "Free",
+      "manage": "Manage",
+      "verified": "Email যাচাই করা",
+      "unverified": "Email যাচাই হয়নি",
+      "joinedOn": "যোগ দিয়েছে {date}",
+      "profile": "Profile",
+      "f": {
+        "name": "নাম",
+        "username": "Username",
+        "phone": "Phone",
+        "email": "Email",
+        "type": "Account এর ধরন",
+        "password": "Password"
+      },
+      "emailNote": "নতুন email টা তার মালিক নিশ্চিত না করা পর্যন্ত যাচাই হয়নি হিসেবে থাকবে।",
+      "roleNote": "এখান থেকে role বদলানো যায় না। Admin বানাতে server এ `make admin` চালাও।",
+      "save": "Save করো",
+      "saving": "Save হচ্ছে…",
+      "saved": "{name} save হয়েছে।",
+      "proTitle": "Pro",
+      "proActive": "{date} পর্যন্ত Pro।",
+      "proNone": "Pro তে নেই।",
+      "days": "{n} দিন",
+      "customDays": "নিজের মতো দিন",
+      "grant": "Pro দাও",
+      "extend": "বাড়াও",
+      "revoke": "এখনই Pro শেষ করো",
+      "granted": "{name} কে {days} দিনের Pro দেওয়া হয়েছে।",
+      "revoked": "{name} এর Pro শেষ করা হয়েছে।",
+      "confirmRevoke": "{name} এর Pro কি এখনই শেষ করবে?",
+      "stackNote": "তার আগের Pro এর সময়ের উপরে দিনগুলো যোগ হয়।",
+      "banTitle": "এই user কে ban করো",
+      "bannedTitle": "Banned",
+      "banNote": "সব জায়গা থেকে সাথে সাথে sign out হয়ে যাবে, আর unban না করা পর্যন্ত আর sign in করতে পারবে না।",
+      "banReason": "কারণ (record এ থাকবে)",
+      "ban": "Ban করো",
+      "confirmBan": "{name} কে ban করবে? সব জায়গা থেকে sign out হয়ে যাবে।",
+      "banned": "{name} কে ban করা হয়েছে।",
+      "bannedOn": "{date} এ ban করা হয়েছে।",
+      "unban": "Ban তুলে নাও",
+      "unbanned": "{name} এর ban তোলা হয়েছে।",
+      "adminNoBan": "Admin কে ban করা যায় না।",
+      "newTitle": "নতুন user",
+      "newSub": "Account টা যাচাই করা email দিয়ে শুরু হয়। তাকে password টা পাঠাও, sign in করার পর সে বদলে নিতে পারবে।",
+      "regenerate": "নতুন",
+      "passwordNote": "অন্তত ১০ অক্ষর। User বানানোর আগে copy করে নাও।",
+      "create": "User বানাও",
+      "created": "{email} বানানো হয়েছে।",
+      "failed": "কিছু একটা ভুল হয়েছে।"
+    },
+    "roadmap": {
+      "title": "Roadmap",
+      "sub": "Home page এর Shipped · Next · Horizon · Plan column। Shipped এ সরালে আজকের তারিখ বসে যায়।",
+      "add": "যোগ করো",
+      "empty": "এই column এ কিছু নেই।",
+      "position": "Position (ছোট = উপরে)",
+      "moveTo": "কোন column এ সরাবে",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "“{title}” delete করবে?",
+      "deleted": "Delete হয়েছে",
+      "moved": "“{title}” এখন {stage} এ",
+      "slug": "Slug (ছোট একটা id)",
+      "stage": "Column",
+      "kind": "ধরন",
+      "titleIn": "Title ({lang})",
+      "descIn": "Description ({lang})",
+      "progress": "Progress %",
+      "shippedAt": "Ship এর তারিখ",
+      "link": "Link",
+      "shippedHint": "Ship এর তারিখ ফাঁকা রাখলে আজকের তারিখ বসবে।",
+      "create": "Item যোগ করো",
+      "save": "Save করো",
+      "saving": "Save হচ্ছে…",
+      "cancel": "বাদ দাও",
+      "created": "Item যোগ হয়েছে",
+      "saved": "Save হয়েছে",
+      "failed": "Save করা গেল না"
+    },
+    "groups": {
+      "overview": "সারসংক্ষেপ",
+      "people": "মানুষ",
+      "money": "টাকা",
+      "content": "Content",
+      "system": "System"
+    },
+    "backToSite": "Site এ যাও",
+    "signOut": "Sign out",
+    "openMenu": "Menu খোলো",
+    "closeMenu": "Menu বন্ধ করো",
+    "overview": {
+      "title": "Dashboard",
+      "sub": "Coding Foding কেমন চলছে, আর কোথায় তোমার নজর দরকার।",
+      "pendingTitle": "{n} টা payment review এর অপেক্ষায়।",
+      "pendingSub": "Approve করলেই learner Pro পেয়ে যায়।",
+      "review": "Review করো",
+      "users": "Users",
+      "newThisWeek": "এই সপ্তাহে +{n}",
+      "pro": "Pro member",
+      "proShare": "সব user এর {n}%",
+      "active": "এই সপ্তাহে active",
+      "activeHint": "গত ৭ দিনে কিছু শিখেছে",
+      "revenue": "আয়, ৩০ দিন",
+      "revenueHint": "approve করা payment",
+      "banned": "Banned",
+      "companies": "Company",
+      "openJobs": "{n} টা খোলা job",
+      "votes": "Topic vote",
+      "likes": "Project like",
+      "recentSignups": "নতুন sign up",
+      "seeAll": "সব user",
+      "topTopics": "সবচেয়ে চাওয়া topic",
+      "manage": "Manage",
+      "topProjects": "সবচেয়ে পছন্দের project",
+      "open": "খোলো",
+      "noLikes": "এখনো কোনো like নেই।",
+      "none": "এখনো কেউ নেই।"
+    },
+    "topics": {
+      "title": "Topics",
+      "sub": "Home page এর “এরপর কী বানাব?” তালিকা। Topic বদলালে বা লুকালেও vote থেকে যায়।",
+      "new": "নতুন topic",
+      "newTitle": "নতুন topic",
+      "editTitle": "Topic বদলাও",
+      "noDescription": "এখনো description নেই।",
+      "votes": "{n} টা vote",
+      "status": {
+        "open": "Vote চলছে",
+        "planned": "পরিকল্পনায় আছে",
+        "hidden": "লুকানো"
+      },
+      "titleEn": "শিরোনাম (English)",
+      "titleBn": "শিরোনাম (বাংলা)",
+      "descEn": "Description (English)",
+      "descBn": "Description (বাংলা)",
+      "tag": "Tag",
+      "statusLabel": "অবস্থা",
+      "statusNote": "লুকানো দিলে home page থেকে সরে যায়; পরিকল্পনায় আছে দিলে voter রা জানে এটা আসছে।",
+      "save": "Save করো",
+      "saving": "Save হচ্ছে…",
+      "create": "Topic বানাও",
+      "saved": "Topic save হয়েছে।",
+      "created": "Topic বানানো হয়েছে।",
+      "failed": "কিছু একটা ভুল হয়েছে।"
+    },
+    "jobs": {
+      "title": "Jobs",
+      "sub": "Careers page এর সব job, সব company র। Spam লুকাও বা job আবার দেখাও।",
+      "empty": "এখনো কোনো job নেই।",
+      "demo": "demo",
+      "posted": "{date} এ দেওয়া",
+      "applications": "{n} টা আবেদন",
+      "statusLive": "চালু",
+      "statusClosed": "বন্ধ",
+      "statusHidden": "লুকানো",
+      "hide": "লুকাও",
+      "show": "Publish করো",
+      "hidden": "“{title}” লুকানো হয়েছে।",
+      "shown": "“{title}” publish হয়েছে।",
+      "failed": "কিছু একটা ভুল হয়েছে।"
+    },
+    "activity": {
+      "title": "Activity",
+      "sub": "Admin দের প্রতিটা কাজ, নতুনগুলো আগে: কে কী বদলালো, আর কখন।",
+      "empty": "এখনো কিছু নেই।",
+      "system": "System",
+      "newer": "নতুনগুলো",
+      "older": "পুরনোগুলো"
+    }
+  },
+  "comingSoon": {
+    "eyebrow": "শীঘ্রই আসছে",
+    "body": "এটা এখন বানানো হচ্ছে। কবে আসছে roadmap এ দেখো — আর আগে চাইলে vote দাও।",
+    "roadmap": "Roadmap দেখো",
+    "vote": "Vote দাও",
+    "meanwhile": "ততক্ষণ Backend First Principles দিয়ে শুরু করো →"
+  },
+  "dsa": {
+    "eyebrow": "Course",
+    "title": "Data Structures & Algorithms",
+    "sub": "প্রতিটা data structure আর algorithm খুলে দেখো, আর নিজের হাতে বানাও: memory তে সেটা কীভাবে বসে, প্রতিটা কাজের খরচ কত, আর কেন সেটা কাজ করে। প্রতিটা ধাপ animation এ, C++, Java, Python, JavaScript, Go আর C# এ code সহ।",
+    "note": "memory র একটা বাক্স থেকে একটা search engine ↓",
+    "from": "memory র একটা বাক্স",
+    "to": "নিজের search engine",
+    "finish": "পুরো লাইনটা ঘুরে নিজের বানানো টুকরোগুলো দিয়ে একটা search engine বানাও। তারপর কোনো interview প্রশ্নই আর black box মনে হবে না।",
+    "groups": {
+      "counting-the-cost": {
+        "title": "Counting the Cost",
+        "sub": "memory, Big-O আর recursion: পরের সবকিছু বিচার করার হাতিয়ার"
+      },
+      "lines-of-data": {
+        "title": "Lines of Data",
+        "sub": "array, string, list, stack, queue আর hash map, নিজের হাতে বানানো"
+      },
+      "search-and-sort": {
+        "title": "Search and Sort",
+        "sub": "দ্রুত খোঁজা, দ্রুত সাজানো, আর দুটো pointer নিয়ে হাঁটা"
+      },
+      "trees": {
+        "title": "Trees",
+        "sub": "family tree থেকে প্রতিটা database এর ভেতরের B-tree পর্যন্ত"
+      },
+      "graphs": {
+        "title": "Graphs",
+        "sub": "map, গোলকধাঁধা আর network: ঘুরে দেখা আর পথ খোঁজা"
+      },
+      "problem-solving": {
+        "title": "Problem-Solving Strategies",
+        "sub": "backtracking, greedy, dynamic programming আর bit"
+      },
+      "dsa-in-production": {
+        "title": "DSA in Production",
+        "sub": "এই idea গুলো সত্যিকারে কোথায় চলে, আর সবগুলো ব্যবহার করা একটা project"
+      }
+    }
+  },
+  "os": {
+    "eyebrow": "Course",
+    "title": "Operating Systems",
+    "sub": "Power চাপা থেকে program এর exit পর্যন্ত একটা program কে follow করো। প্রতিটা stop এ দেখবে নিচে OS কী করছে আর কেন — C, C++, Go, Python, Java আর Rust এ code সহ।",
+    "note": "একটা program, power-on থেকে exit ↓",
+    "from": "power button",
+    "to": "নিজের OS",
+    "finish": "পুরো লাইনটা ঘুরে নিজের বানানো OS boot করো। তোমার code এর নিচে আর কিছুই জাদু মনে হবে না।",
+    "groups": {
+      "under-the-hood": {
+        "title": "Under the Hood",
+        "sub": "operating system আসলে কী, আর সে কীভাবে জেগে ওঠে"
+      },
+      "many-things-at-once": {
+        "title": "Many Things at Once",
+        "sub": "process, thread, আর CPU পরের বার কে পাবে"
+      },
+      "sharing-without-chaos": {
+        "title": "Sharing Without Chaos",
+        "sub": "race, lock আর deadlock — interview এর প্রিয় topic"
+      },
+      "where-programs-live": {
+        "title": "Where Programs Live",
+        "sub": "memory, page, আর সব নিজের থাকার ভ্রম"
+      },
+      "bytes-that-stay": {
+        "title": "Bytes That Stay",
+        "sub": "file, disk আর hardware এর সাথে কথা বলা"
+      },
+      "os-in-the-real-world": {
+        "title": "OS in the Real World",
+        "sub": "security, container, আর interview"
+      },
+      "build-your-own": {
+        "title": "Build Your Own",
+        "sub": "দুইটা project: নিজের Docker, তারপর নিজের লেখা kernel boot"
+      }
+    }
+  },
+  "notFound": {
+    "eyebrow": "পথ হারিয়েছেন",
+    "title": "আপনি পথ থেকে সরে গেছেন।",
+    "body": "এই পেজটি নেই — অথবা সরিয়ে নেওয়া হয়েছে। প্রতিটা যাত্রায় একটা ভুল মোড় থাকে; চলুন আবার পথে ফিরি।",
+    "home": "হোমে ফিরুন",
+    "roadmap": "রোডম্যাপ দেখুন"
+  },
+  "blog": {
+    "eyebrow": "ব্লগ",
+    "title": "শেখা, tools আর engineering নিয়ে লেখা",
+    "sub": "Coding Foding team এর বিস্তারিত লেখা, এমনভাবে লেখা যাতে intern আর senior দুজনেই কিছু নিয়ে যেতে পারে।",
+    "empty": "এখনো কোনো লেখা নেই। প্রথমটা আসছে।",
+    "read": "পড়ো",
+    "minutes": "{n, number} মিনিটের পড়া",
+    "back": "সব লেখা",
+    "onThisPage": "এই পাতায়",
+    "fallback": "এই লেখার বাংলা অনুবাদ এখনো হয়নি, তাই English মূল লেখাটা দেখানো হচ্ছে।",
+    "vote": {
+      "title": "লেখাটা কাজে লাগলো?",
+      "hint": "Vote একবারই দেওয়া যায়, পরে বদলানো যায় না।",
+      "up": "Upvote",
+      "down": "Downvote",
+      "signIn": "Vote দিতে sign in করো। প্রতিটা লেখায় একটাই vote।",
+      "votedUp": "তুমি upvote দিয়েছো। Vote একবারই দেওয়া যায়, তাই আর বদলানো যাবে না।",
+      "votedDown": "তুমি downvote দিয়েছো। Vote একবারই দেওয়া যায়, তাই আর বদলানো যাবে না।",
+      "thanksUp": "Upvote এর জন্য ধন্যবাদ!",
+      "thanksDown": "ধন্যবাদ, তোমার মতামত জমা হয়েছে।",
+      "already": "এই লেখায় তুমি আগেই vote দিয়েছো।",
+      "failed": "Vote জমা হয়নি। আবার চেষ্টা করো।"
+    }
+  },
+  "net": {
+    "eyebrow": "Course",
+    "title": "Networking Fundamentals",
+    "sub": "তোমার laptop থেকে একটা server পর্যন্ত একটা click কে follow করো, তারপর ফেরত। প্রতিটা stop যাত্রার একটা layer খোলে, fiber এর আলো থেকে screen এর page পর্যন্ত, C, C++, Go, Python, Java আর Rust এ code সহ।",
+    "note": "একটা click, laptop থেকে server ↓",
+    "from": "তোমার laptop",
+    "to": "নিজের Kubernetes",
+    "finish": "পুরো লাইনটা ঘুরে একটা mini Kubernetes বানাও, যার network তুমি নিজে জুড়েছো, pod IP থেকে Service আর DNS পর্যন্ত। Internet আর কখনো জাদু মনে হবে না।",
+    "groups": {
+      "first-hello": {
+        "title": "First Hello",
+        "sub": "network কী, তার ভেতরের বাক্স গুলো, আর একটা click এর মানচিত্র"
+      },
+      "signals-and-links": {
+        "title": "Signals and Links",
+        "sub": "wire এ bit, frame, error আর switch"
+      },
+      "finding-the-way": {
+        "title": "Finding the Way",
+        "sub": "IP address, subnet, NAT আর routing"
+      },
+      "reliable-delivery": {
+        "title": "Reliable Delivery",
+        "sub": "port, UDP, TCP আর রাস্তা ফাঁকা রাখা"
+      },
+      "what-users-touch": {
+        "title": "What Users Touch",
+        "sub": "DNS, web, email আর রোজকার protocol"
+      },
+      "safe-and-wireless": {
+        "title": "Safe, Wireless, Cloud",
+        "sub": "security, VPN, Wi-Fi, mobile আর cloud"
+      },
+      "build-your-own": {
+        "title": "Build Your Own",
+        "sub": "শেষ project: network সহ একটা mini Kubernetes"
+      }
+    }
+  },
+  "devops": {
+    "eyebrow": "Course",
+    "title": "DevOps & Cloud",
+    "sub": "একটা app কে তোমার laptop থেকে নজরদারিতে থাকা, নির্ভরযোগ্য production system পর্যন্ত নিয়ে যাও: Linux, Git, container, Kubernetes, CI/CD, Terraform, monitoring আর SRE। আগে Networking course করো; এখানে শুধু DevOps এর জন্য অবশ্যই-জানা অংশটুকু revise করা হয়।",
+    "note": "একটা app, laptop থেকে production ↓",
+    "from": "তোমার laptop",
+    "to": "production",
+    "finish": "পুরো লাইনটা ঘুরে একটা আসল app production এ ship করো, নিজের বানানো pipeline, infrastructure as code, dashboard আর SLO সহ।",
+    "groups": {
+      "linux-for-servers": {
+        "title": "Linux for Servers",
+        "sub": "terminal, permission, service আর Bash"
+      },
+      "git-workflows": {
+        "title": "Git Workflows",
+        "sub": "Git কীভাবে ভাবে, আর team এ Git"
+      },
+      "networking-revision": {
+        "title": "Networking Revision",
+        "sub": "অবশ্যই-জানা revision · বিস্তারিত Networking course এ"
+      },
+      "containers": {
+        "title": "Containers",
+        "sub": "প্রথম image থেকে production পর্যন্ত Docker"
+      },
+      "kubernetes": {
+        "title": "Kubernetes",
+        "sub": "cluster চালানো, সাজানো আর সুস্থ রাখা"
+      },
+      "delivery": {
+        "title": "Delivery and Cloud",
+        "sub": "CI/CD, cloud, আর infrastructure as code"
+      },
+      "running-in-prod": {
+        "title": "Running in Production",
+        "sub": "monitoring, observability আর SRE"
+      },
+      "interview-and-project": {
+        "title": "Interview and Project",
+        "sub": "interview, তারপর একটা আসল app পুরোটা ship করো"
+      }
+    }
+  },
+  "sd": {
+    "eyebrow": "Course",
+    "title": "System Design",
+    "sub": "দুই layer এ software design করো: আগে class, তারপর পুরো architecture, তারপর একটা আসল system বানিয়ে নিজেই scale করো, Java, Go, Python, TypeScript আর C++ এ code সহ। Classic problem গুলো practice করো Practice → System Design Problems এ।",
+    "note": "একটা class থেকে লক্ষ user ↓",
+    "from": "একটা class",
+    "to": "লক্ষ user",
+    "finish": "পুরো লাইনটা ঘুরে নিজের বানানো একটা system scale করো, প্রতিটা ধাপ মেপে মেপে। পরের design round টা মনে হবে গল্প করা, পরীক্ষা না।",
+    "groups": {
+      "low-level-design": {
+        "title": "Low Level Design",
+        "sub": "intro, OOP, class relationship, principle, SOLID আর design pattern"
+      },
+      "high-level-design": {
+        "title": "High Level Design",
+        "sub": "scale, database, caching, queue আর trade-off"
+      },
+      "build-and-scale": {
+        "title": "Build and Scale",
+        "sub": "শেষ project: একটা আসল system বানাও, তারপর বড় করো"
+      }
+    }
+  },
+  "sdProblems": {
+    "eyebrow": "Practice",
+    "title": "System Design Problems",
+    "sub": "Classic LLD আর HLD interview প্রশ্ন, প্রতিটা শুরু থেকে শেষ পর্যন্ত সমাধান করা: requirement, design, trade-off, আর interviewer রা পরে যে প্রশ্নগুলো করে। নিয়মিত নতুন problem যোগ হচ্ছে।",
+    "theory": "System design এ নতুন? আগে System Design course এ theory টা শিখে নাও →",
+    "lld": "Low Level Design",
+    "lldSub": "একটা নির্দিষ্ট system এর class, pattern আর code।",
+    "hld": "High Level Design",
+    "hldSub": "লক্ষ লক্ষ user সামলানো পুরো architecture।",
+    "levels": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "hours": "{range} ঘণ্টা",
+    "allProblems": "সব topic আর problem ({n})",
+    "howTitle": "প্রতিটা problem যেভাবে solve করা হয়",
+    "startWith": "{title} দিয়ে শুরু করো",
+    "outline": {
+      "lld": [
+        "Requirement পরিষ্কার করা",
+        "Entity খুঁজে বের করা",
+        "Class diagram",
+        "মূল flow গুলো",
+        "Code",
+        "Extension",
+        "Follow-up প্রশ্ন"
+      ],
+      "hld": [
+        "Requirement",
+        "Estimation",
+        "API design",
+        "High-level design",
+        "Data model",
+        "Deep dive",
+        "Trade-off",
+        "Follow-up প্রশ্ন"
+      ],
+      "lesson": [
+        "মূল idea",
+        "কেন দরকার",
+        "Code",
+        "সাধারণ ভুল",
+        "Interview প্রশ্ন"
+      ]
+    },
+    "soonTitle": "এটা লেখা হচ্ছে",
+    "soonSub": "পুরো solution আসছে। এর outline দেওয়া আছে, তাই চাইলে আগে নিজে design করে দেখতে পারো।",
+    "fallback": "এই problem এর অনুবাদ এখনো হয়নি, তাই অন্য ভাষার লেখাটা দেখানো হচ্ছে।",
+    "prev": "আগের",
+    "next": "পরের",
+    "onThisPage": "এই পাতায়",
+    "willCover": "যা যা থাকবে",
+    "back": "System Design course",
+    "solvedShort": "done",
+    "signIn": "Sign in",
+    "signInSync": "করো, তাহলে সব device এ progress থাকবে।",
+    "search": "Topic বা problem খোঁজো...",
+    "filter": "Filter",
+    "difficulty": "Difficulty",
+    "status": "Status",
+    "all": "সব",
+    "statuses": {
+      "all": "সব",
+      "todo": "বাকি",
+      "solved": "Solved"
+    },
+    "mark": "Solved হিসেবে mark করো",
+    "unmark": "Solved থেকে সরাও",
+    "solvedLabel": "Solved",
+    "noMatch": "কোনো problem মিললো না। অন্য শব্দ দিয়ে খোঁজো বা filter সরাও।",
+    "markNote": "নিজে design করে solution টা বুঝেছো? Mark করো, তাহলে progress ট্র্যাক হবে।",
+    "doneNote": "দারুণ! এটা তোমার progress এ যোগ হয়েছে।",
+    "groups": {
+      "start": "Introduction",
+      "objects": "OOP Basics",
+      "modeling": "Class Relationships & UML",
+      "smells": "Design Principles & SOLID",
+      "patterns": "Design Patterns",
+      "concurrency": "Concurrency",
+      "lld-problems": "LLD Problems",
+      "hld-problems": "HLD Problems"
+    },
+    "subs": {
+      "creating": "Creational · object বানানো",
+      "varying": "Behavioral · behaviour বদলানো",
+      "wrapping": "Structural · অংশ জোড়া লাগানো",
+      "notifying": "Behavioral · অন্যদের জানানো"
+    },
+    "interviewQuestions": "Interview Questions",
+    "lessonSub": "{group} এর একটা ছোট lesson: সহজ ভাষায় মূল idea, কেন দরকার, code, আর interviewer রা যে ভুলগুলো খোঁজে।",
+    "levelHint": "Difficulty শুধু interview প্রশ্নের জন্য, তাই lesson গুলো লুকানো আছে।",
+    "lessonSoonSub": "পুরো lesson আসছে। এর outline দেওয়া আছে, তাই কী কী থাকবে আগেই দেখে নিতে পারো।",
+    "markLessonNote": "পড়ে idea টা বুঝেছো? Done হিসেবে mark করো, তাহলে progress ট্র্যাক হবে।",
+    "markDone": "Done হিসেবে mark করো",
+    "doneLabel": "Done"
+  },
+  "dsaProblems": {
+    "eyebrow": "Practice",
+    "title": "DSA Problems",
+    "sub": "Big-O depot থেকে শুরু, তারপর ১৮ টা topic জুড়ে ১৫০ টা interview problem, আমাদের নিজেদের সাজানো order এ, যাতে প্রতিটা topic আগেরটার উপর দাঁড়ায়। প্রতিটা problem এর write-up থাকবে: intuition, diagram, brute force থেকে optimal, ছয় ভাষায় code, আর বাস্তব app এ idea টা কোথায় কাজে লাগে।",
+    "roadmap": "DSA Metro",
+    "howTitle": "প্রতিটা problem যেভাবে solve করা হয়",
+    "outline": [
+      "Problem টা বোঝা",
+      "আগে brute force",
+      "Diagram এ দেখা",
+      "Pattern টা ধরা",
+      "Optimal solution",
+      "ছয় ভাষায় code",
+      "Time আর space complexity",
+      "Edge case আর সাধারণ ভুল",
+      "বাস্তব app এ কোথায় লাগে"
+    ],
+    "startWith": "Depot থেকে শুরু: {title}",
+    "stats": {
+      "problems": "problem",
+      "topics": "topic",
+      "easy": "easy",
+      "medium": "medium",
+      "hard": "hard"
+    },
+    "levels": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "allProblems": "সব problem ({n})",
+    "soonTitle": "Write-up টা লেখা হচ্ছে",
+    "soonSub": "পুরো ব্যাখ্যা আসছে। আগে LeetCode এ নিজে চেষ্টা করো; write-up টা যে outline ধরে যাবে সেটা এখানে দেওয়া আছে।",
+    "fallback": "এই problem এর অনুবাদ এখনো হয়নি, তাই অন্য ভাষার লেখাটা দেখানো হচ্ছে।",
+    "leetcode": "LeetCode এ solve করো",
+    "prev": "আগের",
+    "next": "পরের",
+    "onThisPage": "এই পাতায়",
+    "willCover": "যা যা থাকবে",
+    "solvedShort": "solved",
+    "signIn": "Sign in",
+    "signInSync": "করো, তাহলে সব device এ progress থাকবে।",
+    "search": "Problem খোঁজো...",
+    "filter": "Filter",
+    "difficulty": "Difficulty",
+    "status": "Status",
+    "all": "সব",
+    "statuses": {
+      "all": "সব",
+      "todo": "বাকি",
+      "solved": "Solved"
+    },
+    "mark": "Solved হিসেবে mark করো",
+    "unmark": "Solved থেকে সরাও",
+    "solvedLabel": "Solved",
+    "noMatch": "কোনো problem মিললো না। অন্য শব্দ দিয়ে খোঁজো বা filter সরাও।",
+    "markNote": "নিজে solve করে optimal approach টা বুঝেছো? Mark করো, তাহলে progress ট্র্যাক হবে।",
+    "doneNote": "দারুণ! এটা তোমার progress এ যোগ হয়েছে।",
+    "groups": {
+      "complexity": "Big-O Basics",
+      "arrays-hashing": "Arrays & Hash Maps",
+      "two-pointers": "Two Pointers",
+      "sliding-window": "Sliding Window",
+      "stack": "Stack Tricks",
+      "binary-search": "Binary Search",
+      "linked-list": "Linked Lists",
+      "trees": "Trees & BST",
+      "tries": "Prefix Trees",
+      "heap": "Heaps",
+      "intervals": "Intervals & Sweeps",
+      "greedy": "Greedy Choices",
+      "backtracking": "Backtracking",
+      "graphs": "BFS & DFS",
+      "advanced-graphs": "Weighted Graphs",
+      "dp-1d": "DP on a Line",
+      "dp-2d": "DP on a Grid",
+      "bit-manipulation": "Bit Tricks",
+      "math-geometry": "Math & Matrices"
+    },
+    "roadmapHint": "চারটা line, ১৮ টা station। একটা line ধরে station এর পর station এগোও, আর যেখানে line মিলেছে সেখানে line বদলাও। Solve করলে ring ভরতে থাকে; কোনো station এ click করলে তার পরের problem এ উঠে যাবে।",
+    "lines": {
+      "array": "Array Line",
+      "tree": "Tree Line",
+      "graph": "Graph Line",
+      "dp": "DP Line"
+    },
+    "river": "Off-by-One নদী",
+    "interchange": "Line বদলানোর station",
+    "nextStop": "পরের station",
+    "nextProblem": "পরের problem:",
+    "board": "উঠে পড়ো",
+    "terminus": "শেষ station",
+    "terminusSub": "সব station পার করে ফেলেছো! এবার না দেখে আরেকবার পুরো পথটা ঘুরে আসো।",
+    "cleared": "Station পার ✓",
+    "outlineSub": [
+      "নিজের ভাষায় বলো, একটা ছোট example দিয়ে।",
+      "সবচেয়ে সোজা যেটা কাজ করে, ধীর হলেও।",
+      "Code এর আগে data কীভাবে নড়ে, ধাপে ধাপে দেখো।",
+      "Trick টার একটা নাম দাও, পরেরবার যেন চিনতে পারো।",
+      "Brute force ঠিক যে কারণে ধীর ছিল, সেটাই সারাও।",
+      "C++, Java, Python, JavaScript, Go আর C#।",
+      "প্রতিটা line ধরে step আর memory গোনো।",
+      "খালি input, duplicate, overflow: কোথায় ভাঙে।",
+      "Spell check, Google Maps, bKash: idea টা কাজে।"
+    ],
+    "lessonOutline": [
+      "সহজ কথায় idea টা",
+      "Visual diagram",
+      "কীভাবে হিসাব করবে",
+      "Code example",
+      "সাধারণ ভুল",
+      "ছোট quiz"
+    ],
+    "lesson": "Lesson",
+    "lessonSub": "Big-O depot এর অংশ: train এ ওঠার আগে এটা পড়ে নাও, তাহলে প্রতিটা problem এর complexity অংশ সহজে বুঝবে।",
+    "lessonSoonSub": "পুরো lesson আসছে। কী কী থাকবে তা জানাতে outline টা এখানে দেওয়া আছে।",
+    "lessonCount": "{n} টা lesson",
+    "levelHint": "Difficulty শুধু problem এর জন্য, তাই Big-O lesson গুলো লুকানো আছে।",
+    "markLessonNote": "পড়ে idea টা বুঝেছো? Done mark করো, তাহলে progress ট্র্যাক হবে।",
+    "markDone": "Done mark করো",
+    "doneLabel": "Done",
+    "howSub": "প্রতিটা problem এ একই নয়টা stop, তাই সবসময় জানবে তুমি কোথায় আছো।",
+    "art": {
+      "sign": "DSA Metro",
+      "signSub": "Station 00 · Big-O",
+      "tea": "চা",
+      "bubble": "আগে Big-O, তারপর train!",
+      "board": "brute O(n²) → optimal O(n)"
+    },
+    "motivation": [
+      "আটকে যাওয়া মানে হেরে যাওয়া না। আটকে থাকার সময়টাতেই মাথায় নতুন রাস্তা তৈরি হয়।",
+      "Two pointers কেউ জন্ম থেকে জানে না। যারা জানে, তারাও একদিন জানতো না।",
+      "আজ ধীরে solve করো, কাল দ্রুত পারবে।",
+      "দিনে একটা problem মানে বছরে ৩৬৫ টা।",
+      "আগে brute force। প্রতিটা সুন্দর solution শুরুতে এলোমেলোই ছিল।",
+      "Interviewer তোমাকে perfect দেখতে চায় না, তুমি কীভাবে ভাবো সেটা শুনতে চায়।",
+      "Wrong answer? ভালো। এখন অন্তত একটা উপায় জানো যেটা কাজ করে না।",
+      "Code এর আগে আঁকো। কাগজ কখনো segfault দেয় না।",
+      "দশ মিনিট আটকে থাকা শেখা। দুই ঘণ্টা আটকে থাকলে hint নেওয়া তোমার অধিকার।",
+      "আজকের hard problem আগামী মাসের warm-up।",
+      "একদিন অনেক না, প্রতিদিন একটু। কাল আবার এসো।",
+      "তুমি পিছিয়ে নেই। নিজের route এ আছো, এক station করে।",
+      "একটা pattern শিখলে আরও দশটা problem সহজ হয়ে যায়।",
+      "Constraint টা পড়ো। কত complexity লাগবে, সেটা ওরাই ফিসফিস করে বলে দেয়।",
+      "Bug কখনো সেখানে থাকে না যেখানে তুমি খুঁজছো। শ্বাস নাও, অন্য জায়গায় দেখো।",
+      "বুঝে solve করা একটা problem, মুখস্থ করা তিনটার চেয়ে দামি।",
+      "Off-by-one ভুল সবাইকে নত করে। হাসো, ঠিক করো, এগিয়ে যাও।",
+      "Interview room এ ভবিষ্যতের তুমি আজকের এই problem টার জন্য ধন্যবাদ দেবে।",
+      "এক হাতে চা, আরেক হাতে logic। চলো শুরু করি।",
+      "কঠিন মানে অচেনা, অসম্ভব না।",
+      "Edge case এর মধ্যেই ভালো engineer তৈরি হয়।",
+      "সন্দেহের tab টা বন্ধ করো, editor টা খোলো।",
+      "ধীর progress ও progress। Train চলছে।",
+      "একটা রাবারের হাঁসকে বুঝিয়ে বলো। হাঁস বুঝলে, তুমিও বুঝেছো।"
+    ],
+    "progress": {
+      "start": "প্রথম station অপেক্ষা করছে। প্রত্যেক expert শূন্য থেকেই শুরু করেছিল।",
+      "some": "{done} টা শেষ, বাকি {left} টা। Train থামিও না 🚇",
+      "thisDone": "এটা আগেই solve করেছো। এবার না দেখে আরেকবার পারো কিনা দেখো!",
+      "all": "সব station পার! তুমি একটা legend। 🏆"
+    },
+    "scenes": {
+      "complexity": "1 শান্ত, n ধীরে ওঠে, n² পালিয়ে যায়।",
+      "arrays-hashing": "প্রতিটা key সোজা নিজের bucket এ পড়ে।",
+      "two-pointers": "দুই মাথা থেকে দুইটা pointer এগিয়ে আসে।",
+      "sliding-window": "Window সরে, কিছুই দুইবার গোনা হয় না।",
+      "stack": "শেষে রাখা plate টাই আগে ওঠে।",
+      "binary-search": "প্রতি ধাপে অর্ধেক range বাদ।",
+      "linked-list": "Node থেকে node, null পর্যন্ত।",
+      "trees": "Tree বড় হয় এক level করে।",
+      "tries": "c → a → t: শব্দেরা prefix ভাগ করে।",
+      "heap": "ছোটটা ভেসে উঠে নিজের জায়গায় যায়।",
+      "intervals": "Overlap করা meeting এক হয়ে যায়।",
+      "greedy": "এখন যেটা সবচেয়ে ভালো, সেই step নাও।",
+      "backtracking": "Dead end? এক পা পিছিয়ে অন্য পথ ধরো।",
+      "graphs": "BFS ছড়ায় ঢেউয়ের মতো, ঘের এর পর ঘের।",
+      "advanced-graphs": "কম hop মানেই সস্তা না। Weight ঠিক করে।",
+      "dp-1d": "প্রতিটা উত্তর আগের দুইটা থেকে তৈরি।",
+      "dp-2d": "Table ভরে, কোণ ধরে ধরে।",
+      "bit-manipulation": "একটা XOR, একটা bit উল্টে গেল।",
+      "math-geometry": "Matrix ঘোরাও: একবারে এক চতুর্থাংশ।"
+    },
+    "sceneTitle": "এই station এ"
+  },
+  "prog": {
+    "eyebrow": "Course",
+    "title": "Programming From Zero",
+    "sub": "কখনো code লেখোনি? এখান থেকে শুরু করো। প্রতিটা ধারণা একবার শেখানো হয়, আর পাশাপাশি ছয়টা language এ দেখানো হয়: C++, Go, Rust, Python, JavaScript আর Java। নিজের tab বেছে নাও; ভাবনাটা একই।",
+    "note": "এক ধারণা, ছয় language ↓",
+    "from": "তোমার প্রথম লাইন",
+    "to": "তোমার নিজের tool",
+    "finish": "পুরো line ঘুরে তোমার বাছাই করা language এ একটা বাস্তব tool বানাও: disk এ save হয়, test আছে, নিজের একটা ছোট API ও আছে।",
+    "groups": {
+      "first-steps": {
+        "title": "প্রথম পা",
+        "sub": "code কীভাবে চলে, variable, সিদ্ধান্ত, loop, function"
+      },
+      "shapes-of-data": {
+        "title": "Data এর আকার",
+        "sub": "লেখা, list, map, নিজের type, আর memory"
+      },
+      "when-things-go-wrong": {
+        "title": "যখন কিছু ভুল হয়",
+        "sub": "recursion, error, file আর debugging"
+      },
+      "building-bigger": {
+        "title": "বড় করে বানানো",
+        "sub": "package, object, generics, functional style, test"
+      },
+      "real-world": {
+        "title": "বাস্তব দুনিয়া",
+        "sub": "concurrency, internet, CLI tool, গতি"
+      },
+      "build-it": {
+        "title": "বানিয়ে ফেলো",
+        "sub": "একটা বাস্তব tool, শুরু থেকে শেষ"
+      }
+    }
+  },
+  "hire": {
+    "eyebrow": "Practice",
+    "title": "Build to Hire",
+    "sub": "{n} টা বাস্তব project, প্রতিটা লেখা একটা team এর brief হিসেবে, যাদের একটা সত্যিকারের সমস্যা আছে। একটা project acceptance criteria পর্যন্ত বানিয়ে ফেলো, তাহলে interview এ দেখানোর মতো এমন কিছু থাকবে যা কোনো certificate দিতে পারে না।",
+    "steps": [
+      {
+        "t": "একটা brief বাছো",
+        "d": "প্রতিটা এমন সমস্যা, যেটা একটা আসল team নতুন engineer কে দিতো।"
+      },
+      {
+        "t": "Checklist ধরে বানাও",
+        "d": "Milestone বলে কী বানাবে; acceptance criteria বলে কখন শেষ।"
+      },
+      {
+        "t": "দেখিয়ে দাও",
+        "d": "সৎভাবে লেখা যায় এমন একটা resume line, আর জিজ্ঞেস করলে কী বলবে।"
+      }
+    ],
+    "search": "Project, tool বা skill খোঁজো...",
+    "category": "Track",
+    "level": "Difficulty",
+    "status": "Status",
+    "all": "সব",
+    "categories": {
+      "backend": "Backend",
+      "devops": "DevOps & SRE",
+      "security": "Security",
+      "ai": "AI & LLM",
+      "ml": "Machine Learning"
+    },
+    "levels": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "showing": "{total} টার মধ্যে {shown} টা project",
+    "clear": "Filter সরাও",
+    "noMatch": "কোনো project মিললো না। অন্য শব্দ দিয়ে খোঁজো বা filter সরাও।",
+    "hours": "{range} ঘণ্টা",
+    "brief": "Brief #{n}",
+    "view": "Brief খোলো",
+    "theBrief": "Brief",
+    "from": "Team এর পক্ষ থেকে",
+    "build": "যা বানাবে",
+    "done": "শেষ হবে যখন",
+    "stretch": "আরো এগোতে চাইলে",
+    "showIt": "দেখিয়ে দাও",
+    "resume": "Resume এ",
+    "interview": "জিজ্ঞেস করলে যা বলবে",
+    "copy": "Copy",
+    "copied": "Copy হয়েছে",
+    "stack": "Stack",
+    "prereqs": "আগে শিখে নাও",
+    "time": "সময়",
+    "signIn": "Sign in",
+    "signInSync": "করো, তাহলে সব device এ progress থাকবে।",
+    "prev": "আগের",
+    "next": "পরের",
+    "back": "সব project",
+    "filters": "Filter",
+    "finishedShort": "শেষ",
+    "stages": {
+      "notStarted": "শুরু হয়নি",
+      "inProgress": "চলছে",
+      "finished": "শেষ",
+      "shown": "দেখানো হয়েছে"
+    },
+    "stageHint": {
+      "notStarted": "Brief টা পড়ো, তৈরি হলে শুরু করো।",
+      "inProgress": "Milestone ধরে এগোও, যতক্ষণ না প্রতিটা 'শেষ হবে যখন' মেলে।",
+      "finished": "README, diagram আর screenshot সহ GitHub এ push করো।",
+      "shown": "Resume আর LinkedIn এ উঠে গেছে। এবার interview টা জিতে আসো।"
+    },
+    "journey": "তোমার project",
+    "actions": {
+      "start": "Project শুরু করো",
+      "finish": "শেষ mark করো",
+      "showOff": "দেখিয়েছি ✓",
+      "undo": "এক ধাপ পিছাও",
+      "allDone": "দেখানো শেষ। দারুণ! 🎉",
+      "signInToStart": "শুরু করতে sign in করো",
+      "goPro": "শুরু করতে Pro নাও"
+    },
+    "proNote": "প্রতিটা brief পড়া free। Project শুরু করা, progress track করা আর show-off kit Pro এর অংশ।",
+    "proUnlock": "Pro দিয়ে show-off kit খোলো",
+    "proLine": "Outline free · tracking সহ বানাতে Pro লাগবে",
+    "guide": "ধাপে ধাপে walkthrough",
+    "guideLockedSub": "পুরো walkthrough, প্রতিটা command, প্রতিটা লাইন code, আর প্রতিটা ধাপ কেন আর কখন দরকার, সব Pro তে। এতে যা আছে:",
+    "guideCta": "Pro দিয়ে খোলো",
+    "guideSignIn": "Sign in",
+    "guideError": "Walkthrough load করা গেল না।",
+    "guideRetry": "আবার চেষ্টা করো",
+    "guideFallback": "এই walkthrough এখনো অনুবাদ হয়নি, তাই অন্য ভাষায় পড়ছো।",
+    "soon": "শীঘ্রই",
+    "soonTitle": "Walkthrough শীঘ্রই আসছে",
+    "soonBody": "এই project এর ধাপে ধাপে walkthrough, প্রতিটা ধাপে আসল output সহ, এখনো লেখা হচ্ছে। ততক্ষণ brief পড়ে নিজে চেষ্টা করতে পারো; walkthrough তৈরি হলে tracking চালু হবে।",
+    "soonSide": "এখনো practice করার মতো তৈরি না। Walkthrough প্রকাশ হলে progress tracking চালু হবে।",
+    "readyChip": "{n} টা এখনই practice করা যায়",
+    "soonChip": "{n} টা শীঘ্রই আসছে",
+    "availability": "অবস্থা",
+    "readyNow": "এখনই তৈরি",
+    "comingSoon": "শীঘ্রই আসছে",
+    "like": "এটা বানাতে চাই",
+    "mostWanted": "সবার পছন্দ!",
+    "startHere": "এখান থেকে শুরু!",
+    "wantCount": "{n} জন এটা বানাতে চায়",
+    "beFirst": "এখনই তৈরি · প্রথম ♥ তুমিই দাও",
+    "crown": "সবচেয়ে পছন্দের #{n}",
+    "liked": "তুমি এটা বানাতে চাও ♥",
+    "alreadyLiked": "এটায় তুমি আগেই ♥ দিয়েছো। একবার দিলে আর তোলা যায় না।"
   }
 }

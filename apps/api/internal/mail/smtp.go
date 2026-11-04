@@ -56,7 +56,8 @@ func (m *SMTP) Send(ctx context.Context, e domain.Email) error {
 		if err != nil {
 			return fmt.Errorf("mail: send: %w", err)
 		}
-		m.log.InfoContext(ctx, "email sent", "subject", e.Subject) // never log recipient bodies/tokens
+		// Never log the subject, recipient or body: sign-in codes travel in the subject.
+		m.log.InfoContext(ctx, "email sent")
 		return nil
 	case <-ctx.Done():
 		return ctx.Err()

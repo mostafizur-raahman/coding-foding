@@ -29,7 +29,7 @@ func (r *VoteRepo) ListTopics(ctx context.Context, viewer *uuid.UUID, after *dom
 	}
 	out := make([]domain.Topic, len(rows))
 	for i, t := range rows {
-		out[i] = domain.Topic{ID: t.ID, Slug: t.Slug, TitleEN: t.TitleEn, TitleBN: t.TitleBn, Tag: t.Tag, VoteCount: t.VoteCount, Voted: t.Voted}
+		out[i] = domain.Topic{ID: t.ID, Slug: t.Slug, TitleEN: t.TitleEn, TitleBN: t.TitleBn, DescEN: t.DescriptionEn, DescBN: t.DescriptionBn, Tag: t.Tag, VoteCount: t.VoteCount, Voted: t.Voted}
 	}
 	return out, nil
 }
@@ -44,12 +44,6 @@ func (r *VoteRepo) InsertVote(ctx context.Context, userID, topicID uuid.UUID) (b
 	return n == 1, mapErr(err)
 }
 
-func (r *VoteRepo) DeleteVote(ctx context.Context, userID, topicID uuid.UUID) (bool, error) {
-	n, err := r.db.w(ctx).DeleteVote(ctx, sqlcdb.DeleteVoteParams{UserID: userID, TopicID: topicID})
-	return n == 1, mapErr(err)
-}
-
-// AdjustVotes with delta 0 just reads the current count under the row lock.
 func (r *VoteRepo) AdjustVotes(ctx context.Context, topicID uuid.UUID, delta int32) (int32, error) {
 	n, err := r.db.w(ctx).AdjustTopicVotes(ctx, sqlcdb.AdjustTopicVotesParams{ID: topicID, Delta: delta})
 	return n, mapErr(err)
@@ -63,5 +57,5 @@ func (r *VoteRepo) CreateTopic(ctx context.Context, t domain.NewTopic) (*domain.
 	if err != nil {
 		return nil, mapErr(err)
 	}
-	return &domain.Topic{ID: row.ID, Slug: row.Slug, TitleEN: row.TitleEn, TitleBN: row.TitleBn, Tag: row.Tag, VoteCount: row.VoteCount}, nil
+	return &domain.Topic{ID: row.ID, Slug: row.Slug, TitleEN: row.TitleEn, TitleBN: row.TitleBn, DescEN: row.DescriptionEn, DescBN: row.DescriptionBn, Tag: row.Tag, VoteCount: row.VoteCount}, nil
 }

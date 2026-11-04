@@ -112,6 +112,12 @@ func mapErr(err error) error {
 			return domain.ErrEmailTaken
 		case "users_username_uq":
 			return domain.ErrUsernameTaken
+		case "payment_orders_trx_uniq":
+			return domain.ErrTrxUsed
+		case "payment_orders_one_pending":
+			return domain.ErrOrderPending
+		case "roadmap_items_slug_key":
+			return domain.E(domain.KindConflict, "slug_taken", "another roadmap item already uses this slug")
 		case "topics_slug_key":
 			return domain.E(domain.KindConflict, "topic_exists", "this topic already exists")
 		}

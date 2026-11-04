@@ -8,6 +8,7 @@ import {
   PORTRAIT,
   pathD,
   project,
+  sketchyPathD,
   type MilestoneId,
   type Orientation,
 } from "@/lib/journey/geometry";
@@ -27,6 +28,7 @@ type Props = {
 export function JourneySvg({ orientation: o, labels, className }: Props) {
   const box = o === "landscape" ? LANDSCAPE : PORTRAIT;
   const d = pathD(o);
+  const sketchy = sketchyPathD(o);
   const finish = project(MILESTONE_POINTS.goal, o);
   const poleTop = project(FLAG_POLE.to, o);
   const gid = `cf-path-gradient-${o}`;
@@ -53,7 +55,8 @@ export function JourneySvg({ orientation: o, labels, className }: Props) {
           <stop offset="0" style={{ stopColor: "var(--path-from)" }} />
           <stop offset="1" style={{ stopColor: "var(--path-to)" }} />
         </linearGradient>
-        {/* Hand-drawn wobble: low-frequency noise displaces the stroke a few units. */}
+        {/* Hand-drawn wobble for the *static* finish bar only; the animated stroke has
+            its wobble baked into the geometry (sketchyPathD) — no per-frame filter. */}
         <filter id={fid} x="-5%" y="-5%" width="110%" height="110%">
           <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" />
           <feDisplacementMap in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G" />
@@ -66,10 +69,10 @@ export function JourneySvg({ orientation: o, labels, className }: Props) {
       {/* ghost route — shows where the path will go */}
       <path d={d} fill="none" stroke="var(--path-ghost)" strokeWidth="4" strokeDasharray="2 14" strokeLinecap="round" />
 
-      <g filter={`url(#${fid})`}>
+      <g>
         {/* neon glow (dark themes); hidden on Paper via --path-glow: 0 */}
         <path
-          d={d}
+          d={sketchy}
           data-journey-draw
           pathLength={1}
           fill="none"
@@ -80,7 +83,7 @@ export function JourneySvg({ orientation: o, labels, className }: Props) {
           style={{ opacity: "calc(var(--path-glow) * 0.75)" }}
         />
         <path
-          d={d}
+          d={sketchy}
           data-journey-path
           data-journey-draw
           pathLength={1}
@@ -91,7 +94,7 @@ export function JourneySvg({ orientation: o, labels, className }: Props) {
           strokeLinejoin="round"
         />
         {/* T-shaped finish bar + flag pole (sketch's summit) */}
-        <g data-journey-finish>
+        <g data-journey-finish filter={`url(#${fid})`}>
           <path d={lineD(FINISH_BAR.from, FINISH_BAR.to, o)} stroke="var(--fg)" strokeWidth="6" strokeLinecap="round" />
           <path d={lineD(FLAG_POLE.from, FLAG_POLE.to, o)} stroke="var(--fg)" strokeWidth="4" strokeLinecap="round" />
           <path

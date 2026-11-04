@@ -76,6 +76,36 @@ const DOODLES = {
       <path d="M70 50 L 89 54 L 92 34" />
     </>
   ),
+  // Deshi nouka: curved hull, a chhoi (arched roof) and a patched sail, on the water.
+  boat: (
+    <>
+      <path d="M4 58 C 20 74, 80 74, 96 58 C 80 63, 20 63, 4 58 Z" />
+      <path d="M30 62 C 30 46, 60 46, 60 62" />
+      <path d="M66 60 L 66 8" />
+      <path d="M68 12 C 86 22, 90 40, 68 50" />
+      <path d="M72 24 l 8 4 M 71 36 l 9 1" />
+      <path d="M2 84 C 12 78, 20 90, 30 84 S 48 78, 58 84 S 76 90, 98 82" />
+    </>
+  ),
+  // Ilish: the river's silver fish.
+  fish: (
+    <>
+      <path d="M8 50 C 28 30, 64 30, 80 50 C 64 70, 28 70, 8 50 Z" />
+      <path d="M80 50 L 96 36 L 91 50 L 96 64 Z" />
+      <path d="M22 46 l 0 1" />
+      <path d="M33 40 C 29 46, 29 54, 33 60" />
+      <path d="M42 51 C 52 47, 62 47, 72 51" />
+    </>
+  ),
+  // Ghuri: a paper kite with its bow and a wavy tail.
+  kite: (
+    <>
+      <path d="M50 4 L 82 38 L 50 72 L 18 38 Z" />
+      <path d="M50 4 L 50 72 M 18 38 C 34 28, 66 28, 82 38" />
+      <path d="M50 72 C 40 82, 60 88, 46 98" />
+      <path d="M43 85 l 7 -3 M 51 92 l 7 -3" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type DoodleName = keyof typeof DOODLES;
@@ -185,4 +215,63 @@ export const SECTION_DOODLES: Record<string, DoodleSpec[]> = {
     { name: "squiggle", corner: "tl", size: 96, rotate: -4, inset: [1.5, 2.5], tone: "accent-1" },
     { name: "stars", corner: "br", size: 80, rotate: -12, inset: [2, 2], tone: "accent-2" },
   ],
+};
+
+type GutterSpec = {
+  name: DoodleName;
+  /** distance from the top of the viewport, in vh */
+  top: number;
+  size?: number;
+  rotate?: number;
+  tone?: DoodleSpec["tone"];
+  /** extra motion: the boat rocks, the kite sways */
+  motion?: "rock" | "sway";
+};
+
+/**
+ * Doodles in the empty side margins of wide screens. Sticky inside the caller's positioned,
+ * full-width wrapper, so they stay beside a sticky sidebar while the page scrolls and stop
+ * before the footer. Hidden where the margins are too narrow.
+ */
+export function GutterDoodles({
+  left,
+  right,
+}: {
+  left: GutterSpec[];
+  right: GutterSpec[];
+}) {
+  const column = (items: GutterSpec[], side: "left" | "right") => (
+    <div className="absolute inset-y-0 w-[calc((100vw-88rem)/2)]" style={{ [side]: 0 }}>
+      {items.map((d, i) => (
+        <div key={`${d.name}-${i}`} className="absolute inset-x-0 flex justify-center" style={{ top: `${d.top}vh` }}>
+          <div
+            className="doodle opacity-45 [[data-theme=paper]_&]:opacity-60"
+            style={{ animationDelay: `${i * -2.3}s` }}
+          >
+            <Doodle
+              name={d.name}
+              size={d.size}
+              rotate={d.rotate}
+              tone={d.tone}
+              className={d.motion ? `doodle-${d.motion}` : undefined}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-0 hidden min-[1680px]:block">
+      <div className="sticky top-0 h-screen">
+        {column(left, "left")}
+        {column(right, "right")}
+      </div>
+    </div>
+  );
+}
+
+/** DSA Problems: a nouka on the left, a ghuri on the right. */
+export const DSA_GUTTER: { left: GutterSpec[]; right: GutterSpec[] } = {
+  left: [{ name: "boat", top: 55, size: 130, tone: "accent-2", motion: "rock" }],
+  right: [{ name: "kite", top: 22, size: 110, rotate: 12, tone: "accent-1", motion: "sway" }],
 };

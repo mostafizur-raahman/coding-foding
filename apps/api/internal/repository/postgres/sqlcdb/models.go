@@ -13,138 +13,48 @@ import (
 	"github.com/google/uuid"
 )
 
-type Difficulty string
+type RoadmapStage string
 
 const (
-	DifficultyEasy   Difficulty = "easy"
-	DifficultyMedium Difficulty = "medium"
-	DifficultyHard   Difficulty = "hard"
+	RoadmapStageShipped RoadmapStage = "shipped"
+	RoadmapStageNext    RoadmapStage = "next"
+	RoadmapStageHorizon RoadmapStage = "horizon"
+	RoadmapStagePlan    RoadmapStage = "plan"
 )
 
-func (e *Difficulty) Scan(src interface{}) error {
+func (e *RoadmapStage) Scan(src interface{}) error {
 	switch s := src.(type) {
 	case []byte:
-		*e = Difficulty(s)
+		*e = RoadmapStage(s)
 	case string:
-		*e = Difficulty(s)
+		*e = RoadmapStage(s)
 	default:
-		return fmt.Errorf("unsupported scan type for Difficulty: %T", src)
+		return fmt.Errorf("unsupported scan type for RoadmapStage: %T", src)
 	}
 	return nil
 }
 
-type NullDifficulty struct {
-	Difficulty Difficulty
-	Valid      bool // Valid is true if Difficulty is not NULL
+type NullRoadmapStage struct {
+	RoadmapStage RoadmapStage
+	Valid        bool // Valid is true if RoadmapStage is not NULL
 }
 
 // Scan implements the Scanner interface.
-func (ns *NullDifficulty) Scan(value interface{}) error {
+func (ns *NullRoadmapStage) Scan(value interface{}) error {
 	if value == nil {
-		ns.Difficulty, ns.Valid = "", false
+		ns.RoadmapStage, ns.Valid = "", false
 		return nil
 	}
 	ns.Valid = true
-	return ns.Difficulty.Scan(value)
+	return ns.RoadmapStage.Scan(value)
 }
 
 // Value implements the driver Valuer interface.
-func (ns NullDifficulty) Value() (driver.Value, error) {
+func (ns NullRoadmapStage) Value() (driver.Value, error) {
 	if !ns.Valid {
 		return nil, nil
 	}
-	return string(ns.Difficulty), nil
-}
-
-type PlanStatus string
-
-const (
-	PlanStatusActive   PlanStatus = "active"
-	PlanStatusArchived PlanStatus = "archived"
-)
-
-func (e *PlanStatus) Scan(src interface{}) error {
-	switch s := src.(type) {
-	case []byte:
-		*e = PlanStatus(s)
-	case string:
-		*e = PlanStatus(s)
-	default:
-		return fmt.Errorf("unsupported scan type for PlanStatus: %T", src)
-	}
-	return nil
-}
-
-type NullPlanStatus struct {
-	PlanStatus PlanStatus
-	Valid      bool // Valid is true if PlanStatus is not NULL
-}
-
-// Scan implements the Scanner interface.
-func (ns *NullPlanStatus) Scan(value interface{}) error {
-	if value == nil {
-		ns.PlanStatus, ns.Valid = "", false
-		return nil
-	}
-	ns.Valid = true
-	return ns.PlanStatus.Scan(value)
-}
-
-// Value implements the driver Valuer interface.
-func (ns NullPlanStatus) Value() (driver.Value, error) {
-	if !ns.Valid {
-		return nil, nil
-	}
-	return string(ns.PlanStatus), nil
-}
-
-type SubmissionStatus string
-
-const (
-	SubmissionStatusQueued        SubmissionStatus = "queued"
-	SubmissionStatusRunning       SubmissionStatus = "running"
-	SubmissionStatusAccepted      SubmissionStatus = "accepted"
-	SubmissionStatusWrongAnswer   SubmissionStatus = "wrong_answer"
-	SubmissionStatusTimeLimit     SubmissionStatus = "time_limit"
-	SubmissionStatusMemoryLimit   SubmissionStatus = "memory_limit"
-	SubmissionStatusRuntimeError  SubmissionStatus = "runtime_error"
-	SubmissionStatusCompileError  SubmissionStatus = "compile_error"
-	SubmissionStatusInternalError SubmissionStatus = "internal_error"
-)
-
-func (e *SubmissionStatus) Scan(src interface{}) error {
-	switch s := src.(type) {
-	case []byte:
-		*e = SubmissionStatus(s)
-	case string:
-		*e = SubmissionStatus(s)
-	default:
-		return fmt.Errorf("unsupported scan type for SubmissionStatus: %T", src)
-	}
-	return nil
-}
-
-type NullSubmissionStatus struct {
-	SubmissionStatus SubmissionStatus
-	Valid            bool // Valid is true if SubmissionStatus is not NULL
-}
-
-// Scan implements the Scanner interface.
-func (ns *NullSubmissionStatus) Scan(value interface{}) error {
-	if value == nil {
-		ns.SubmissionStatus, ns.Valid = "", false
-		return nil
-	}
-	ns.Valid = true
-	return ns.SubmissionStatus.Scan(value)
-}
-
-// Value implements the driver Valuer interface.
-func (ns NullSubmissionStatus) Value() (driver.Value, error) {
-	if !ns.Valid {
-		return nil, nil
-	}
-	return string(ns.SubmissionStatus), nil
+	return string(ns.RoadmapStage), nil
 }
 
 type TokenKind string
@@ -187,6 +97,49 @@ func (ns NullTokenKind) Value() (driver.Value, error) {
 		return nil, nil
 	}
 	return string(ns.TokenKind), nil
+}
+
+type TopicStatus string
+
+const (
+	TopicStatusOpen    TopicStatus = "open"
+	TopicStatusPlanned TopicStatus = "planned"
+	TopicStatusHidden  TopicStatus = "hidden"
+)
+
+func (e *TopicStatus) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = TopicStatus(s)
+	case string:
+		*e = TopicStatus(s)
+	default:
+		return fmt.Errorf("unsupported scan type for TopicStatus: %T", src)
+	}
+	return nil
+}
+
+type NullTopicStatus struct {
+	TopicStatus TopicStatus
+	Valid       bool // Valid is true if TopicStatus is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullTopicStatus) Scan(value interface{}) error {
+	if value == nil {
+		ns.TopicStatus, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.TopicStatus.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullTopicStatus) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return string(ns.TopicStatus), nil
 }
 
 type TranslationStatus string
@@ -235,11 +188,9 @@ func (ns NullTranslationStatus) Value() (driver.Value, error) {
 type UserRole string
 
 const (
-	UserRoleIntern UserRole = "intern"
-	UserRoleJunior UserRole = "junior"
-	UserRoleSenior UserRole = "senior"
-	UserRoleMentor UserRole = "mentor"
-	UserRoleAdmin  UserRole = "admin"
+	UserRoleLearner UserRole = "learner"
+	UserRoleMentor  UserRole = "mentor"
+	UserRoleAdmin   UserRole = "admin"
 )
 
 func (e *UserRole) Scan(src interface{}) error {
@@ -277,6 +228,13 @@ func (ns NullUserRole) Value() (driver.Value, error) {
 	return string(ns.UserRole), nil
 }
 
+type AppSetting struct {
+	Key       string
+	Value     string
+	UpdatedBy uuid.NullUUID
+	UpdatedAt time.Time
+}
+
 type AuditLog struct {
 	ID         uuid.UUID
 	ActorID    uuid.NullUUID
@@ -289,29 +247,130 @@ type AuditLog struct {
 	CreatedAt  time.Time
 }
 
-type LeaderboardSnapshot struct {
+type BlogPost struct {
 	ID          uuid.UUID
-	TakenAt     time.Time
-	Division    *string
-	UserID      uuid.UUID
-	Rank        int32
-	Xp          int64
-	SolvedCount int32
-	Percentile  float64
+	Slug        string
+	IsPublished bool
+	CreatedAt   time.Time
+}
+
+type BlogVote struct {
+	UserID    uuid.UUID
+	PostID    uuid.UUID
+	Value     int16
+	CreatedAt time.Time
+}
+
+type Company struct {
+	ID          uuid.UUID
+	Slug        string
+	Name        string
+	Tagline     string
+	About       string
+	Website     *string
+	LogoKey     *string
+	District    *string
+	Size        *string
+	OwnerUserID uuid.NullUUID
+	IsVerified  bool
+	IsDemo      bool
+	CreatedAt   time.Time
+}
+
+type ContentSync struct {
+	ID         uuid.UUID
+	CommitSha  string
+	StartedAt  time.Time
+	FinishedAt *time.Time
+	Stats      []byte
+	Error      *string
+}
+
+type Coupon struct {
+	Code           string
+	PercentOff     int32
+	Plans          []string
+	MaxRedemptions *int32
+	ValidUntil     *time.Time
+	IsActive       bool
+	Note           string
+	CreatedAt      time.Time
+}
+
+type EmailChallenge struct {
+	ID              uuid.UUID
+	Email           string
+	CodeMac         []byte
+	Attempts        int32
+	ExpiresAt       time.Time
+	VerifiedAt      *time.Time
+	SignupTokenHash []byte
+	SignupExpiresAt *time.Time
+	SignupUsedAt    *time.Time
+	Ip              *netip.Addr
+	CreatedAt       time.Time
+}
+
+type Job struct {
+	ID               uuid.UUID
+	CompanyID        uuid.UUID
+	Title            string
+	Department       string
+	EmploymentType   string
+	Level            string
+	Workplace        string
+	Location         string
+	SalaryMin        *int32
+	SalaryMax        *int32
+	Summary          string
+	Description      string
+	Responsibilities []string
+	Requirements     []string
+	Skills           []string
+	IsPublished      bool
+	IsDemo           bool
+	PostedAt         time.Time
+	ClosesAt         *time.Time
+}
+
+type JobApplication struct {
+	JobID     uuid.UUID
+	UserID    uuid.UUID
+	Note      string
+	Status    string
+	CreatedAt time.Time
+}
+
+type LeaderboardSnapshot struct {
+	ID         uuid.UUID
+	TakenAt    time.Time
+	Division   *string
+	UserID     uuid.UUID
+	Rank       int32
+	Xp         int64
+	Percentile float64
 }
 
 type Lesson struct {
-	ID               uuid.UUID
-	MilestoneID      uuid.UUID
-	Slug             string
-	Position         int32
-	EstimatedMinutes int32
-	XpReward         int32
-	Version          int32
-	IsPublished      bool
-	CreatedAt        time.Time
-	UpdatedAt        time.Time
-	DeletedAt        *time.Time
+	ID          uuid.UUID
+	TrackID     uuid.UUID
+	Slug        string
+	Position    int32
+	XpReward    int32
+	EnHash      string
+	IsPublished bool
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	GroupSlug   *string
+}
+
+type LessonLocale struct {
+	LessonID   uuid.UUID
+	Locale     string
+	Title      string
+	SourceHash string
+	Status     TranslationStatus
+	UpdatedAt  time.Time
 }
 
 type LessonProgress struct {
@@ -320,42 +379,26 @@ type LessonProgress struct {
 	CompletedAt time.Time
 }
 
-type LessonTranslation struct {
-	LessonID  uuid.UUID
-	Locale    string
-	Title     string
-	BodyMd    string
-	Status    TranslationStatus
-	Search    interface{}
-	UpdatedAt time.Time
-}
-
-type Milestone struct {
-	ID             uuid.UUID
-	PathID         uuid.UUID
-	Slug           string
+type LessonSection struct {
+	LessonID       uuid.UUID
+	SectionID      string
 	Position       int32
-	EstimatedHours int32
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+	MinReadSeconds int32
 }
 
-type MilestoneTranslation struct {
-	MilestoneID uuid.UUID
-	Locale      string
-	Title       string
-	Description string
-	Status      TranslationStatus
-	UpdatedAt   time.Time
+type LessonSectionProgress struct {
+	UserID      uuid.UUID
+	LessonID    uuid.UUID
+	SectionID   string
+	CompletedAt time.Time
 }
 
-type Notification struct {
-	ID        uuid.UUID
-	UserID    uuid.UUID
-	Kind      string
-	Payload   []byte
-	ReadAt    *time.Time
-	CreatedAt time.Time
+type LessonState struct {
+	UserID        uuid.UUID
+	LessonID      uuid.UUID
+	OpenedAt      time.Time
+	LastSectionID *string
+	LastSeenAt    time.Time
 }
 
 type OauthAccount struct {
@@ -367,70 +410,56 @@ type OauthAccount struct {
 	CreatedAt      time.Time
 }
 
-type Path struct {
-	ID          uuid.UUID
-	Slug        string
-	Position    int32
-	IsPublished bool
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   *time.Time
+type PaymentOrder struct {
+	ID             uuid.UUID
+	UserID         uuid.UUID
+	Plan           string
+	PeriodDays     int32
+	ListAmount     int32
+	BaseAmount     int32
+	DiscountAmount int32
+	Amount         int32
+	CouponCode     *string
+	Method         string
+	PayerNumber    string
+	TrxID          string
+	Status         string
+	RejectReason   *string
+	ReviewedBy     uuid.NullUUID
+	ReviewedAt     *time.Time
+	CreatedAt      time.Time
 }
 
-type PathTranslation struct {
-	PathID    uuid.UUID
-	Locale    string
-	Title     string
-	Summary   string
-	Status    TranslationStatus
+type PracticeLike struct {
+	UserID     uuid.UUID
+	Collection string
+	Slug       string
+	LikedAt    time.Time
+}
+
+type PracticeProgress struct {
+	UserID     uuid.UUID
+	Collection string
+	Slug       string
+	SolvedAt   time.Time
+}
+
+type RoadmapItem struct {
+	ID        uuid.UUID
+	Stage     RoadmapStage
+	Kind      string
+	Position  int32
+	TitleEn   string
+	TitleBn   string
+	DescEn    string
+	DescBn    string
+	Progress  *int32
+	TopicID   uuid.NullUUID
+	CreatedAt time.Time
 	UpdatedAt time.Time
-}
-
-type Plan struct {
-	ID          uuid.UUID
-	UserID      uuid.UUID
-	Goal        string
-	HoursPerDay float64
-	HorizonDays int32
-	StartDate   time.Time
-	Status      PlanStatus
-	Version     int32
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-}
-
-type PlanItem struct {
-	ID          uuid.UUID
-	PlanID      uuid.UUID
-	MilestoneID uuid.UUID
-	Position    int32
-	StartDate   time.Time
-	EndDate     time.Time
-	Hours       float64
-}
-
-type Problem struct {
-	ID            uuid.UUID
-	Slug          string
-	MilestoneID   uuid.NullUUID
-	Difficulty    Difficulty
-	Topic         string
-	TimeLimitMs   int32
-	MemoryLimitKb int32
-	TestCases     []byte
-	XpReward      int32
-	IsPublished   bool
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-}
-
-type ProblemTranslation struct {
-	ProblemID   uuid.UUID
-	Locale      string
-	Title       string
-	StatementMd string
-	Status      TranslationStatus
-	UpdatedAt   time.Time
+	Slug      string
+	Link      *string
+	ShippedAt *time.Time
 }
 
 type Session struct {
@@ -446,30 +475,28 @@ type Session struct {
 	CreatedAt  time.Time
 }
 
-type Submission struct {
-	ID             uuid.UUID
-	UserID         uuid.UUID
-	ProblemID      uuid.UUID
-	Language       string
-	SourceCode     string
-	Status         SubmissionStatus
-	IdempotencyKey string
-	RuntimeMs      *int32
-	MemoryKb       *int32
-	VerdictDetail  string
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+type Topic struct {
+	ID            uuid.UUID
+	Slug          string
+	TitleEn       string
+	TitleBn       string
+	Tag           string
+	VoteCount     int32
+	Status        TopicStatus
+	CreatedBy     uuid.NullUUID
+	CreatedAt     time.Time
+	DescriptionEn string
+	DescriptionBn string
 }
 
-type Topic struct {
-	ID        uuid.UUID
-	Slug      string
-	TitleEn   string
-	TitleBn   string
-	Tag       string
-	VoteCount int32
-	CreatedBy uuid.NullUUID
-	CreatedAt time.Time
+type Track struct {
+	ID              uuid.UUID
+	Slug            string
+	Position        int32
+	JourneyPosition *int32
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
+	FreePart        *string
 }
 
 type User struct {
@@ -482,9 +509,9 @@ type User struct {
 	Role            UserRole
 	PreferredLocale string
 	Theme           string
+	Font            string
 	Division        *string
 	Xp              int64
-	SolvedCount     int32
 	CurrentStreak   int32
 	LongestStreak   int32
 	LastActiveDate  *time.Time
@@ -492,6 +519,16 @@ type User struct {
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 	DeletedAt       *time.Time
+	Phone           *string
+	District        *string
+	Interests       []string
+	AvatarKey       *string
+	JourneyStage    string
+	AvatarChangedAt *time.Time
+	AccountType     string
+	ProUntil        *time.Time
+	BannedAt        *time.Time
+	BanReason       *string
 }
 
 type UserToken struct {

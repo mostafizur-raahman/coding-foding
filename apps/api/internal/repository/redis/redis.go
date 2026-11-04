@@ -67,25 +67,34 @@ type Board struct{ c goredis.UniversalClient }
 
 func NewBoard(c goredis.UniversalClient) *Board { return &Board{c} }
 
-func boardKey(division string) string {
-	if division == "" {
+// boardKey: national → lb:xp:all, "div:dhaka" → lb:xp:div:dhaka, "dist:gazipur" → lb:xp:dist:gazipur.
+func boardKey(board string) string {
+	if board == "" {
 		return "lb:xp:all"
 	}
-	return "lb:xp:div:" + division
+	return "lb:xp:" + board
 }
 
-func (b *Board) Incr(ctx context.Context, userID uuid.UUID, division *string, delta int64) error {
+func (b *Board) Incr(ctx context.Context, userID uuid.UUID, boards []string, delta int64) error {
 	pipe := b.c.TxPipeline()
-	pipe.ZIncrBy(ctx, boardKey(""), float64(delta), userID.String())
-	if division != nil {
-		pipe.ZIncrBy(ctx, boardKey(*division), float64(delta), userID.String())
+	for _, name := range boards {
+		pipe.ZIncrBy(ctx, boardKey(name), float64(delta), userID.String())
 	}
 	_, err := pipe.Exec(ctx)
 	return err
 }
 
-func (b *Board) Top(ctx context.Context, division string, offset, limit int64) ([]domain.ScoredUser, error) {
-	zs, err := b.c.ZRevRangeWithScores(ctx, boardKey(division), offset, offset+limit-1).Result()
+func (b *Board) Remove(ctx context.Context, userID uuid.UUID, boards []string) error {
+	pipe := b.c.TxPipeline()
+	for _, name := range boards {
+		pipe.ZRem(ctx, boardKey(name), userID.String())
+	}
+	_, err := pipe.Exec(ctx)
+	return err
+}
+
+func (b *Board) Top(ctx context.Context, board string, offset, limit int64) ([]domain.ScoredUser, error) {
+	zs, err := b.c.ZRevRangeWithScores(ctx, boardKey(board), offset, offset+limit-1).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -100,8 +109,8 @@ func (b *Board) Top(ctx context.Context, division string, offset, limit int64) (
 	return out, nil
 }
 
-func (b *Board) Rank(ctx context.Context, userID uuid.UUID, division string) (int64, int64, bool, error) {
-	key := boardKey(division)
+func (b *Board) Rank(ctx context.Context, userID uuid.UUID, board string) (int64, int64, bool, error) {
+	key := boardKey(board)
 	pipe := b.c.Pipeline()
 	rank := pipe.ZRevRank(ctx, key, userID.String())
 	score := pipe.ZScore(ctx, key, userID.String())
@@ -118,14 +127,14 @@ func (b *Board) Rank(ctx context.Context, userID uuid.UUID, division string) (in
 	return r + 1, int64(score.Val()), true, nil
 }
 
-func (b *Board) Count(ctx context.Context, division string) (int64, error) {
-	return b.c.ZCard(ctx, boardKey(division)).Result()
+func (b *Board) Count(ctx context.Context, board string) (int64, error) {
+	return b.c.ZCard(ctx, boardKey(board)).Result()
 }
 
 // Replace builds the new board under a temp key and RENAMEs it atomically,
 // so readers never see a half-built board.
-func (b *Board) Replace(ctx context.Context, division string, entries []domain.ScoredUser) error {
-	key := boardKey(division)
+func (b *Board) Replace(ctx context.Context, board string, entries []domain.ScoredUser) error {
+	key := boardKey(board)
 	if len(entries) == 0 {
 		return b.c.Del(ctx, key).Err()
 	}

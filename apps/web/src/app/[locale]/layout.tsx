@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { DoodleDefs } from "@/components/decor/Doodles";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { ScrollShade } from "@/components/layout/ScrollShade";
 import { Providers } from "@/components/providers/Providers";
 import { routing } from "@/i18n/routing";
@@ -19,7 +20,11 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
@@ -30,8 +35,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       canonical: `/${locale}`,
       languages: { en: "/en", bn: "/bn", "x-default": "/en" },
     },
-    openGraph: { title: t("title"), description: t("description"), locale: locale === "bn" ? "bn_BD" : "en_US", type: "website" },
-    icons: { icon: "/favicon.svg" },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      locale: locale === "bn" ? "bn_BD" : "en_US",
+      type: "website",
+    },
+    icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
   };
 }
 
@@ -42,7 +52,13 @@ export const viewport: Viewport = {
   ],
 };
 
-export default async function LocaleLayout({ children, params }: { children: ReactNode; params: Promise<{ locale: string }> }) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
@@ -58,14 +74,23 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
-      <body className="min-h-screen bg-[var(--bg)] text-[var(--fg)]">
+      {/* Extensions (e.g. ColorZilla's cz-shortcut-listen) add attributes to <body>
+          before hydration; this ignores those on <body> only, not its children. */}
+      <body
+        className="min-h-screen bg-[var(--bg)] text-[var(--fg)]"
+        suppressHydrationWarning
+      >
         <DoodleDefs />
         <NextIntlClientProvider>
           <Providers>
-            <Navbar />
-            <ScrollShade />
+            <SiteChrome>
+              <Navbar />
+              <ScrollShade />
+            </SiteChrome>
             <main id="main">{children}</main>
-            <Footer />
+            <SiteChrome>
+              <Footer />
+            </SiteChrome>
           </Providers>
         </NextIntlClientProvider>
       </body>

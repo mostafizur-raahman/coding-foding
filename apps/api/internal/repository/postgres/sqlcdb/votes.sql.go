@@ -31,7 +31,7 @@ func (q *Queries) AdjustTopicVotes(ctx context.Context, arg AdjustTopicVotesPara
 const createTopic = `-- name: CreateTopic :one
 INSERT INTO topics (id, slug, title_en, title_bn, tag, created_by)
 VALUES ($1, $2, $3, $4, $5, $6)
-RETURNING id, slug, title_en, title_bn, tag, vote_count
+RETURNING id, slug, title_en, title_bn, description_en, description_bn, tag, vote_count
 `
 
 type CreateTopicParams struct {
@@ -44,12 +44,14 @@ type CreateTopicParams struct {
 }
 
 type CreateTopicRow struct {
-	ID        uuid.UUID
-	Slug      string
-	TitleEn   string
-	TitleBn   string
-	Tag       string
-	VoteCount int32
+	ID            uuid.UUID
+	Slug          string
+	TitleEn       string
+	TitleBn       string
+	DescriptionEn string
+	DescriptionBn string
+	Tag           string
+	VoteCount     int32
 }
 
 func (q *Queries) CreateTopic(ctx context.Context, arg CreateTopicParams) (CreateTopicRow, error) {
@@ -67,27 +69,12 @@ func (q *Queries) CreateTopic(ctx context.Context, arg CreateTopicParams) (Creat
 		&i.Slug,
 		&i.TitleEn,
 		&i.TitleBn,
+		&i.DescriptionEn,
+		&i.DescriptionBn,
 		&i.Tag,
 		&i.VoteCount,
 	)
 	return i, err
-}
-
-const deleteVote = `-- name: DeleteVote :execrows
-DELETE FROM votes WHERE user_id = $1 AND topic_id = $2
-`
-
-type DeleteVoteParams struct {
-	UserID  uuid.UUID
-	TopicID uuid.UUID
-}
-
-func (q *Queries) DeleteVote(ctx context.Context, arg DeleteVoteParams) (int64, error) {
-	result, err := q.db.Exec(ctx, deleteVote, arg.UserID, arg.TopicID)
-	if err != nil {
-		return 0, err
-	}
-	return result.RowsAffected(), nil
 }
 
 const insertVote = `-- name: InsertVote :execrows
@@ -108,10 +95,11 @@ func (q *Queries) InsertVote(ctx context.Context, arg InsertVoteParams) (int64, 
 }
 
 const listTopics = `-- name: ListTopics :many
-SELECT t.id, t.slug, t.title_en, t.title_bn, t.tag, t.vote_count,
+SELECT t.id, t.slug, t.title_en, t.title_bn, t.description_en, t.description_bn, t.tag, t.vote_count,
        EXISTS (SELECT 1 FROM votes v WHERE v.topic_id = t.id AND v.user_id = $1)::bool AS voted
 FROM topics t
-WHERE ($2::int IS NULL
+WHERE t.status <> 'hidden'
+  AND ($2::int IS NULL
        OR (t.vote_count, t.id) < ($2::int, $3::uuid))
 ORDER BY t.vote_count DESC, t.id DESC
 LIMIT $4
@@ -125,13 +113,15 @@ type ListTopicsParams struct {
 }
 
 type ListTopicsRow struct {
-	ID        uuid.UUID
-	Slug      string
-	TitleEn   string
-	TitleBn   string
-	Tag       string
-	VoteCount int32
-	Voted     bool
+	ID            uuid.UUID
+	Slug          string
+	TitleEn       string
+	TitleBn       string
+	DescriptionEn string
+	DescriptionBn string
+	Tag           string
+	VoteCount     int32
+	Voted         bool
 }
 
 func (q *Queries) ListTopics(ctx context.Context, arg ListTopicsParams) ([]ListTopicsRow, error) {
@@ -153,6 +143,8 @@ func (q *Queries) ListTopics(ctx context.Context, arg ListTopicsParams) ([]ListT
 			&i.Slug,
 			&i.TitleEn,
 			&i.TitleBn,
+			&i.DescriptionEn,
+			&i.DescriptionBn,
 			&i.Tag,
 			&i.VoteCount,
 			&i.Voted,
@@ -168,7 +160,7 @@ func (q *Queries) ListTopics(ctx context.Context, arg ListTopicsParams) ([]ListT
 }
 
 const topicExists = `-- name: TopicExists :one
-SELECT EXISTS (SELECT 1 FROM topics WHERE id = $1)::bool
+SELECT EXISTS (SELECT 1 FROM topics WHERE id = $1 AND status <> 'hidden')::bool
 `
 
 func (q *Queries) TopicExists(ctx context.Context, id uuid.UUID) (bool, error) {

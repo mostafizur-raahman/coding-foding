@@ -114,13 +114,19 @@ export function buildJourney({ gsap, ScrollTrigger }: GsapBundle, o: Options) {
       confettiFired = false;
     }
 
-    // camera follows the walker (desktop)
+    // camera follows the walker (desktop), within the track's own area — on wide
+    // screens a side panel takes part of the viewport, and a track that already fits
+    // stays centred (mx-auto) instead of panning.
     if (o.track) {
       const trackW = o.track.offsetWidth;
-      const vw = window.innerWidth;
-      const px = (pt.x / LANDSCAPE.width) * trackW;
-      const minX = Math.min(0, vw - trackW - vw * 0.04);
-      gsap.set(o.track, { x: Math.max(minX, Math.min(0, vw * 0.4 - px)) });
+      const vw = o.track.parentElement?.clientWidth ?? window.innerWidth;
+      if (trackW <= vw) {
+        gsap.set(o.track, { x: 0 });
+      } else {
+        const px = (pt.x / LANDSCAPE.width) * trackW;
+        const minX = vw - trackW - vw * 0.04;
+        gsap.set(o.track, { x: Math.max(minX, Math.min(0, vw * 0.4 - px)) });
+      }
     }
     if (o.progressBar) gsap.set(o.progressBar, { scaleX: f });
   };

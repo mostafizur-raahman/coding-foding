@@ -25,12 +25,11 @@ func (q *Queries) DeleteOldSnapshots(ctx context.Context, takenAt time.Time) (in
 }
 
 type InsertLeaderboardSnapshotParams struct {
-	ID          uuid.UUID
-	TakenAt     time.Time
-	Division    *string
-	UserID      uuid.UUID
-	Rank        int32
-	Xp          int64
-	SolvedCount int32
-	Percentile  float64
+	ID         uuid.UUID
+	TakenAt    time.Time
+	Division   *string
+	UserID     uuid.UUID
+	Rank       int32
+	Xp         int64
+	Percentile float64
 }

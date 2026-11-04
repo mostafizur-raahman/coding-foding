@@ -199,3 +199,25 @@ export function buildTimeWarp(dsaFraction: number, width = 0.07, slowdown = 2.2,
     return (lo - 1 + t) / samples;
   };
 }
+
+/**
+ * Hand-drawn version of the path with the wobble *baked into the geometry*.
+ * An SVG turbulence filter looked the same but re-rasterised on every scroll frame
+ * (the stroke-dashoffset changes), halving the frame rate. Smooth multi-frequency
+ * noise is applied perpendicular to the path, tapered to zero at both ends.
+ */
+export function sketchyPathD(o: Orientation, samples = 360, amplitude = 2.6): string {
+  const table = buildArcTable(o);
+  const noise = (s: number) => Math.sin(s * 0.045) * 0.55 + Math.sin(s * 0.13 + 1.3) * 0.3 + Math.sin(s * 0.31 + 2.1) * 0.15;
+  const parts: string[] = [];
+  for (let i = 0; i <= samples; i++) {
+    const f = i / samples;
+    const pt = table.at(f);
+    const a = (pt.angle * Math.PI) / 180;
+    const off = noise(f * table.total) * amplitude * Math.sin(Math.PI * f);
+    const x = pt.x - Math.sin(a) * off;
+    const y = pt.y + Math.cos(a) * off;
+    parts.push(`${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`);
+  }
+  return parts.join(" ");
+}

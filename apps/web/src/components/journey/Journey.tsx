@@ -14,6 +14,7 @@ import {
 import { MILESTONE_META } from "@/lib/journey/milestones";
 import { CornerDoodles, SECTION_DOODLES } from "@/components/decor/Doodles";
 import { JourneySvg } from "./JourneySvg";
+import { LiveOnPath } from "./LiveOnPath";
 import { buildJourney } from "./animate";
 
 const pct = (v: number, of: number) => `${(v / of) * 100}%`;
@@ -102,39 +103,45 @@ export function Journey() {
       >
         <CornerDoodles items={SECTION_DOODLES.journey!} />
         <Header />
-        <div className="relative flex min-h-0 flex-1 items-center overflow-x-auto [[data-animated=true]_&]:overflow-visible">
-          <div
-            ref={deskTrack}
-            className="relative h-full max-h-[640px] shrink-0 will-change-transform"
-            style={{ aspectRatio: `${LANDSCAPE.width} / ${LANDSCAPE.height}` }}
-          >
-            <JourneySvg orientation="landscape" labels={labels} className="absolute inset-0 h-full w-full" />
-            <p
-              className="journey-zone-hint font-hand absolute -translate-x-1/2 text-center text-[clamp(1.4rem,2vw,2rem)] font-semibold text-[var(--accent-2)]"
-              data-zone-for="dsa"
-              style={{ left: pct(dsa.x, LANDSCAPE.width), top: pct(dsa.y - 250, LANDSCAPE.height) }}
+        <div className="flex min-h-0 flex-1">
+          {/* Track area: the camera pans inside this box; on wide screens the track is centred in it. */}
+          <div className="relative flex min-h-0 min-w-0 flex-1 items-center overflow-x-auto [[data-animated=true]_&]:overflow-visible">
+            <div
+              ref={deskTrack}
+              className="relative mx-auto h-full max-h-[640px] shrink-0 will-change-transform"
+              style={{ aspectRatio: `${LANDSCAPE.width} / ${LANDSCAPE.height}` }}
             >
-              {t("dsaHint")}
-            </p>
-            <p
-              className="journey-zone-hint font-hand absolute -translate-x-1/2 text-[clamp(1.3rem,1.8vw,1.8rem)] font-semibold text-[var(--accent-1)]"
-              data-zone-for="peak"
-              style={{ left: pct(1560, LANDSCAPE.width), top: pct(10, LANDSCAPE.height) }}
-            >
-              {t("peakHint")}
-            </p>
-            <p
-              className="journey-zone-hint text-gradient absolute -translate-x-1/2 text-center text-[clamp(1.6rem,2.4vw,2.6rem)] font-extrabold tracking-tight whitespace-nowrap"
-              data-zone-for="finish"
-              style={{ left: pct(fin.x - 140, LANDSCAPE.width), top: pct(560, LANDSCAPE.height) }}
-            >
-              {t("finish")}
-            </p>
+              <JourneySvg orientation="landscape" labels={labels} className="absolute inset-0 h-full w-full" />
+              <p
+                className="journey-zone-hint font-hand absolute -translate-x-1/2 text-center text-[clamp(1.4rem,2vw,2rem)] font-semibold text-[var(--accent-2)]"
+                data-zone-for="dsa"
+                style={{ left: pct(dsa.x, LANDSCAPE.width), top: pct(dsa.y - 250, LANDSCAPE.height) }}
+              >
+                {t("dsaHint")}
+              </p>
+              <p
+                className="journey-zone-hint font-hand absolute -translate-x-1/2 text-[clamp(1.3rem,1.8vw,1.8rem)] font-semibold text-[var(--accent-1)]"
+                data-zone-for="peak"
+                style={{ left: pct(1560, LANDSCAPE.width), top: pct(10, LANDSCAPE.height) }}
+              >
+                {t("peakHint")}
+              </p>
+              <p
+                className="journey-zone-hint text-gradient absolute -translate-x-1/2 text-center text-[clamp(1.6rem,2.4vw,2.6rem)] font-extrabold tracking-tight whitespace-nowrap"
+                data-zone-for="finish"
+                style={{ left: pct(fin.x - 140, LANDSCAPE.width), top: pct(560, LANDSCAPE.height) }}
+              >
+                {t("finish")}
+              </p>
+            </div>
           </div>
+          {/* Wide screens: the empty right side shows where everyone is on the path. */}
+          <aside className="relative z-10 hidden w-80 shrink-0 items-center pr-10 pl-2 2xl:flex">
+            <LiveOnPath active={active} />
+          </aside>
         </div>
-        <div className="pointer-events-none relative z-10 mx-auto flex h-44 w-full max-w-6xl shrink-0 items-end justify-between gap-6 px-10 pb-8">
-          <MilestoneHud index={active} />
-          <div className="mb-3 hidden h-1.5 w-56 overflow-hidden rounded-full bg-[var(--border)] [[data-animated=true]_&]:block">
+        <div className="pointer-events-none relative z-10 mx-auto flex h-14 w-full max-w-6xl shrink-0 items-start justify-end px-10">
+          <div className="hidden h-1.5 w-56 overflow-hidden rounded-full bg-[var(--border)] [[data-animated=true]_&]:block">
             <div
               ref={deskProgress}
               role="presentation"
@@ -152,9 +159,9 @@ export function Journey() {
         <div className="relative mx-auto w-full max-w-[420px]">
           <JourneySvg orientation="portrait" labels={labels} className="h-auto w-full" />
           <p
-            className="journey-zone-hint font-hand absolute right-0 left-0 text-center text-2xl font-semibold text-[var(--accent-2)]"
+            className="journey-zone-hint font-hand absolute right-1 max-w-[62%] text-right text-xl leading-snug font-semibold text-balance text-[var(--accent-2)]"
             data-zone-for="dsa"
-            style={{ top: `calc(${pct(project(dsa, "portrait").y, 2380)} - 3rem)` }}
+            style={{ top: `calc(${pct(project(dsa, "portrait").y, 2380)} - 2.5rem)` }}
           >
             {t("dsaHint")}
           </p>
@@ -166,9 +173,6 @@ export function Journey() {
             {t("finish")}
           </p>
           <div ref={mobileConfetti} aria-hidden="true" className="pointer-events-none absolute inset-0" />
-        </div>
-        <div className="pointer-events-none sticky bottom-4 z-10 mt-4 [[data-animated=false]_&]:hidden">
-          <MilestoneHud index={active} />
         </div>
       </div>
 
@@ -190,22 +194,7 @@ function Header() {
   );
 }
 
-/** Floating card that swaps as the walker reaches each dot. */
-function MilestoneHud({ index }: { index: number | null }) {
-  if (index === null) return <div aria-hidden="true" />;
-  const id = MILESTONE_IDS[index]!;
-  return (
-    <div
-      key={id}
-      className="hud-in card pointer-events-auto w-full max-w-md p-5 shadow-[0_20px_60px_-20px_var(--glow)] backdrop-blur"
-      aria-live="polite"
-    >
-      <MilestoneBody id={id} index={index} />
-    </div>
-  );
-}
-
-/** Card content shared by the HUD and the static list. */
+/** Card content for the static milestone list. */
 function MilestoneBody({ id, index }: { id: MilestoneId; index: number }) {
   const t = useTranslations("journey");
   const meta = MILESTONE_META[id];
@@ -255,7 +244,7 @@ function MilestoneList() {
   const t = useTranslations("journey");
   return (
     <div className="motion-safe:sr-only">
-      <ol aria-label={t("listLabel")} className="mx-auto grid max-w-6xl gap-4 px-6 py-12 sm:grid-cols-2 lg:grid-cols-3">
+      <ol aria-label={t("listLabel")} className="mx-auto grid max-w-6xl items-start gap-4 px-6 py-12 sm:grid-cols-2 lg:grid-cols-3">
         {MILESTONE_IDS.map((id, i) => (
           <li key={id} className="card p-5">
             <MilestoneBody id={id} index={i} />

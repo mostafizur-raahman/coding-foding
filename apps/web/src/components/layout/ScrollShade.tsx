@@ -45,7 +45,12 @@ export function ScrollShade() {
           <div
             key={l.blur}
             className="absolute inset-0"
-            style={{ backdropFilter: `blur(${l.blur}px)`, WebkitBackdropFilter: `blur(${l.blur}px)`, maskImage: mask, WebkitMaskImage: mask }}
+            style={{
+              backdropFilter: `blur(${l.blur}px)`,
+              WebkitBackdropFilter: `blur(${l.blur}px)`,
+              maskImage: mask,
+              WebkitMaskImage: mask,
+            }}
           />
         );
       })}

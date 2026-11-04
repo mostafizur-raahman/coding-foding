@@ -9,80 +9,154 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Querier interface {
+	AddLike(ctx context.Context, arg AddLikeParams) error
 	AdjustTopicVotes(ctx context.Context, arg AdjustTopicVotesParams) (int32, error)
+	AdminCreateTopic(ctx context.Context, arg AdminCreateTopicParams) (uuid.UUID, error)
+	AdminListJobs(ctx context.Context) ([]AdminListJobsRow, error)
+	AdminListTopics(ctx context.Context) ([]AdminListTopicsRow, error)
+	AdminStats(ctx context.Context) (AdminStatsRow, error)
+	AdminUpdateTopic(ctx context.Context, arg AdminUpdateTopicParams) (int64, error)
+	AdminUpdateUser(ctx context.Context, arg AdminUpdateUserParams) (int64, error)
 	// Optimistic lock: only succeeds if nobody else bumped the row since we read it.
 	ApplyXPAndStreak(ctx context.Context, arg ApplyXPAndStreakParams) (int64, error)
-	ArchiveActivePlan(ctx context.Context, userID uuid.UUID) error
-	BumpLessonVersion(ctx context.Context, id uuid.UUID) error
-	ClaimSubmission(ctx context.Context, id uuid.UUID) (int64, error)
+	ApproveOrder(ctx context.Context, arg ApproveOrderParams) error
+	BlogPostExists(ctx context.Context, id uuid.UUID) (bool, error)
+	// Counted on read: a post's votes are a small, indexed range, and nothing can drift.
+	BlogVoteSummary(ctx context.Context, arg BlogVoteSummaryParams) (BlogVoteSummaryRow, error)
+	BumpChallengeAttempts(ctx context.Context, id uuid.UUID) error
+	ClearPro(ctx context.Context, id uuid.UUID) (int64, error)
 	ConsumeUserToken(ctx context.Context, arg ConsumeUserTokenParams) (uuid.UUID, error)
-	CreateNotification(ctx context.Context, arg CreateNotificationParams) error
+	// Orders under review hold their redemption; a rejected order gives it back.
+	CountCouponRedemptions(ctx context.Context, arg CountCouponRedemptionsParams) (CountCouponRedemptionsRow, error)
+	CountLessonSections(ctx context.Context, arg CountLessonSectionsParams) (CountLessonSectionsRow, error)
+	CountLikes(ctx context.Context, collection string) ([]CountLikesRow, error)
+	CountOpenJobsByDepartment(ctx context.Context) ([]CountOpenJobsByDepartmentRow, error)
+	CountRecentChallenges(ctx context.Context, arg CountRecentChallengesParams) (int64, error)
+	CountUsers(ctx context.Context, arg CountUsersParams) (int64, error)
+	CountUsersByJourneyStage(ctx context.Context) ([]CountUsersByJourneyStageRow, error)
+	CreateChallenge(ctx context.Context, arg CreateChallengeParams) error
+	CreateCoupon(ctx context.Context, arg CreateCouponParams) (int64, error)
 	CreateOAuthAccount(ctx context.Context, arg CreateOAuthAccountParams) error
-	CreatePlan(ctx context.Context, arg CreatePlanParams) (Plan, error)
+	CreateRoadmapItem(ctx context.Context, arg CreateRoadmapItemParams) (CreateRoadmapItemRow, error)
 	CreateSession(ctx context.Context, arg CreateSessionParams) (Session, error)
-	CreateSubmission(ctx context.Context, arg CreateSubmissionParams) (Submission, error)
 	CreateTopic(ctx context.Context, arg CreateTopicParams) (CreateTopicRow, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
 	CreateUserToken(ctx context.Context, arg CreateUserTokenParams) error
 	DeleteExpiredSessions(ctx context.Context) (int64, error)
+	// Removing a section also drops readers' progress on it (FK cascade).
+	DeleteLessonSectionsExcept(ctx context.Context, arg DeleteLessonSectionsExceptParams) (int64, error)
+	DeleteOldChallenges(ctx context.Context, createdAt time.Time) (int64, error)
 	DeleteOldSnapshots(ctx context.Context, takenAt time.Time) (int64, error)
-	DeleteVote(ctx context.Context, arg DeleteVoteParams) (int64, error)
-	FinishSubmission(ctx context.Context, arg FinishSubmissionParams) error
-	GetActivePlan(ctx context.Context, userID uuid.UUID) (Plan, error)
-	GetLesson(ctx context.Context, arg GetLessonParams) (GetLessonRow, error)
+	DeleteRoadmapItem(ctx context.Context, id uuid.UUID) (int64, error)
+	// Extends from whichever is later, now or the current end, so early renewals stack.
+	ExtendPro(ctx context.Context, arg ExtendProParams) (*time.Time, error)
+	GetAccountType(ctx context.Context, id uuid.UUID) (string, error)
+	GetCoupon(ctx context.Context, code string) (GetCouponRow, error)
+	// Locked so two checkouts can't both take the last redemption.
+	GetCouponForUpdate(ctx context.Context, code string) (GetCouponForUpdateRow, error)
+	GetLastSectionCompletion(ctx context.Context, userID uuid.UUID) (time.Time, error)
+	// Free = in the track's free part (Part 1), or anywhere in a track whose free part is
+	// 'all' (a fully free track). A track with no free part set has none.
+	GetLessonIsFree(ctx context.Context, id uuid.UUID) (bool, error)
+	GetLessonOpenedAt(ctx context.Context, arg GetLessonOpenedAtParams) (time.Time, error)
 	GetLessonReward(ctx context.Context, id uuid.UUID) (GetLessonRewardRow, error)
-	GetLessonTranslation(ctx context.Context, arg GetLessonTranslationParams) (LessonTranslation, error)
+	GetLessonSection(ctx context.Context, arg GetLessonSectionParams) (GetLessonSectionRow, error)
+	GetNextSection(ctx context.Context, arg GetNextSectionParams) (string, error)
 	GetOAuthAccount(ctx context.Context, arg GetOAuthAccountParams) (OauthAccount, error)
-	GetPathBySlug(ctx context.Context, arg GetPathBySlugParams) (GetPathBySlugRow, error)
-	GetProblemBySlug(ctx context.Context, arg GetProblemBySlugParams) (GetProblemBySlugRow, error)
-	GetProblemForJudge(ctx context.Context, id uuid.UUID) (GetProblemForJudgeRow, error)
+	GetOpenJob(ctx context.Context, id uuid.UUID) (GetOpenJobRow, error)
+	GetOrderForUpdate(ctx context.Context, id uuid.UUID) (PaymentOrder, error)
+	GetRoadmapItem(ctx context.Context, id uuid.UUID) (GetRoadmapItemRow, error)
 	GetSessionByTokenHashForUpdate(ctx context.Context, tokenHash []byte) (Session, error)
-	GetSubmission(ctx context.Context, id uuid.UUID) (Submission, error)
-	GetSubmissionByIdempotencyKey(ctx context.Context, arg GetSubmissionByIdempotencyKeyParams) (Submission, error)
+	GetTrackIDBySlug(ctx context.Context, slug string) (uuid.UUID, error)
 	GetUserByEmail(ctx context.Context, email string) (User, error)
 	GetUserByID(ctx context.Context, id uuid.UUID) (User, error)
 	GetUserByUsername(ctx context.Context, username string) (User, error)
+	GetUserProUntil(ctx context.Context, id uuid.UUID) (*time.Time, error)
 	GetUserProgressState(ctx context.Context, id uuid.UUID) (GetUserProgressStateRow, error)
+	// Same filter as above, so an account still left in a board (say, just made admin) never shows.
 	GetUsersByIDs(ctx context.Context, ids []uuid.UUID) ([]GetUsersByIDsRow, error)
-	HasAcceptedSubmission(ctx context.Context, arg HasAcceptedSubmissionParams) (bool, error)
 	InsertAuditLog(ctx context.Context, arg InsertAuditLogParams) error
+	InsertBlogVote(ctx context.Context, arg InsertBlogVoteParams) (int64, error)
+	InsertJobApplication(ctx context.Context, arg InsertJobApplicationParams) (int64, error)
 	InsertLeaderboardSnapshot(ctx context.Context, arg []InsertLeaderboardSnapshotParams) (int64, error)
 	InsertLessonProgress(ctx context.Context, arg InsertLessonProgressParams) (int64, error)
-	InsertPlanItems(ctx context.Context, arg []InsertPlanItemsParams) (int64, error)
+	InsertPaymentOrder(ctx context.Context, arg InsertPaymentOrderParams) error
+	InsertSectionProgress(ctx context.Context, arg InsertSectionProgressParams) (int64, error)
 	InsertVote(ctx context.Context, arg InsertVoteParams) (int64, error)
 	InsertXPEvent(ctx context.Context, arg InsertXPEventParams) (int64, error)
 	InvalidateUserTokens(ctx context.Context, arg InvalidateUserTokensParams) error
+	IsLessonCompleted(ctx context.Context, arg IsLessonCompletedParams) (bool, error)
+	IsSectionCompleted(ctx context.Context, arg IsSectionCompletedParams) (bool, error)
+	// The newest unexpired, unverified code for this email; older ones are superseded.
+	LatestOpenChallengeForUpdate(ctx context.Context, arg LatestOpenChallengeForUpdateParams) (LatestOpenChallengeForUpdateRow, error)
+	ListAppliedJobIDs(ctx context.Context, userID uuid.UUID) ([]uuid.UUID, error)
+	ListAuditLogs(ctx context.Context, arg ListAuditLogsParams) ([]ListAuditLogsRow, error)
 	ListCompletedLessonIDs(ctx context.Context, arg ListCompletedLessonIDsParams) ([]uuid.UUID, error)
-	ListLessonTranslationStatus(ctx context.Context, limit int32) ([]ListLessonTranslationStatusRow, error)
-	ListLessonsByPath(ctx context.Context, arg ListLessonsByPathParams) ([]ListLessonsByPathRow, error)
-	// Milestones with aggregated lesson stats in a single query (no N+1).
-	ListMilestonesByPath(ctx context.Context, arg ListMilestonesByPathParams) ([]ListMilestonesByPathRow, error)
-	// Locale fallback: one LEFT JOIN for the requested locale + one for 'en'.
-	// `translated` tells the UI to show the "এখনো বাংলায় আসেনি" badge.
-	ListPaths(ctx context.Context, locale string) ([]ListPathsRow, error)
-	ListPlanItems(ctx context.Context, arg ListPlanItemsParams) ([]ListPlanItemsRow, error)
-	ListPlanMilestones(ctx context.Context, arg ListPlanMilestonesParams) ([]ListPlanMilestonesRow, error)
-	ListProblems(ctx context.Context, arg ListProblemsParams) ([]ListProblemsRow, error)
-	ListStaleQueuedSubmissions(ctx context.Context, arg ListStaleQueuedSubmissionsParams) ([]uuid.UUID, error)
+	// Redeemed counts what checkout counts: orders under review or approved.
+	ListCoupons(ctx context.Context) ([]ListCouponsRow, error)
+	ListDoneSections(ctx context.Context, arg ListDoneSectionsParams) ([]string, error)
+	ListLiked(ctx context.Context, arg ListLikedParams) ([]string, error)
+	// Open jobs, newest first; department NULL = all.
+	ListOpenJobs(ctx context.Context, arg ListOpenJobsParams) ([]ListOpenJobsRow, error)
+	ListOrdersForReview(ctx context.Context, arg ListOrdersForReviewParams) ([]ListOrdersForReviewRow, error)
+	// Enum order (shipped, next, horizon, plan) is the column order on the page.
+	ListRoadmapItems(ctx context.Context) ([]ListRoadmapItemsRow, error)
+	ListSettings(ctx context.Context) ([]ListSettingsRow, error)
+	ListSolved(ctx context.Context, arg ListSolvedParams) ([]string, error)
 	ListTopics(ctx context.Context, arg ListTopicsParams) ([]ListTopicsRow, error)
-	ListUnreadNotifications(ctx context.Context, arg ListUnreadNotificationsParams) ([]Notification, error)
+	ListTrackProgress(ctx context.Context, arg ListTrackProgressParams) ([]ListTrackProgressRow, error)
+	ListUserOrders(ctx context.Context, userID uuid.UUID) ([]PaymentOrder, error)
+	// Every learner is ranked, including those still at 0 XP; admins and company accounts are
+	// not (keep in step with domain.Ranked).
 	ListUsersForLeaderboard(ctx context.Context, arg ListUsersForLeaderboardParams) ([]ListUsersForLeaderboardRow, error)
+	// Serializes all progress writes of one user, so parallel requests cannot race the read-time gate.
+	LockUserForProgress(ctx context.Context, id uuid.UUID) (uuid.UUID, error)
+	MarkChallengeVerified(ctx context.Context, arg MarkChallengeVerifiedParams) error
 	MarkEmailVerified(ctx context.Context, id uuid.UUID) error
-	MarkNotificationRead(ctx context.Context, arg MarkNotificationReadParams) error
-	ResetStuckSubmissions(ctx context.Context, olderThan pgtype.Interval) (int64, error)
+	MarkSignupUsed(ctx context.Context, arg MarkSignupUsedParams) error
+	MarkSolved(ctx context.Context, arg MarkSolvedParams) error
+	MyBlogVote(ctx context.Context, arg MyBlogVoteParams) (int16, error)
+	// Keeps the original opened_at: re-opening must not reset (or extend) the reading clock.
+	OpenLesson(ctx context.Context, arg OpenLessonParams) (time.Time, error)
+	// Sections are re-ordered by first moving every position out of the way, so swapping
+	// two sections never trips UNIQUE (lesson_id, position).
+	ParkLessonSections(ctx context.Context, lessonID uuid.UUID) error
+	RecentSignups(ctx context.Context) ([]RecentSignupsRow, error)
+	RejectOrder(ctx context.Context, arg RejectOrderParams) error
 	RevokeAllUserSessions(ctx context.Context, userID uuid.UUID) error
 	RevokeSessionFamily(ctx context.Context, familyID uuid.UUID) error
 	RotateSession(ctx context.Context, arg RotateSessionParams) error
-	SearchLessons(ctx context.Context, arg SearchLessonsParams) ([]SearchLessonsRow, error)
+	// q matches email, username or display name (case-insensitive substring; no LIKE wildcards).
+	SearchUsers(ctx context.Context, arg SearchUsersParams) ([]SearchUsersRow, error)
+	SetJobPublished(ctx context.Context, arg SetJobPublishedParams) (int64, error)
+	SetLastSection(ctx context.Context, arg SetLastSectionParams) error
+	// Returns the previous key so the old file can be deleted after the swap. A new photo
+	// only lands if the cooldown has passed (checked under the row lock, so two parallel
+	// uploads can't both win); clearing (NULL key) is always allowed and keeps the clock.
+	SetUserAvatar(ctx context.Context, arg SetUserAvatarParams) (*string, error)
+	// Admins can't be banned; a NULL banned_at lifts the ban.
+	SetUserBan(ctx context.Context, arg SetUserBanParams) (int64, error)
+	SignupChallengeForUpdate(ctx context.Context, arg SignupChallengeForUpdateParams) (SignupChallengeForUpdateRow, error)
 	SumXPByUser(ctx context.Context) ([]SumXPByUserRow, error)
 	TopicExists(ctx context.Context, id uuid.UUID) (bool, error)
+	UnmarkSolved(ctx context.Context, arg UnmarkSolvedParams) error
+	UnpublishMissingBlogPosts(ctx context.Context, keep []uuid.UUID) (int64, error)
+	UnpublishMissingLessons(ctx context.Context, arg UnpublishMissingLessonsParams) (int64, error)
+	UpdateCoupon(ctx context.Context, arg UpdateCouponParams) (int64, error)
 	UpdatePasswordHash(ctx context.Context, arg UpdatePasswordHashParams) error
+	UpdateRoadmapItem(ctx context.Context, arg UpdateRoadmapItemParams) (UpdateRoadmapItemRow, error)
 	UpdateUserPreferences(ctx context.Context, arg UpdateUserPreferencesParams) (User, error)
-	UpsertLessonTranslation(ctx context.Context, arg UpsertLessonTranslationParams) (UpsertLessonTranslationRow, error)
+	UpsertBlogPost(ctx context.Context, arg UpsertBlogPostParams) error
+	UpsertLesson(ctx context.Context, arg UpsertLessonParams) error
+	UpsertLessonLocale(ctx context.Context, arg UpsertLessonLocaleParams) error
+	UpsertLessonSection(ctx context.Context, arg UpsertLessonSectionParams) error
+	UpsertSetting(ctx context.Context, arg UpsertSettingParams) error
+	// Content sync: the Markdown in content/ is the source of truth; these upserts mirror
+	// the metadata the API needs (ids, order, XP, sections) into Postgres.
+	UpsertTrack(ctx context.Context, arg UpsertTrackParams) (uuid.UUID, error)
 }
 
 var _ Querier = (*Queries)(nil)

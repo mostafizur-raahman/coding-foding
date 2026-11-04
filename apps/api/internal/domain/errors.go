@@ -65,8 +65,11 @@ var (
 	ErrIdempotencyReuse   = E(KindConflict, "idempotency_key_reused", "idempotency key was used for a different request")
 	ErrRateLimited        = E(KindRateLimited, "rate_limited", "too many requests, slow down")
 	ErrAccountLocked      = E(KindLocked, "account_locked", "too many failed attempts, try again later")
+	ErrAccountBanned      = E(KindForbidden, "account_banned", "this account has been suspended")
 	ErrInvalidToken       = E(KindUnauthorized, "invalid_token", "token is invalid or expired")
 	ErrEmailNotVerified   = E(KindForbidden, "email_not_verified", "verify your email first")
+	ErrInvalidCode        = E(KindInvalid, "invalid_code", "the code is wrong or has expired")
+	ErrCodeAttempts       = E(KindRateLimited, "too_many_attempts", "too many wrong codes, request a new one")
 )
 
 // Internal wraps an unexpected error so it never leaks to clients.

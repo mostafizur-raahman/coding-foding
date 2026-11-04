@@ -21,3 +21,6 @@ coverage.*
 .DS_Store
 .vscode/
 .idea/
+
+# user uploads (local object store)
+apps/api/var/

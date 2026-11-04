@@ -1,8 +1,10 @@
-import { useId } from "react";
-
 /**
- * Brand mark from coding-foding-logo.svg. Gradient follows the active theme
- * (accent tokens); `animate` draws the journey stroke on first paint (CSS only).
+ * Brand mark "Walker": a learner walking through </> — left bracket = WHY,
+ * walker = CODE, right bracket = CRACK. Strokes only, so it takes each theme's
+ * accent/fg tokens. `animate` draws the brackets and drops the walker in on
+ * first paint; inside a link the brackets redraw on hover/focus (CSS only).
+ * The compact (navbar, ≤32px) mark drops the arm and thickens strokes.
+ * Wordmark: quiet "coding", bold "foding" whose i-dot is the walker's head.
  */
 export function Logo({
   animate = false,
@@ -16,35 +18,70 @@ export function Logo({
   compact?: boolean;
   className?: string;
 }) {
-  const gid = useId().replace(/:/g, "");
+  const bracket = compact ? 13 : 10;
+  const body = compact ? 12 : 9;
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
-      <svg viewBox="8 8 144 144" className={`${compact ? "size-8" : "size-9"} shrink-0`} aria-hidden="true">
-        <defs>
-          <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" style={{ stopColor: "var(--accent-1)" }} />
-            <stop offset="1" style={{ stopColor: "var(--accent-2)" }} />
-          </linearGradient>
-        </defs>
-        <rect x="8" y="8" width="144" height="144" rx="36" fill="#0E0F1A" />
+    <span className={`inline-flex items-center gap-2 ${className ?? ""}`}>
+      <svg
+        viewBox="8 14 104 88"
+        className={`logo-mark ${compact ? "h-7 w-8" : "h-8 w-9"} shrink-0`}
+        aria-hidden="true"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path
-          d="M34 104 C 52 104, 52 56, 70 56 S 88 104, 106 104 S 120 64, 126 56"
+          d="M38 38 L 16 60 L 38 82"
           pathLength={1}
-          className={animate ? "logo-draw" : undefined}
-          fill="none"
-          stroke={`url(#${gid})`}
-          strokeWidth="10"
-          strokeLinecap="round"
+          className={`logo-stroke ${animate ? "logo-draw" : ""}`}
+          style={{ stroke: "var(--accent-1)" }}
+          strokeWidth={bracket}
         />
-        <circle cx="34" cy="104" r="9" style={{ fill: "var(--accent-1)" }} className={animate ? "logo-pop" : undefined} />
-        <circle cx="70" cy="56" r="5" fill="#fff" className={animate ? "logo-pop" : undefined} style={{ animationDelay: "0.55s" }} />
-        <circle cx="106" cy="104" r="5" fill="#fff" className={animate ? "logo-pop" : undefined} style={{ animationDelay: "0.95s" }} />
-        <line x1="126" y1="56" x2="126" y2="30" stroke="#fff" strokeWidth="5" strokeLinecap="round" />
-        <path d="M128 30 L 142 36 L 128 42 Z" style={{ fill: "var(--accent-2)" }} className={animate ? "logo-pop" : undefined} />
+        <path
+          d="M82 38 L 104 60 L 82 82"
+          pathLength={1}
+          className={`logo-stroke ${animate ? "logo-draw" : ""}`}
+          style={{ stroke: "var(--accent-2)", animationDelay: "0.3s" }}
+          strokeWidth={bracket}
+        />
+        <g
+          className={animate ? "logo-pop" : undefined}
+          style={{ stroke: "var(--fg)", animationDelay: "0.7s" }}
+        >
+          <path
+            d={
+              compact
+                ? "M68 41 L 58 70 L 50 92 M 58 70 L 70 90"
+                : "M68 41 L 58 70 L 50 92 M 58 70 L 70 90 M 65 50 L 76 58"
+            }
+            strokeWidth={body}
+          />
+          <circle
+            cx="71"
+            cy={compact ? 26 : 28}
+            r={compact ? 10 : 8}
+            stroke="none"
+            style={{ fill: "var(--fg)" }}
+          />
+        </g>
       </svg>
       {showWordmark && (
-        <span className={`${compact ? "text-[17px]" : "text-xl"} font-medium tracking-tight`}>
-          coding<span className="text-gradient font-extrabold">foding</span>
+        <span
+          className={`${compact ? "text-[17px]" : "text-xl"} font-[family-name:var(--font-brand)] tracking-[-0.03em] lowercase`}
+        >
+          <span className="sr-only">Coding Foding</span>
+          <span aria-hidden="true">
+            <span className="font-light text-[var(--muted)]">coding</span>
+            <span className="font-extrabold">
+              fod
+              {/* Dotless ı + an accent dot: the walker's head. */}
+              <span className="relative">
+                ı
+                <span className="wm-dot absolute top-[0.1em] left-1/2 size-[0.19em] -translate-x-1/2 rounded-full bg-[var(--accent-2)]" />
+              </span>
+              ng
+            </span>
+          </span>
         </span>
       )}
     </span>

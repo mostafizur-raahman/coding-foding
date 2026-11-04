@@ -15,17 +15,15 @@ import (
 const applyXPAndStreak = `-- name: ApplyXPAndStreak :execrows
 UPDATE users
 SET xp               = xp + $1,
-    solved_count     = solved_count + $2,
-    current_streak   = $3,
-    longest_streak   = greatest(longest_streak, $3),
-    last_active_date = $4,
+    current_streak   = $2,
+    longest_streak   = greatest(longest_streak, $2),
+    last_active_date = $3,
     version          = version + 1
-WHERE id = $5 AND version = $6
+WHERE id = $4 AND version = $5
 `
 
 type ApplyXPAndStreakParams struct {
 	XpDelta        int64
-	SolvedDelta    int32
 	CurrentStreak  int32
 	LastActiveDate *time.Time
 	ID             uuid.UUID
@@ -36,7 +34,6 @@ type ApplyXPAndStreakParams struct {
 func (q *Queries) ApplyXPAndStreak(ctx context.Context, arg ApplyXPAndStreakParams) (int64, error) {
 	result, err := q.db.Exec(ctx, applyXPAndStreak,
 		arg.XpDelta,
-		arg.SolvedDelta,
 		arg.CurrentStreak,
 		arg.LastActiveDate,
 		arg.ID,
@@ -48,10 +45,43 @@ func (q *Queries) ApplyXPAndStreak(ctx context.Context, arg ApplyXPAndStreakPara
 	return result.RowsAffected(), nil
 }
 
+const countUsersByJourneyStage = `-- name: CountUsersByJourneyStage :many
+SELECT journey_stage, count(*)::bigint AS learners
+FROM users
+WHERE deleted_at IS NULL
+GROUP BY journey_stage
+`
+
+type CountUsersByJourneyStageRow struct {
+	JourneyStage string
+	Learners     int64
+}
+
+func (q *Queries) CountUsersByJourneyStage(ctx context.Context) ([]CountUsersByJourneyStageRow, error) {
+	rows, err := q.db.Query(ctx, countUsersByJourneyStage)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []CountUsersByJourneyStageRow{}
+	for rows.Next() {
+		var i CountUsersByJourneyStageRow
+		if err := rows.Scan(&i.JourneyStage, &i.Learners); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const createUser = `-- name: CreateUser :one
-INSERT INTO users (id, email, username, display_name, password_hash, role, preferred_locale, division)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-RETURNING id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, division, xp, solved_count, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at
+INSERT INTO users (id, email, username, display_name, password_hash, role, preferred_locale, division,
+                   phone, district, interests, email_verified_at, journey_stage)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, coalesce($13::text, 'why'))
+RETURNING id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, font, division, xp, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at, phone, district, interests, avatar_key, journey_stage, avatar_changed_at, account_type, pro_until, banned_at, ban_reason
 `
 
 type CreateUserParams struct {
@@ -63,6 +93,11 @@ type CreateUserParams struct {
 	Role            UserRole
 	PreferredLocale string
 	Division        *string
+	Phone           *string
+	District        *string
+	Interests       []string
+	EmailVerifiedAt *time.Time
+	JourneyStage    *string
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
@@ -75,6 +110,11 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		arg.Role,
 		arg.PreferredLocale,
 		arg.Division,
+		arg.Phone,
+		arg.District,
+		arg.Interests,
+		arg.EmailVerifiedAt,
+		arg.JourneyStage,
 	)
 	var i User
 	err := row.Scan(
@@ -87,9 +127,9 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.Role,
 		&i.PreferredLocale,
 		&i.Theme,
+		&i.Font,
 		&i.Division,
 		&i.Xp,
-		&i.SolvedCount,
 		&i.CurrentStreak,
 		&i.LongestStreak,
 		&i.LastActiveDate,
@@ -97,12 +137,22 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.Phone,
+		&i.District,
+		&i.Interests,
+		&i.AvatarKey,
+		&i.JourneyStage,
+		&i.AvatarChangedAt,
+		&i.AccountType,
+		&i.ProUntil,
+		&i.BannedAt,
+		&i.BanReason,
 	)
 	return i, err
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
-SELECT id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, division, xp, solved_count, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at FROM users WHERE email = $1 AND deleted_at IS NULL
+SELECT id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, font, division, xp, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at, phone, district, interests, avatar_key, journey_stage, avatar_changed_at, account_type, pro_until, banned_at, ban_reason FROM users WHERE email = $1 AND deleted_at IS NULL
 `
 
 func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error) {
@@ -118,9 +168,9 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 		&i.Role,
 		&i.PreferredLocale,
 		&i.Theme,
+		&i.Font,
 		&i.Division,
 		&i.Xp,
-		&i.SolvedCount,
 		&i.CurrentStreak,
 		&i.LongestStreak,
 		&i.LastActiveDate,
@@ -128,12 +178,22 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.Phone,
+		&i.District,
+		&i.Interests,
+		&i.AvatarKey,
+		&i.JourneyStage,
+		&i.AvatarChangedAt,
+		&i.AccountType,
+		&i.ProUntil,
+		&i.BannedAt,
+		&i.BanReason,
 	)
 	return i, err
 }
 
 const getUserByID = `-- name: GetUserByID :one
-SELECT id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, division, xp, solved_count, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at FROM users WHERE id = $1 AND deleted_at IS NULL
+SELECT id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, font, division, xp, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at, phone, district, interests, avatar_key, journey_stage, avatar_changed_at, account_type, pro_until, banned_at, ban_reason FROM users WHERE id = $1 AND deleted_at IS NULL
 `
 
 func (q *Queries) GetUserByID(ctx context.Context, id uuid.UUID) (User, error) {
@@ -149,9 +209,9 @@ func (q *Queries) GetUserByID(ctx context.Context, id uuid.UUID) (User, error) {
 		&i.Role,
 		&i.PreferredLocale,
 		&i.Theme,
+		&i.Font,
 		&i.Division,
 		&i.Xp,
-		&i.SolvedCount,
 		&i.CurrentStreak,
 		&i.LongestStreak,
 		&i.LastActiveDate,
@@ -159,12 +219,22 @@ func (q *Queries) GetUserByID(ctx context.Context, id uuid.UUID) (User, error) {
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.Phone,
+		&i.District,
+		&i.Interests,
+		&i.AvatarKey,
+		&i.JourneyStage,
+		&i.AvatarChangedAt,
+		&i.AccountType,
+		&i.ProUntil,
+		&i.BannedAt,
+		&i.BanReason,
 	)
 	return i, err
 }
 
 const getUserByUsername = `-- name: GetUserByUsername :one
-SELECT id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, division, xp, solved_count, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at FROM users WHERE username = $1 AND deleted_at IS NULL
+SELECT id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, font, division, xp, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at, phone, district, interests, avatar_key, journey_stage, avatar_changed_at, account_type, pro_until, banned_at, ban_reason FROM users WHERE username = $1 AND deleted_at IS NULL
 `
 
 func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User, error) {
@@ -180,9 +250,9 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 		&i.Role,
 		&i.PreferredLocale,
 		&i.Theme,
+		&i.Font,
 		&i.Division,
 		&i.Xp,
-		&i.SolvedCount,
 		&i.CurrentStreak,
 		&i.LongestStreak,
 		&i.LastActiveDate,
@@ -190,14 +260,24 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.Phone,
+		&i.District,
+		&i.Interests,
+		&i.AvatarKey,
+		&i.JourneyStage,
+		&i.AvatarChangedAt,
+		&i.AccountType,
+		&i.ProUntil,
+		&i.BannedAt,
+		&i.BanReason,
 	)
 	return i, err
 }
 
 const getUsersByIDs = `-- name: GetUsersByIDs :many
-SELECT id, username, display_name, division, xp, solved_count, current_streak
+SELECT id, username, display_name, division, district, avatar_key, xp, current_streak
 FROM users
-WHERE id = ANY($1::uuid[]) AND deleted_at IS NULL
+WHERE id = ANY($1::uuid[]) AND deleted_at IS NULL AND role <> 'admin' AND account_type = 'learner'
 `
 
 type GetUsersByIDsRow struct {
@@ -205,11 +285,13 @@ type GetUsersByIDsRow struct {
 	Username      string
 	DisplayName   string
 	Division      *string
+	District      *string
+	AvatarKey     *string
 	Xp            int64
-	SolvedCount   int32
 	CurrentStreak int32
 }
 
+// Same filter as above, so an account still left in a board (say, just made admin) never shows.
 func (q *Queries) GetUsersByIDs(ctx context.Context, ids []uuid.UUID) ([]GetUsersByIDsRow, error) {
 	rows, err := q.db.Query(ctx, getUsersByIDs, ids)
 	if err != nil {
@@ -224,8 +306,9 @@ func (q *Queries) GetUsersByIDs(ctx context.Context, ids []uuid.UUID) ([]GetUser
 			&i.Username,
 			&i.DisplayName,
 			&i.Division,
+			&i.District,
+			&i.AvatarKey,
 			&i.Xp,
-			&i.SolvedCount,
 			&i.CurrentStreak,
 		); err != nil {
 			return nil, err
@@ -239,9 +322,9 @@ func (q *Queries) GetUsersByIDs(ctx context.Context, ids []uuid.UUID) ([]GetUser
 }
 
 const listUsersForLeaderboard = `-- name: ListUsersForLeaderboard :many
-SELECT id, username, display_name, division, xp, solved_count, current_streak
+SELECT id, username, display_name, division, district, avatar_key, xp, current_streak
 FROM users
-WHERE deleted_at IS NULL AND xp > 0
+WHERE deleted_at IS NULL AND role <> 'admin' AND account_type = 'learner'
 ORDER BY xp DESC, id
 LIMIT $1 OFFSET $2
 `
@@ -256,11 +339,14 @@ type ListUsersForLeaderboardRow struct {
 	Username      string
 	DisplayName   string
 	Division      *string
+	District      *string
+	AvatarKey     *string
 	Xp            int64
-	SolvedCount   int32
 	CurrentStreak int32
 }
 
+// Every learner is ranked, including those still at 0 XP; admins and company accounts are
+// not (keep in step with domain.Ranked).
 func (q *Queries) ListUsersForLeaderboard(ctx context.Context, arg ListUsersForLeaderboardParams) ([]ListUsersForLeaderboardRow, error) {
 	rows, err := q.db.Query(ctx, listUsersForLeaderboard, arg.Limit, arg.Offset)
 	if err != nil {
@@ -275,8 +361,9 @@ func (q *Queries) ListUsersForLeaderboard(ctx context.Context, arg ListUsersForL
 			&i.Username,
 			&i.DisplayName,
 			&i.Division,
+			&i.District,
+			&i.AvatarKey,
 			&i.Xp,
-			&i.SolvedCount,
 			&i.CurrentStreak,
 		); err != nil {
 			return nil, err
@@ -298,6 +385,47 @@ func (q *Queries) MarkEmailVerified(ctx context.Context, id uuid.UUID) error {
 	return err
 }
 
+const setUserAvatar = `-- name: SetUserAvatar :one
+WITH old AS (
+  SELECT cur.id, cur.avatar_key, cur.avatar_changed_at FROM users AS cur
+  WHERE cur.id = $4 AND cur.deleted_at IS NULL
+  FOR UPDATE
+)
+UPDATE users
+SET avatar_key        = $1,
+    avatar_changed_at = CASE WHEN $1::text IS NULL THEN old.avatar_changed_at
+                             ELSE $2::timestamptz END,
+    version           = users.version + 1
+FROM old
+WHERE users.id = old.id
+  AND ($1::text IS NULL
+       OR old.avatar_changed_at IS NULL
+       OR old.avatar_changed_at <= $3::timestamptz)
+RETURNING old.avatar_key AS previous_key
+`
+
+type SetUserAvatarParams struct {
+	AvatarKey     *string
+	Now           time.Time
+	AllowedBefore time.Time
+	UserID        uuid.UUID
+}
+
+// Returns the previous key so the old file can be deleted after the swap. A new photo
+// only lands if the cooldown has passed (checked under the row lock, so two parallel
+// uploads can't both win); clearing (NULL key) is always allowed and keeps the clock.
+func (q *Queries) SetUserAvatar(ctx context.Context, arg SetUserAvatarParams) (*string, error) {
+	row := q.db.QueryRow(ctx, setUserAvatar,
+		arg.AvatarKey,
+		arg.Now,
+		arg.AllowedBefore,
+		arg.UserID,
+	)
+	var previous_key *string
+	err := row.Scan(&previous_key)
+	return previous_key, err
+}
+
 const updatePasswordHash = `-- name: UpdatePasswordHash :exec
 UPDATE users SET password_hash = $2, version = version + 1 WHERE id = $1
 `
@@ -317,17 +445,29 @@ UPDATE users
 SET display_name     = coalesce($1, display_name),
     preferred_locale = coalesce($2, preferred_locale),
     theme            = coalesce($3, theme),
-    division         = coalesce($4, division),
+    font             = coalesce($4, font),
+    division         = coalesce($5, division),
+    journey_stage    = coalesce($6::text, journey_stage),
+    district         = coalesce($7::text, district),
+    interests        = coalesce($8::text[], interests),
+    -- NULL leaves the phone alone; an empty string removes it.
+    phone            = CASE WHEN $9::text IS NULL THEN phone
+                            ELSE nullif($9::text, '') END,
     version          = version + 1
-WHERE id = $5 AND deleted_at IS NULL
-RETURNING id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, division, xp, solved_count, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at
+WHERE id = $10 AND deleted_at IS NULL
+RETURNING id, email, email_verified_at, username, display_name, password_hash, role, preferred_locale, theme, font, division, xp, current_streak, longest_streak, last_active_date, version, created_at, updated_at, deleted_at, phone, district, interests, avatar_key, journey_stage, avatar_changed_at, account_type, pro_until, banned_at, ban_reason
 `
 
 type UpdateUserPreferencesParams struct {
 	DisplayName     *string
 	PreferredLocale *string
 	Theme           *string
+	Font            *string
 	Division        *string
+	JourneyStage    *string
+	District        *string
+	Interests       []string
+	Phone           *string
 	ID              uuid.UUID
 }
 
@@ -336,7 +476,12 @@ func (q *Queries) UpdateUserPreferences(ctx context.Context, arg UpdateUserPrefe
 		arg.DisplayName,
 		arg.PreferredLocale,
 		arg.Theme,
+		arg.Font,
 		arg.Division,
+		arg.JourneyStage,
+		arg.District,
+		arg.Interests,
+		arg.Phone,
 		arg.ID,
 	)
 	var i User
@@ -350,9 +495,9 @@ func (q *Queries) UpdateUserPreferences(ctx context.Context, arg UpdateUserPrefe
 		&i.Role,
 		&i.PreferredLocale,
 		&i.Theme,
+		&i.Font,
 		&i.Division,
 		&i.Xp,
-		&i.SolvedCount,
 		&i.CurrentStreak,
 		&i.LongestStreak,
 		&i.LastActiveDate,
@@ -360,6 +505,16 @@ func (q *Queries) UpdateUserPreferences(ctx context.Context, arg UpdateUserPrefe
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
+		&i.Phone,
+		&i.District,
+		&i.Interests,
+		&i.AvatarKey,
+		&i.JourneyStage,
+		&i.AvatarChangedAt,
+		&i.AccountType,
+		&i.ProUntil,
+		&i.BannedAt,
+		&i.BanReason,
 	)
 	return i, err
 }

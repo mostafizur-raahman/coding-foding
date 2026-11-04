@@ -2,6 +2,7 @@ package domain
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -18,8 +19,10 @@ type LeaderboardEntry struct {
 	Username      string    `json:"username"`
 	DisplayName   string    `json:"display_name"`
 	Division      *string   `json:"division"`
+	District      *string   `json:"district"`
+	AvatarKey     *string   `json:"-"`
+	AvatarURL     *string   `json:"avatar_url"`
 	XP            int64     `json:"xp"`
-	SolvedCount   int32     `json:"solved_count"`
 	CurrentStreak int32     `json:"current_streak"`
 }
 
@@ -28,8 +31,9 @@ type LeaderboardUser struct {
 	Username      string
 	DisplayName   string
 	Division      *string
+	District      *string
+	AvatarKey     *string
 	XP            int64
-	SolvedCount   int32
 	CurrentStreak int32
 }
 
@@ -43,22 +47,62 @@ type Standing struct {
 }
 
 type SnapshotRow struct {
-	TakenAt     time.Time
-	Division    *string
-	UserID      uuid.UUID
-	Rank        int32
-	XP          int64
-	SolvedCount int32
-	Percentile  float64
+	TakenAt    time.Time
+	Division   *string
+	UserID     uuid.UUID
+	Rank       int32
+	XP         int64
+	Percentile float64
 }
 
-// Board is the real-time ranking store (Redis ZSET). division "" = national.
+// Board names: "" is the national board, then "div:<division>" and "dist:<district>".
+// The prefixes matter: many districts share their division's slug (dhaka, sylhet…).
+const NationalBoard = ""
+
+func DivisionBoard(d string) string { return "div:" + d }
+func DistrictBoard(d string) string { return "dist:" + d }
+
+// BoardsFor lists every board a learner ranks on.
+func BoardsFor(division, district *string) []string {
+	boards := []string{NationalBoard}
+	if division != nil {
+		boards = append(boards, DivisionBoard(*division))
+	}
+	if district != nil {
+		boards = append(boards, DistrictBoard(*district))
+	}
+	return boards
+}
+
+// ValidBoard reports whether name is the national board or a known division/district board.
+func ValidBoard(name string) bool {
+	switch {
+	case name == NationalBoard:
+		return true
+	case strings.HasPrefix(name, "div:"):
+		return ValidDivision(strings.TrimPrefix(name, "div:"))
+	case strings.HasPrefix(name, "dist:"):
+		return ValidDistrict(strings.TrimPrefix(name, "dist:"))
+	}
+	return false
+}
+
+// Board is the real-time ranking store (Redis ZSET), one sorted set per board name.
+// Ranked reports whether an account belongs on the leaderboards: learners only. Admins
+// run the site and company accounts hire, so neither competes.
+func Ranked(role Role, accountType string) bool {
+	return role != RoleAdmin && accountType == AccountLearner
+}
+
 type Board interface {
-	Incr(ctx context.Context, userID uuid.UUID, division *string, delta int64) error
-	Top(ctx context.Context, division string, offset, limit int64) ([]ScoredUser, error)
-	Rank(ctx context.Context, userID uuid.UUID, division string) (rank int64, score int64, found bool, err error)
-	Count(ctx context.Context, division string) (int64, error)
-	Replace(ctx context.Context, division string, entries []ScoredUser) error
+	// Incr adds delta to the user's score on each of the given boards.
+	Incr(ctx context.Context, userID uuid.UUID, boards []string, delta int64) error
+	// Remove takes the user off the given boards (e.g. after moving district).
+	Remove(ctx context.Context, userID uuid.UUID, boards []string) error
+	Top(ctx context.Context, board string, offset, limit int64) ([]ScoredUser, error)
+	Rank(ctx context.Context, userID uuid.UUID, board string) (rank int64, score int64, found bool, err error)
+	Count(ctx context.Context, board string) (int64, error)
+	Replace(ctx context.Context, board string, entries []ScoredUser) error
 }
 
 type LeaderboardRepository interface {

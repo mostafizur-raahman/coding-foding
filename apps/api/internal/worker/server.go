@@ -2,7 +2,6 @@ package worker
 
 import (
 	"context"
-	"errors"
 	"log/slog"
 	"time"
 
@@ -18,7 +17,6 @@ type Mailer interface {
 
 type Handlers struct {
 	Mailer      Mailer
-	Submissions *service.SubmissionService
 	Leaderboard *service.LeaderboardService
 	Sessions    domain.SessionRepository
 	Log         *slog.Logger
@@ -33,18 +31,6 @@ func (h *Handlers) Mux() *asynq.ServeMux {
 		}
 		return h.Mailer.Send(ctx, e)
 	})
-	mux.HandleFunc(TypeJudgeRun, func(ctx context.Context, t *asynq.Task) error {
-		p, err := decode[judgePayload](t)
-		if err != nil {
-			return err
-		}
-		err = h.Submissions.Judge(ctx, p.SubmissionID)
-		if errors.Is(err, service.ErrJudgeUnavailable) {
-			// Leave the row 'queued'; the sweeper re-enqueues once a judge is configured.
-			return asynq.SkipRetry
-		}
-		return err
-	})
 	mux.HandleFunc(TypeLeaderboardSnapshot, func(ctx context.Context, _ *asynq.Task) error {
 		return h.Leaderboard.Snapshot(ctx, 1000)
 	})
@@ -56,14 +42,11 @@ func (h *Handlers) Mux() *asynq.ServeMux {
 		h.Log.InfoContext(ctx, "expired sessions deleted", "count", n)
 		return err
 	})
-	mux.HandleFunc(TypeSubmissionsSweep, func(ctx context.Context, _ *asynq.Task) error {
-		return h.Submissions.Sweep(ctx)
-	})
 	return mux
 }
 
 // NewServer builds a bounded worker pool: Concurrency caps goroutines across queues,
-// and queue weights give the judge priority over email and maintenance.
+// and queue weights put auth emails ahead of maintenance.
 func NewServer(redisOpt asynq.RedisConnOpt, concurrency int, log *slog.Logger) *asynq.Server {
 	return asynq.NewServer(redisOpt, asynq.Config{
 		Concurrency:     concurrency,
@@ -89,7 +72,6 @@ func NewScheduler(redisOpt asynq.RedisConnOpt) (*asynq.Scheduler, error) {
 		q    string
 	}{
 		{"@every 10m", TypeLeaderboardSnapshot, QueueLow},
-		{"@every 1m", TypeSubmissionsSweep, QueueDefault},
 		{"0 3 * * *", TypeSessionsCleanup, QueueLow},
 		{"30 3 * * *", TypeLeaderboardRebuild, QueueLow}, // nightly self-heal from Postgres
 	}

@@ -15,7 +15,12 @@ const config: NextConfig = {
   experimental: { optimizePackageImports: ["gsap"] },
   // Same-origin API: refresh cookie stays first-party, no CORS preflights.
   async rewrites() {
-    return [{ source: "/api/v1/:path*", destination: `${API_ORIGIN}/api/v1/:path*` }];
+    return [
+      { source: "/api/v1/:path*", destination: `${API_ORIGIN}/api/v1/:path*` },
+      // Swagger UI + spec, so "Try it out" runs same-origin with the real session cookies.
+      { source: "/api/docs", destination: `${API_ORIGIN}/api/docs` },
+      { source: "/api/openapi.yaml", destination: `${API_ORIGIN}/api/openapi.yaml` },
+    ];
   },
   async headers() {
     return [

@@ -12,8 +12,154 @@ import (
 	"github.com/google/uuid"
 )
 
+const countLessonSections = `-- name: CountLessonSections :one
+SELECT count(*)::int AS total, count(p.section_id)::int AS done
+FROM lesson_sections s
+LEFT JOIN lesson_section_progress p
+  ON p.lesson_id = s.lesson_id AND p.section_id = s.section_id AND p.user_id = $1
+WHERE s.lesson_id = $2
+`
+
+type CountLessonSectionsParams struct {
+	UserID   uuid.UUID
+	LessonID uuid.UUID
+}
+
+type CountLessonSectionsRow struct {
+	Total int32
+	Done  int32
+}
+
+func (q *Queries) CountLessonSections(ctx context.Context, arg CountLessonSectionsParams) (CountLessonSectionsRow, error) {
+	row := q.db.QueryRow(ctx, countLessonSections, arg.UserID, arg.LessonID)
+	var i CountLessonSectionsRow
+	err := row.Scan(&i.Total, &i.Done)
+	return i, err
+}
+
+const getLastSectionCompletion = `-- name: GetLastSectionCompletion :one
+SELECT completed_at FROM lesson_section_progress
+WHERE user_id = $1
+ORDER BY completed_at DESC
+LIMIT 1
+`
+
+func (q *Queries) GetLastSectionCompletion(ctx context.Context, userID uuid.UUID) (time.Time, error) {
+	row := q.db.QueryRow(ctx, getLastSectionCompletion, userID)
+	var completed_at time.Time
+	err := row.Scan(&completed_at)
+	return completed_at, err
+}
+
+const getLessonIsFree = `-- name: GetLessonIsFree :one
+SELECT coalesce(t.free_part IS NOT NULL AND (t.free_part = 'all' OR l.group_slug = t.free_part), false)::bool AS free
+FROM lessons l JOIN tracks t ON t.id = l.track_id
+WHERE l.id = $1 AND l.is_published
+`
+
+// Free = in the track's free part (Part 1), or anywhere in a track whose free part is
+// 'all' (a fully free track). A track with no free part set has none.
+func (q *Queries) GetLessonIsFree(ctx context.Context, id uuid.UUID) (bool, error) {
+	row := q.db.QueryRow(ctx, getLessonIsFree, id)
+	var free bool
+	err := row.Scan(&free)
+	return free, err
+}
+
+const getLessonOpenedAt = `-- name: GetLessonOpenedAt :one
+SELECT opened_at FROM lesson_state WHERE user_id = $1 AND lesson_id = $2
+`
+
+type GetLessonOpenedAtParams struct {
+	UserID   uuid.UUID
+	LessonID uuid.UUID
+}
+
+func (q *Queries) GetLessonOpenedAt(ctx context.Context, arg GetLessonOpenedAtParams) (time.Time, error) {
+	row := q.db.QueryRow(ctx, getLessonOpenedAt, arg.UserID, arg.LessonID)
+	var opened_at time.Time
+	err := row.Scan(&opened_at)
+	return opened_at, err
+}
+
+const getLessonReward = `-- name: GetLessonReward :one
+SELECT id, xp_reward FROM lessons WHERE id = $1 AND is_published
+`
+
+type GetLessonRewardRow struct {
+	ID       uuid.UUID
+	XpReward int32
+}
+
+func (q *Queries) GetLessonReward(ctx context.Context, id uuid.UUID) (GetLessonRewardRow, error) {
+	row := q.db.QueryRow(ctx, getLessonReward, id)
+	var i GetLessonRewardRow
+	err := row.Scan(&i.ID, &i.XpReward)
+	return i, err
+}
+
+const getLessonSection = `-- name: GetLessonSection :one
+SELECT s.section_id, s.position, s.min_read_seconds
+FROM lesson_sections s
+JOIN lessons l ON l.id = s.lesson_id
+WHERE s.lesson_id = $1 AND s.section_id = $2 AND l.is_published
+`
+
+type GetLessonSectionParams struct {
+	LessonID  uuid.UUID
+	SectionID string
+}
+
+type GetLessonSectionRow struct {
+	SectionID      string
+	Position       int32
+	MinReadSeconds int32
+}
+
+func (q *Queries) GetLessonSection(ctx context.Context, arg GetLessonSectionParams) (GetLessonSectionRow, error) {
+	row := q.db.QueryRow(ctx, getLessonSection, arg.LessonID, arg.SectionID)
+	var i GetLessonSectionRow
+	err := row.Scan(&i.SectionID, &i.Position, &i.MinReadSeconds)
+	return i, err
+}
+
+const getNextSection = `-- name: GetNextSection :one
+SELECT s.section_id
+FROM lesson_sections s
+WHERE s.lesson_id = $1
+  AND NOT EXISTS (
+    SELECT 1 FROM lesson_section_progress p
+    WHERE p.user_id = $2 AND p.lesson_id = s.lesson_id AND p.section_id = s.section_id
+  )
+ORDER BY s.position
+LIMIT 1
+`
+
+type GetNextSectionParams struct {
+	LessonID uuid.UUID
+	UserID   uuid.UUID
+}
+
+func (q *Queries) GetNextSection(ctx context.Context, arg GetNextSectionParams) (string, error) {
+	row := q.db.QueryRow(ctx, getNextSection, arg.LessonID, arg.UserID)
+	var section_id string
+	err := row.Scan(&section_id)
+	return section_id, err
+}
+
+const getTrackIDBySlug = `-- name: GetTrackIDBySlug :one
+SELECT id FROM tracks WHERE slug = $1
+`
+
+func (q *Queries) GetTrackIDBySlug(ctx context.Context, slug string) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, getTrackIDBySlug, slug)
+	var id uuid.UUID
+	err := row.Scan(&id)
+	return id, err
+}
+
 const getUserProgressState = `-- name: GetUserProgressState :one
-SELECT id, xp, current_streak, longest_streak, last_active_date, version, division, solved_count
+SELECT id, xp, current_streak, longest_streak, last_active_date, version, division, district, pro_until, role, account_type
 FROM users WHERE id = $1 AND deleted_at IS NULL
 `
 
@@ -25,7 +171,10 @@ type GetUserProgressStateRow struct {
 	LastActiveDate *time.Time
 	Version        int32
 	Division       *string
-	SolvedCount    int32
+	District       *string
+	ProUntil       *time.Time
+	Role           UserRole
+	AccountType    string
 }
 
 func (q *Queries) GetUserProgressState(ctx context.Context, id uuid.UUID) (GetUserProgressStateRow, error) {
@@ -39,7 +188,10 @@ func (q *Queries) GetUserProgressState(ctx context.Context, id uuid.UUID) (GetUs
 		&i.LastActiveDate,
 		&i.Version,
 		&i.Division,
-		&i.SolvedCount,
+		&i.District,
+		&i.ProUntil,
+		&i.Role,
+		&i.AccountType,
 	)
 	return i, err
 }
@@ -56,6 +208,32 @@ type InsertLessonProgressParams struct {
 
 func (q *Queries) InsertLessonProgress(ctx context.Context, arg InsertLessonProgressParams) (int64, error) {
 	result, err := q.db.Exec(ctx, insertLessonProgress, arg.UserID, arg.LessonID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const insertSectionProgress = `-- name: InsertSectionProgress :execrows
+INSERT INTO lesson_section_progress (user_id, lesson_id, section_id, completed_at)
+VALUES ($1, $2, $3, $4)
+ON CONFLICT DO NOTHING
+`
+
+type InsertSectionProgressParams struct {
+	UserID      uuid.UUID
+	LessonID    uuid.UUID
+	SectionID   string
+	CompletedAt time.Time
+}
+
+func (q *Queries) InsertSectionProgress(ctx context.Context, arg InsertSectionProgressParams) (int64, error) {
+	result, err := q.db.Exec(ctx, insertSectionProgress,
+		arg.UserID,
+		arg.LessonID,
+		arg.SectionID,
+		arg.CompletedAt,
+	)
 	if err != nil {
 		return 0, err
 	}
@@ -90,21 +268,55 @@ func (q *Queries) InsertXPEvent(ctx context.Context, arg InsertXPEventParams) (i
 	return result.RowsAffected(), nil
 }
 
+const isLessonCompleted = `-- name: IsLessonCompleted :one
+SELECT EXISTS (SELECT 1 FROM lesson_progress WHERE user_id = $1 AND lesson_id = $2)
+`
+
+type IsLessonCompletedParams struct {
+	UserID   uuid.UUID
+	LessonID uuid.UUID
+}
+
+func (q *Queries) IsLessonCompleted(ctx context.Context, arg IsLessonCompletedParams) (bool, error) {
+	row := q.db.QueryRow(ctx, isLessonCompleted, arg.UserID, arg.LessonID)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
+}
+
+const isSectionCompleted = `-- name: IsSectionCompleted :one
+SELECT EXISTS (
+  SELECT 1 FROM lesson_section_progress WHERE user_id = $1 AND lesson_id = $2 AND section_id = $3
+)
+`
+
+type IsSectionCompletedParams struct {
+	UserID    uuid.UUID
+	LessonID  uuid.UUID
+	SectionID string
+}
+
+func (q *Queries) IsSectionCompleted(ctx context.Context, arg IsSectionCompletedParams) (bool, error) {
+	row := q.db.QueryRow(ctx, isSectionCompleted, arg.UserID, arg.LessonID, arg.SectionID)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
+}
+
 const listCompletedLessonIDs = `-- name: ListCompletedLessonIDs :many
 SELECT lp.lesson_id
 FROM lesson_progress lp
 JOIN lessons l ON l.id = lp.lesson_id
-JOIN milestones m ON m.id = l.milestone_id
-WHERE lp.user_id = $1 AND m.path_id = $2
+WHERE lp.user_id = $1 AND l.track_id = $2
 `
 
 type ListCompletedLessonIDsParams struct {
-	UserID uuid.UUID
-	PathID uuid.UUID
+	UserID  uuid.UUID
+	TrackID uuid.UUID
 }
 
 func (q *Queries) ListCompletedLessonIDs(ctx context.Context, arg ListCompletedLessonIDsParams) ([]uuid.UUID, error) {
-	rows, err := q.db.Query(ctx, listCompletedLessonIDs, arg.UserID, arg.PathID)
+	rows, err := q.db.Query(ctx, listCompletedLessonIDs, arg.UserID, arg.TrackID)
 	if err != nil {
 		return nil, err
 	}
@@ -121,6 +333,153 @@ func (q *Queries) ListCompletedLessonIDs(ctx context.Context, arg ListCompletedL
 		return nil, err
 	}
 	return items, nil
+}
+
+const listDoneSections = `-- name: ListDoneSections :many
+SELECT s.section_id
+FROM lesson_section_progress p
+JOIN lesson_sections s ON s.lesson_id = p.lesson_id AND s.section_id = p.section_id
+WHERE p.user_id = $1 AND p.lesson_id = $2
+ORDER BY s.position
+`
+
+type ListDoneSectionsParams struct {
+	UserID   uuid.UUID
+	LessonID uuid.UUID
+}
+
+func (q *Queries) ListDoneSections(ctx context.Context, arg ListDoneSectionsParams) ([]string, error) {
+	rows, err := q.db.Query(ctx, listDoneSections, arg.UserID, arg.LessonID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []string{}
+	for rows.Next() {
+		var section_id string
+		if err := rows.Scan(&section_id); err != nil {
+			return nil, err
+		}
+		items = append(items, section_id)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listTrackProgress = `-- name: ListTrackProgress :many
+SELECT l.id, l.slug, l.group_slug, l.position,
+       (SELECT count(*) FROM lesson_sections s WHERE s.lesson_id = l.id)::int AS sections_total,
+       (SELECT count(*) FROM lesson_section_progress p
+         WHERE p.lesson_id = l.id AND p.user_id = $1)::int AS sections_done,
+       EXISTS (SELECT 1 FROM lesson_progress lp
+         WHERE lp.lesson_id = l.id AND lp.user_id = $1) AS done,
+       ls.last_section_id
+FROM lessons l
+LEFT JOIN lesson_state ls ON ls.lesson_id = l.id AND ls.user_id = $1
+WHERE l.track_id = $2 AND l.is_published
+ORDER BY l.position
+`
+
+type ListTrackProgressParams struct {
+	UserID  uuid.UUID
+	TrackID uuid.UUID
+}
+
+type ListTrackProgressRow struct {
+	ID            uuid.UUID
+	Slug          string
+	GroupSlug     *string
+	Position      int32
+	SectionsTotal int32
+	SectionsDone  int32
+	Done          bool
+	LastSectionID *string
+}
+
+func (q *Queries) ListTrackProgress(ctx context.Context, arg ListTrackProgressParams) ([]ListTrackProgressRow, error) {
+	rows, err := q.db.Query(ctx, listTrackProgress, arg.UserID, arg.TrackID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListTrackProgressRow{}
+	for rows.Next() {
+		var i ListTrackProgressRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Slug,
+			&i.GroupSlug,
+			&i.Position,
+			&i.SectionsTotal,
+			&i.SectionsDone,
+			&i.Done,
+			&i.LastSectionID,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const lockUserForProgress = `-- name: LockUserForProgress :one
+SELECT id FROM users WHERE id = $1 AND deleted_at IS NULL FOR UPDATE
+`
+
+// Serializes all progress writes of one user, so parallel requests cannot race the read-time gate.
+func (q *Queries) LockUserForProgress(ctx context.Context, id uuid.UUID) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, lockUserForProgress, id)
+	err := row.Scan(&id)
+	return id, err
+}
+
+const openLesson = `-- name: OpenLesson :one
+INSERT INTO lesson_state (user_id, lesson_id, opened_at, last_seen_at)
+SELECT $1, l.id, $2, $2
+FROM lessons l WHERE l.id = $3 AND l.is_published
+ON CONFLICT (user_id, lesson_id) DO UPDATE SET last_seen_at = excluded.last_seen_at
+RETURNING opened_at
+`
+
+type OpenLessonParams struct {
+	UserID   uuid.UUID
+	Now      time.Time
+	LessonID uuid.UUID
+}
+
+// Keeps the original opened_at: re-opening must not reset (or extend) the reading clock.
+func (q *Queries) OpenLesson(ctx context.Context, arg OpenLessonParams) (time.Time, error) {
+	row := q.db.QueryRow(ctx, openLesson, arg.UserID, arg.Now, arg.LessonID)
+	var opened_at time.Time
+	err := row.Scan(&opened_at)
+	return opened_at, err
+}
+
+const setLastSection = `-- name: SetLastSection :exec
+UPDATE lesson_state SET last_section_id = $3, last_seen_at = $4
+WHERE user_id = $1 AND lesson_id = $2
+`
+
+type SetLastSectionParams struct {
+	UserID        uuid.UUID
+	LessonID      uuid.UUID
+	LastSectionID *string
+	LastSeenAt    time.Time
+}
+
+func (q *Queries) SetLastSection(ctx context.Context, arg SetLastSectionParams) error {
+	_, err := q.db.Exec(ctx, setLastSection,
+		arg.UserID,
+		arg.LessonID,
+		arg.LastSectionID,
+		arg.LastSeenAt,
+	)
+	return err
 }
 
 const sumXPByUser = `-- name: SumXPByUser :many

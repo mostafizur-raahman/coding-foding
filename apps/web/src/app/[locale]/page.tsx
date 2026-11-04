@@ -8,7 +8,11 @@ import { Stats } from "@/components/home/Stats";
 import { Journey } from "@/components/journey/Journey";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 
-export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
   setRequestLocale(locale);
   return (

@@ -18,38 +18,33 @@ const (
 )
 
 type UserDTO struct {
-	ID              string  `json:"id"`
-	Email           string  `json:"email"`
-	EmailVerified   bool    `json:"email_verified"`
-	Username        string  `json:"username"`
-	DisplayName     string  `json:"display_name"`
-	Role            string  `json:"role"`
-	PreferredLocale string  `json:"preferred_locale"`
-	Theme           string  `json:"theme"`
-	Division        *string `json:"division"`
-	XP              int64   `json:"xp"`
-	SolvedCount     int32   `json:"solved_count"`
-	CurrentStreak   int32   `json:"current_streak"`
-	LongestStreak   int32   `json:"longest_streak"`
+	ID              string     `json:"id"`
+	Email           string     `json:"email"`
+	EmailVerified   bool       `json:"email_verified"`
+	Username        string     `json:"username"`
+	DisplayName     string     `json:"display_name"`
+	Role            string     `json:"role"`
+	PreferredLocale string     `json:"preferred_locale"`
+	Theme           string     `json:"theme"`
+	Font            string     `json:"font"`
+	Division        *string    `json:"division"`
+	District        *string    `json:"district"`
+	Phone           *string    `json:"phone"`
+	Interests       []string   `json:"interests"`
+	AvatarURL       *string    `json:"avatar_url"`
+	AvatarNextAt    *time.Time `json:"avatar_next_change_at"` // nil = a new photo is allowed now
+	JourneyStage    string     `json:"journey_stage"`
+	AccountType     string     `json:"account_type"` // "learner" | "company"
+	ProUntil        *time.Time `json:"pro_until"`    // Pro while in the future
+	XP              int64      `json:"xp"`
+	CurrentStreak   int32      `json:"current_streak"`
+	LongestStreak   int32      `json:"longest_streak"`
 }
 
 func toUserDTO(u *domain.User) UserDTO {
 	return UserDTO{ID: u.ID.String(), Email: u.Email, EmailVerified: u.EmailVerified, Username: u.Username,
 		DisplayName: u.DisplayName, Role: string(u.Role), PreferredLocale: string(u.PreferredLocale), Theme: u.Theme,
-		Division: u.Division, XP: u.XP, SolvedCount: u.SolvedCount, CurrentStreak: u.CurrentStreak, LongestStreak: u.LongestStreak}
-}
-
-// PublicProfileDTO omits PII (email, settings).
-type PublicProfileDTO struct {
-	Username      string  `json:"username"`
-	DisplayName   string  `json:"display_name"`
-	Role          string  `json:"role"`
-	Division      *string `json:"division"`
-	XP            int64   `json:"xp"`
-	SolvedCount   int32   `json:"solved_count"`
-	CurrentStreak int32   `json:"current_streak"`
-	LongestStreak int32   `json:"longest_streak"`
-	JoinedAt      string  `json:"joined_at"`
+		Font: u.Font, Division: u.Division, District: u.District, Phone: u.Phone, Interests: u.Interests, AvatarURL: mediaURL(u.AvatarKey), AvatarNextAt: service.NextAvatarChange(u, time.Now()), JourneyStage: u.JourneyStage, AccountType: u.AccountType, ProUntil: u.ProUntil, XP: u.XP, CurrentStreak: u.CurrentStreak, LongestStreak: u.LongestStreak}
 }
 
 type authResponse struct {
@@ -93,59 +88,6 @@ func (h *Handlers) writeAuth(w http.ResponseWriter, status int, res *service.Aut
 	httpx.JSON(w, status, authResponse{User: toUserDTO(res.User), AccessToken: res.AccessToken, ExpiresAt: res.AccessExpiresAt})
 }
 
-type registerReq struct {
-	Email       string  `json:"email" validate:"required,email,max=254"`
-	Username    string  `json:"username" validate:"required,min=3,max=32"`
-	DisplayName string  `json:"display_name" validate:"max=64"`
-	Password    string  `json:"password" validate:"required,min=10,max=128"`
-	Locale      string  `json:"locale" validate:"omitempty,oneof=en bn"`
-	Division    *string `json:"division" validate:"omitempty"`
-}
-
-func (h *Handlers) Register(w http.ResponseWriter, r *http.Request) {
-	var req registerReq
-	if err := httpx.Decode(w, r, &req); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	locale, ok := domain.ParseLocale(req.Locale)
-	if !ok {
-		locale = httpx.Locale(r.Context())
-	}
-	if _, err := h.Auth.Register(r.Context(), service.RegisterInput{
-		Email: req.Email, Username: req.Username, DisplayName: req.DisplayName, Password: req.Password,
-		Locale: locale, Division: req.Division,
-	}); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	res, err := h.Auth.Login(r.Context(), req.Email, req.Password, clientInfo(r))
-	if err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	h.writeAuth(w, http.StatusCreated, res)
-}
-
-type loginReq struct {
-	Email    string `json:"email" validate:"required,max=254"`
-	Password string `json:"password" validate:"required,max=128"`
-}
-
-func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
-	var req loginReq
-	if err := httpx.Decode(w, r, &req); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	res, err := h.Auth.Login(r.Context(), req.Email, req.Password, clientInfo(r))
-	if err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	h.writeAuth(w, http.StatusOK, res)
-}
-
 func (h *Handlers) Refresh(w http.ResponseWriter, r *http.Request) {
 	c, err := r.Cookie(refreshCookie)
 	if err != nil {
@@ -172,67 +114,6 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-type tokenReq struct {
-	Token string `json:"token" validate:"required,min=20,max=128"`
-}
-
-func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
-	var req tokenReq
-	if err := httpx.Decode(w, r, &req); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	if err := h.Auth.VerifyEmail(r.Context(), req.Token); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	w.WriteHeader(http.StatusNoContent)
-}
-
-func (h *Handlers) ResendVerification(w http.ResponseWriter, r *http.Request) {
-	if err := h.Auth.ResendVerification(r.Context(), mustUser(r)); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	w.WriteHeader(http.StatusAccepted)
-}
-
-type forgotReq struct {
-	Email string `json:"email" validate:"required,max=254"`
-}
-
-func (h *Handlers) ForgotPassword(w http.ResponseWriter, r *http.Request) {
-	var req forgotReq
-	if err := httpx.Decode(w, r, &req); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	if err := h.Auth.RequestPasswordReset(r.Context(), req.Email); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	w.WriteHeader(http.StatusAccepted) // same response whether or not the email exists
-}
-
-type resetReq struct {
-	Token    string `json:"token" validate:"required,min=20,max=128"`
-	Password string `json:"password" validate:"required,min=10,max=128"`
-}
-
-func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
-	var req resetReq
-	if err := httpx.Decode(w, r, &req); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	if err := h.Auth.ResetPassword(r.Context(), req.Token, req.Password); err != nil {
-		httpx.Error(w, r, err)
-		return
-	}
-	h.clearSession(w)
-	w.WriteHeader(http.StatusNoContent)
-}
-
 func (h *Handlers) Me(w http.ResponseWriter, r *http.Request) {
 	u, err := h.Auth.Me(r.Context(), mustUser(r))
 	if err != nil {
@@ -244,10 +125,15 @@ func (h *Handlers) Me(w http.ResponseWriter, r *http.Request) {
 }
 
 type prefsReq struct {
-	DisplayName *string `json:"display_name" validate:"omitempty,min=1,max=64"`
-	Locale      *string `json:"preferred_locale" validate:"omitempty,oneof=en bn"`
-	Theme       *string `json:"theme" validate:"omitempty,oneof=system midnight obsidian paper dracula solarized matrix"`
-	Division    *string `json:"division" validate:"omitempty"`
+	DisplayName *string  `json:"display_name" validate:"omitempty,min=1,max=64"`
+	Locale      *string  `json:"preferred_locale" validate:"omitempty,oneof=en bn"`
+	Theme       *string  `json:"theme" validate:"omitempty,oneof=system midnight obsidian paper dracula solarized matrix"`
+	Font        *string  `json:"font" validate:"omitempty,oneof=default friendly anek bookish terminal fira plex-mono space-mono"`
+	Division    *string  `json:"division" validate:"omitempty"`
+	Stage       *string  `json:"journey_stage" validate:"omitempty,max=32"`
+	Phone       *string  `json:"phone" validate:"omitempty,max=20"`
+	District    *string  `json:"district" validate:"omitempty,max=32"`
+	Interests   []string `json:"interests" validate:"omitempty,max=20,dive,max=32"`
 }
 
 func (h *Handlers) UpdateMe(w http.ResponseWriter, r *http.Request) {
@@ -256,7 +142,8 @@ func (h *Handlers) UpdateMe(w http.ResponseWriter, r *http.Request) {
 		httpx.Error(w, r, err)
 		return
 	}
-	p := domain.UserPreferences{DisplayName: req.DisplayName, Theme: req.Theme, Division: req.Division}
+	p := domain.UserPreferences{DisplayName: req.DisplayName, Theme: req.Theme, Font: req.Font, Division: req.Division,
+		JourneyStage: req.Stage, Phone: req.Phone, District: req.District, Interests: req.Interests}
 	if req.Locale != nil {
 		l := domain.Locale(*req.Locale)
 		p.Locale = &l

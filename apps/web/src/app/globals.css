@@ -233,6 +233,27 @@ html[lang="bn"] :is(h1, h2, h3) {
   transform-origin: center;
   animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
+/* Logo inside a link (navbar, footer): the journey redraws on hover/focus. */
+@keyframes redraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+a:is(:hover, :focus-visible) .logo-mark .logo-stroke {
+  stroke-dasharray: 1;
+  animation: redraw 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+@keyframes dot-hop {
+  40% {
+    transform: translateY(-0.22em);
+  }
+}
+a:is(:hover, :focus-visible) .wm-dot {
+  animation: dot-hop 0.5s 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
 /* ───────── Corner doodles: a slow, lazy drift (transform only) ───────── */
 @keyframes doodle-float {
@@ -240,6 +261,55 @@ html[lang="bn"] :is(h1, h2, h3) {
   to { transform: translateY(-8px) rotate(3deg); }
 }
 .doodle { animation: doodle-float 6s ease-in-out infinite alternate; }
+.doodle-rock { transform-origin: 50% 70%; animation: doodle-rock 3.2s ease-in-out infinite alternate; }
+@keyframes doodle-rock { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+.doodle-sway { transform-origin: 50% 0; animation: doodle-sway 2.6s ease-in-out infinite alternate; }
+@keyframes doodle-sway { from { transform: rotate(-9deg) translateX(-4px); } to { transform: rotate(7deg) translateX(4px); } }
+@media (prefers-reduced-motion: reduce) { .doodle-rock, .doodle-sway { animation: none; } }
+
+/* ───────── "You vs You" story (leaderboard) ───────── */
+.yvy .yvy-other .walker-body { stroke: var(--who, var(--accent-1)); }
+@keyframes petal-fall {
+  0% { transform: translate(0, -14px) rotate(0deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(-26px, 70px) rotate(160deg); opacity: 0; }
+}
+.yvy-calendar { animation: yvy-sway 3.4s ease-in-out infinite alternate; }
+.yvy-shake { animation: yvy-shake 0.32s ease-in-out infinite alternate; }
+@keyframes yvy-shake { from { rotate: calc(var(--dir, 1) * -7deg); } to { rotate: calc(var(--dir, 1) * 7deg); } }
+@keyframes yvy-sway { from { rotate: -3deg; } to { rotate: 3deg; } }
+.yvy-buzz { animation: yvy-buzz 1.4s ease-in-out infinite; }
+[data-yvy="noise"] > g:nth-child(2) .yvy-buzz { animation-delay: -0.5s; }
+[data-yvy="noise"] > g:nth-child(3) .yvy-buzz { animation-delay: -0.9s; }
+[data-yvy="noise"] > g:nth-child(4) .yvy-buzz { animation-delay: -0.3s; }
+@keyframes yvy-buzz { 0%, 100% { translate: 0 0; rotate: 0deg; } 20% { translate: -1.5px -3px; rotate: -6deg; } 40% { translate: 1.5px -1px; rotate: 6deg; } 60% { translate: 0 -3px; rotate: 0deg; } }
+.yvy-dig { transform-box: view-box; transform-origin: 0 -24px; animation: yvy-dig 0.9s ease-in-out infinite alternate; }
+@keyframes yvy-dig { from { rotate: -10deg; } to { rotate: 22deg; } }
+.yvy-flag { transform-box: fill-box; transform-origin: left center; animation: yvy-flag 0.7s ease-in-out infinite alternate; }
+@keyframes yvy-flag { from { transform: skewY(-8deg) scaleX(0.9); } to { transform: skewY(6deg) scaleX(1); } }
+.yvy-star { transform-box: fill-box; transform-origin: center; animation: yvy-star 1.8s ease-in-out infinite alternate; }
+@keyframes yvy-star { from { opacity: 0.35; scale: 0.7; } to { opacity: 1; scale: 1.1; } }
+@media (prefers-reduced-motion: reduce) { .yvy-calendar, .yvy-buzz, .yvy-dig, .yvy-flag, .yvy-star, .yvy-shake { animation: none; } }
+.yvy .petal {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: petal-fall 9s linear infinite;
+}
+/* Static (no JS / reduced motion): all three lines, the last one as the headline. */
+.yvy-cap { font-size: 0.9rem; color: var(--muted); }
+.yvy-cap-main { margin-top: 0.25rem; font-size: 1.15rem; font-weight: 700; color: var(--fg); }
+/* Animated: the lines share one slot and cross-fade. */
+.yvy[data-animated] .yvy-captions { position: relative; min-height: 4.5rem; }
+.yvy[data-animated] .yvy-cap {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--fg);
+}
 
 /* ───────── "Before → After" section ───────── */
 @keyframes tile-jitter {
@@ -265,6 +335,44 @@ html[lang="bn"] :is(h1, h2, h3) {
 .understood-label { transition: opacity 0.4s ease, transform 0.4s ease; }
 [data-done="false"] .understood-label { opacity: 0.35; }
 [data-done="true"] .understood-label { opacity: 1; }
+
+/* ───────── Sticky note (journey side panel) ───────── */
+/* A real paper note: same yellow in every theme, dark ink, tape, soft curl shadow. */
+.sticky-note {
+  padding: 1.6rem 1.4rem 1.2rem;
+  color: #3b3112;
+  background: linear-gradient(180deg, #fff1a6 0%, #ffe680 70%, #f9d968 100%);
+  border-radius: 2px 2px 18px 2px;
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 0.08),
+    0 18px 30px -14px rgb(0 0 0 / 0.55),
+    inset 0 -14px 20px -16px rgb(120 90 0 / 0.35);
+  transform: rotate(var(--tilt, -2deg));
+  transform-origin: 50% 0;
+}
+[data-theme="paper"] .sticky-note { box-shadow: 0 1px 1px rgb(0 0 0 / 0.06), 0 14px 24px -14px rgb(80 60 0 / 0.35); }
+.sticky-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 92px;
+  height: 26px;
+  translate: -50% 0;
+  rotate: -3deg;
+  background: rgb(255 255 255 / 0.45);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 4% 96%, 0 50%);
+}
+@keyframes sticky-in {
+  0% { opacity: 0; transform: translateY(-36px) rotate(calc(var(--tilt) - 9deg)) scale(1.04); }
+  60% { opacity: 1; transform: translateY(4px) rotate(calc(var(--tilt) + 1.5deg)) scale(1); }
+  100% { opacity: 1; transform: translateY(0) rotate(var(--tilt)) scale(1); }
+}
+@keyframes sticky-out {
+  to { opacity: 0; transform: translate(40px, -26px) rotate(calc(var(--tilt) + 14deg)); }
+}
+.sticky-in { animation: sticky-in 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.sticky-out { animation: sticky-out 0.42s ease-in forwards; pointer-events: none; }
 
 /* ───────── Journey dots ───────── */
 .journey-dot .dot-core,
@@ -292,6 +400,14 @@ html[lang="bn"] :is(h1, h2, h3) {
   to { opacity: 1; transform: none; }
 }
 .hud-in { animation: hud-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* Nav menus: a quick drop-in, short enough that switching menus never feels laggy. */
+@keyframes nav-pop {
+  from { opacity: 0; transform: translateY(-6px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+.nav-pop { animation: nav-pop 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both; transform-origin: top center; }
+@media (prefers-reduced-motion: reduce) { .nav-pop { animation: none; } }
 
 /* ───────── Journey stick figure ───────── */
 /* Pivot limbs at the hip / shoulder in the figure's own user units. */
@@ -327,6 +443,29 @@ html[lang="bn"] :is(h1, h2, h3) {
 .walker.is-cheering .arm-cheer { opacity: 1; }
 .walker.is-cheering .arm-a,
 .walker.is-cheering .arm-b { opacity: 0; }
+/* Double-biceps pose (course route): the arms pump while flexing. */
+.walker .arm-flex { opacity: 0; transform-box: view-box; transform-origin: 0 -66px; }
+.walker.is-flexing .arm-flex { opacity: 1; animation: flex-pump 0.45s ease-in-out infinite alternate; }
+.walker.is-flexing :is(.arm-a, .arm-b, .arm-cheer) { opacity: 0; }
+@keyframes flex-pump { to { transform: scale(1.12, 1.06); } }
+/* Reading (lesson sidebar): an open book, eyes down, a page turning now and then. */
+.walker .arm-read { opacity: 0; }
+.walker.is-riding :is(.arm-a, .arm-b, .arm-cheer) { opacity: 0; }
+/* Handshake: the scene draws the shaking arm, so the walker hides its own on that side. */
+.walker.is-shaking-r :is(.arm-b, .arm-cheer) { opacity: 0; }
+.walker.is-shaking-l :is(.arm-a, .arm-cheer) { opacity: 0; }
+.walker.is-reading .arm-read { opacity: 1; }
+.walker.is-reading :is(.arm-a, .arm-b, .arm-cheer, .arm-flex) { opacity: 0; }
+.walker.is-reading .eye { transform: translateY(2.5px); }
+.walker .book-page { transform-box: view-box; transform-origin: 0 -47px; }
+.walker.is-reading .book-page { animation: page-turn 4s ease-in-out infinite; }
+@keyframes page-turn {
+  0%, 80% { transform: scaleX(1); }
+  90% { transform: scaleX(-1); }
+  100% { transform: scaleX(1); }
+}
+/* Running: same stride, double time. */
+.walker.is-running.is-walking :is(.leg-a, .leg-b, .arm-a, .arm-b) { animation-duration: 0.28s; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -334,4 +473,1092 @@ html[lang="bn"] :is(h1, h2, h3) {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ───────── Course route: a winding path, one station per chapter ───────── */
+/* Each part sets --line; badges, pins and cards on that stretch read it. */
+.route-part { --line: var(--accent-1); }
+
+/* Path (drawn by RouteCanvas): dotted ghost trail + the solid stretch walked so far. */
+.route-ghost { stroke: var(--path-ghost); stroke-width: 4; stroke-dasharray: 1 10; }
+.route-progress { filter: drop-shadow(0 0 6px var(--glow)); }
+[data-theme="paper"] .route-progress { filter: none; }
+
+.route-badge,
+.station-pin {
+  position: relative;
+  z-index: 30; /* above the route walker (z-20), so it never hides a station number */
+  border: 3px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.route-badge[data-reached="true"],
+.station-pin[data-reached="true"],
+.station[data-done="true"] .station-pin { background: var(--line); color: var(--on-accent); }
+.route-badge[data-reached="true"] { box-shadow: 0 0 0 8px color-mix(in oklab, var(--line) 18%, transparent); }
+
+/* Pins sit in the lane beside their card; mobile wiggles them so the path still bends. */
+.station-pin {
+  position: absolute;
+  top: 26px;
+  left: 2px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.station[data-side="right"] .station-pin { left: 12px; }
+@media (min-width: 768px) {
+  .station[data-side="left"] .station-pin { left: calc(50% - 100px + 22px); }
+  .station[data-side="right"] .station-pin { left: calc(50% + 100px - 58px); }
+}
+
+.station-card {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease, translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.station:is(:hover, :focus-within) .station-card {
+  transform: translateY(-4px) rotate(var(--tilt, -0.6deg));
+  border-color: var(--line);
+  box-shadow: 0 26px 50px -30px color-mix(in oklab, var(--line) 75%, transparent);
+}
+.station[data-side="right"] { --tilt: 0.6deg; }
+.station:is(:hover, :focus-within) .station-pin { transform: scale(1.15); }
+
+/* Organic blob behind each doodle; the doodle wiggles on hover. */
+.station-doodle {
+  color: var(--line);
+  background: color-mix(in oklab, var(--line) 13%, transparent);
+  border-radius: 42% 58% 63% 37% / 45% 40% 60% 55%;
+  transform: rotate(-4deg);
+}
+.station:is(:hover, :focus-within) .station-doodle svg { animation: doodle-wiggle 0.6s ease-in-out; }
+@keyframes doodle-wiggle {
+  25% { transform: rotate(-8deg) scale(1.08); }
+  60% { transform: rotate(6deg) scale(1.08); }
+}
+.station-tag {
+  border-radius: 6px;
+  padding: 0.1rem 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: color-mix(in oklab, var(--line) 12%, transparent);
+}
+.station-numeral {
+  position: absolute;
+  top: -1.9rem;
+  right: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in oklab, var(--line) 30%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+@media (min-width: 768px) { .station-numeral { font-size: 7rem; top: -2.6rem; } }
+.station-go { opacity: 0; transform: translateX(-4px); transition: opacity 0.25s ease, transform 0.25s ease; }
+.station:is(:hover, :focus-within) .station-go { opacity: 1; transform: none; }
+
+/* Scroll reveal, only once RouteCanvas is running (no JS → everything visible). */
+[data-route-armed] .station:not([data-shown="true"]) .station-card { opacity: 0; translate: 0 32px; }
+@media (min-width: 768px) {
+  [data-route-armed] .station[data-side="left"]:not([data-shown="true"]) .station-card { translate: -40px 16px; }
+  [data-route-armed] .station[data-side="right"]:not([data-shown="true"]) .station-card { translate: 40px 16px; }
+}
+
+/* Hand-written encouragement in the empty column beside some stations (RouteQuote). */
+.route-quote { transition: opacity 0.8s ease 0.25s, translate 0.8s ease 0.25s; }
+.route-quote-mark {
+  position: absolute;
+  top: -2.6rem;
+  left: -1.4rem;
+  font-family: var(--font-source-serif), serif;
+  font-size: 6rem;
+  line-height: 1;
+  color: color-mix(in oklab, var(--line) 22%, transparent);
+  pointer-events: none;
+}
+.route-quote-underline {
+  stroke: var(--line);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.8s;
+}
+[data-route-armed] .station:not([data-shown="true"]) .route-quote { opacity: 0; translate: 0 18px; }
+[data-route-armed] .station:not([data-shown="true"]) .route-quote-underline { stroke-dashoffset: 1; }
+
+/* The learner's speech bubble (RouteCanvas positions it above their head). */
+.walk-bubble {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  padding: 0.45rem 0.9rem;
+  border: 2px solid var(--fg);
+  border-radius: 18px 18px 4px 18px; /* tail corner points down at the learner */
+  background: var(--bg-elev);
+  color: var(--fg);
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.walk-bubble[data-show="true"] { opacity: 1; }
+
+/* Route ticket: punched stub with half-circle notches. */
+.ticket {
+  position: relative;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  transform: rotate(-1.5deg);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 30px 60px -36px var(--glow);
+}
+.ticket:hover { transform: rotate(0deg); }
+.ticket-stub { position: relative; border-top: 2px dashed var(--border); }
+.ticket-stub::before,
+.ticket-stub::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.ticket-stub::before { left: -12px; clip-path: inset(0 0 0 50%); }
+.ticket-stub::after { right: -12px; clip-path: inset(0 50% 0 0); }
+
+/* ───────── Lesson article (Markdown from content/) ───────── */
+.lesson { font-size: 1.075rem; line-height: 1.85; }
+.lesson > * + * { margin-top: 1.1em; }
+.lesson h2 {
+  margin-top: 2.6em;
+  scroll-margin-top: 6rem;
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.lesson h3 { margin-top: 2em; scroll-margin-top: 6rem; font-size: 1.3rem; font-weight: 700; }
+.lesson h2 + *, .lesson h3 + * { margin-top: 0.6em; }
+.lesson a { color: var(--accent-2); text-decoration: underline; text-underline-offset: 3px; }
+.lesson strong { color: var(--fg); font-weight: 700; }
+.lesson ul, .lesson ol { padding-left: 1.4em; }
+.lesson ul { list-style: disc; }
+.lesson ol { list-style: decimal; }
+.lesson li + li { margin-top: 0.35em; }
+.lesson li::marker { color: var(--line, var(--accent-1)); }
+.lesson hr { border: 0; border-top: 2px dashed var(--border); margin: 2.5em 0; }
+.lesson :not(pre) > code {
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+.lesson table { display: block; overflow-x: auto; width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.lesson th, .lesson td { padding: 0.55em 0.9em; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+.lesson th { background: var(--bg-elev-2); font-weight: 700; }
+.lesson blockquote { border-left: 4px solid var(--border); padding-left: 1em; color: var(--muted); }
+
+/* Callouts (> [!tip] in Obsidian) */
+.lesson .callout {
+  --c: var(--accent-1);
+  padding: 1rem 1.2rem;
+  border: 1px solid color-mix(in oklab, var(--c) 40%, var(--border));
+  border-left: 5px solid var(--c);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--c) 8%, var(--bg-elev));
+}
+.lesson .callout[data-callout="tip"] { --c: var(--accent-2); }
+.lesson .callout[data-callout="warning"] { --c: #e7a33e; }
+.lesson .callout[data-callout="danger"] { --c: var(--danger); }
+/* [!world]: the real-world problem a section solves, with a small globe before its title */
+.lesson .callout[data-callout="world"] {
+  --c: color-mix(in oklab, var(--accent-2) 55%, var(--accent-1));
+  border-style: dashed;
+  border-left-style: solid;
+}
+.lesson .callout[data-callout="world"] .callout-title::before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.45em;
+  vertical-align: -0.15em;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.lesson .callout > * + * { margin-top: 0.6em; }
+.lesson .callout-title { font-weight: 700; color: var(--c); }
+.lesson details.callout > summary { cursor: pointer; list-style: none; }
+.lesson details.callout > summary::before { content: "▸ "; }
+.lesson details.callout[open] > summary::before { content: "▾ "; }
+
+/* Code blocks: Shiki emits VS Code Dark+ / Light+ colours as CSS vars. */
+.lesson pre.shiki {
+  position: relative;
+  overflow-x: auto;
+  padding: 2.6rem 1.2rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--shiki-dark-bg) !important;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+.lesson pre.shiki span { color: var(--shiki-dark); }
+[data-theme="paper"] .lesson pre.shiki { background: var(--shiki-light-bg) !important; }
+[data-theme="paper"] .lesson pre.shiki span { color: var(--shiki-light); }
+/* window chrome: three dots + language */
+.lesson pre.shiki::before {
+  content: "";
+  position: absolute;
+  top: 0.95rem;
+  left: 1.1rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: #ff5f57;
+  box-shadow: 16px 0 #febc2e, 32px 0 #28c840;
+}
+.lesson pre.shiki::after {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0.6rem;
+  right: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b8b8b;
+}
+
+/* Code tabs: one example, a tab per language; the block below loses its top corners. */
+.lesson .code-tabs { margin: 1.5em 0; }
+.lesson .code-tabs-bar {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 4px 4px 0;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  background: var(--bg-elev);
+}
+.lesson .code-tabs-bar button {
+  flex-shrink: 0;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px 10px 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  transition: color 0.15s, background-color 0.15s;
+}
+.lesson .code-tabs-bar button:hover { color: var(--fg); }
+/* Same surface as the code block below it: Shiki's Dark+ / Light+ backgrounds. */
+.lesson .code-tabs-bar button[aria-selected="true"] {
+  color: #d4d4d4;
+  background: #1e1e1e;
+  box-shadow: inset 0 2px 0 var(--accent-2);
+}
+[data-theme="paper"] .lesson .code-tabs-bar button[aria-selected="true"] { color: #1f1f1f; background: #ffffff; }
+.lesson .code-tabs pre.shiki { margin: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+
+/* ───────── Lesson diagrams ───────── */
+.dg { margin: 2em 0; }
+.dg-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-elev); }
+.dg-svg { display: block; width: 100%; min-width: 560px; height: auto; padding: 0.5rem; }
+.dg figcaption { margin-top: 0.6rem; text-align: center; font-size: 0.9rem; color: var(--muted); }
+.dg text { fill: var(--fg); font-family: var(--font-mono); font-size: 11px; text-anchor: middle; }
+.dg .dg-label { font-family: var(--font-sans); font-size: 13px; font-weight: 700; }
+.dg .dg-left { text-anchor: start; }
+.dg .dg-muted { fill: var(--muted); }
+.dg .dg-small { font-size: 9.5px; }
+.dg .dg-accent { fill: var(--accent-1); }
+.dg .dg-res-text { fill: var(--accent-2); font-weight: 700; }
+.dg .dg-ink { stroke: var(--fg); }
+.dg .dg-muted-stroke { stroke: var(--muted); }
+.dg .dg-dot { fill: var(--muted); }
+.dg .dg-led { fill: var(--accent-2); animation: dg-blink 1.4s ease-in-out infinite alternate; }
+.dg .dg-lane { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 4 6; fill: none; }
+.dg .dg-paper { fill: var(--bg); stroke: var(--border); stroke-width: 1.5; }
+.dg .dg-req-box { fill: color-mix(in oklab, var(--accent-1) 16%, var(--bg)); stroke: var(--accent-1); stroke-width: 1.5; }
+.dg .dg-res-box { fill: color-mix(in oklab, var(--accent-2) 16%, var(--bg)); stroke: var(--accent-2); stroke-width: 1.5; }
+.dg .dg-band { stroke-width: 1.5; }
+.dg .dg-band-a { fill: color-mix(in oklab, var(--accent-1) 16%, transparent); stroke: var(--accent-1); }
+.dg .dg-band-b { fill: color-mix(in oklab, var(--accent-2) 14%, transparent); stroke: var(--accent-2); }
+.dg .dg-band-gap { fill: none; stroke: var(--muted); stroke-dasharray: 4 4; }
+.dg .dg-band-c { fill: color-mix(in oklab, #e7a33e 16%, transparent); stroke: #e7a33e; }
+.dg .dg-brace { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.dg .dg-arrow { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.dg .dg-arrow-req { stroke: var(--accent-1); }
+.dg .dg-arrow-res { stroke: var(--accent-2); }
+@keyframes dg-blink { to { opacity: 0.25; } }
+
+/* restaurant: the waiter shuttles order → kitchen → dish back */
+.dg .dg-waiter { animation: dg-waiter 7s ease-in-out infinite; }
+.dg .dg-slip { animation: dg-slip 7s step-end infinite; }
+.dg .dg-plate { animation: dg-plate 7s step-end infinite; }
+@keyframes dg-waiter {
+  0%, 6% { transform: translate(160px, 160px); }
+  44%, 56% { transform: translate(420px, 160px); }
+  94%, 100% { transform: translate(160px, 160px); }
+}
+@keyframes dg-slip { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes dg-plate { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+
+/* request → response */
+.dg .dg-req { animation: dg-req 6s ease-in-out infinite; }
+.dg .dg-res { animation: dg-res 6s ease-in-out infinite; }
+@keyframes dg-req {
+  0% { transform: translate(180px, 44px); opacity: 0; }
+  6% { opacity: 1; }
+  40% { transform: translate(305px, 44px); opacity: 1; }
+  48%, 100% { transform: translate(305px, 44px); opacity: 0; }
+}
+@keyframes dg-res {
+  0%, 46% { transform: translate(305px, 110px); opacity: 0; }
+  52% { opacity: 1; }
+  88% { transform: translate(180px, 110px); opacity: 1; }
+  96%, 100% { transform: translate(180px, 110px); opacity: 0; }
+}
+
+/* CORS: steps appear one after another */
+.dg .dg-step { animation: 9s ease-in-out infinite; }
+.dg .dg-step-1 { animation-name: dg-step-1; }
+.dg .dg-step-2 { animation-name: dg-step-2; }
+.dg .dg-step-3 { animation-name: dg-step-3; }
+.dg .dg-step-4 { animation-name: dg-step-4; }
+@keyframes dg-step-1 { 0% { opacity: 0; } 5%, 86% { opacity: 1; } 94%, 100% { opacity: 0; } }
+@keyframes dg-step-2 { 0%, 18% { opacity: 0; } 24%, 86% { opacity: 1; } 94%, 100% { opacity: 0; } }
+@keyframes dg-step-3 { 0%, 38% { opacity: 0; } 44%, 86% { opacity: 1; } 94%, 100% { opacity: 0; } }
+@keyframes dg-step-4 { 0%, 56% { opacity: 0; } 62%, 86% { opacity: 1; } 94%, 100% { opacity: 0; } }
+/* DSA course: staggered reveal (--d = order), curves that draw themselves */
+.dg .dg-seq { animation: dg-seq 10s calc(var(--d) * 0.7s) infinite backwards; }
+@keyframes dg-seq { 0% { opacity: 0; } 4%, 70% { opacity: 1; } 76%, 100% { opacity: 0; } }
+.dg .dg-seq-hold { animation-name: dg-seq-hold; }
+@keyframes dg-seq-hold { 0% { opacity: 0; } 4%, 85% { opacity: 1; } 90%, 100% { opacity: 0; } }
+.dg .dg-draw { stroke-dasharray: 700; animation: dg-draw 10s ease-out infinite backwards; }
+@keyframes dg-draw { 0% { stroke-dashoffset: 700; } 25%, 85% { stroke-dashoffset: 0; } 95%, 100% { stroke-dashoffset: 700; } }
+.dg .dg-curve-good { stroke: var(--accent-2); }
+.dg .dg-curve-mid { stroke: var(--accent-1); }
+.dg .dg-curve-bad { stroke: #e7a33e; }
+/* DSA: three machines race the same work; bars stop at different times, labels follow */
+.dg .dg-race { transform-box: fill-box; transform-origin: left center; animation: 9s linear infinite; }
+.dg .dg-race-fast { animation-name: dg-race-fast; }
+.dg .dg-race-mid { animation-name: dg-race-mid; }
+.dg .dg-race-slow { animation-name: dg-race-slow; }
+@keyframes dg-race-fast { 0% { transform: scaleX(0); } 12%, 90% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes dg-race-mid { 0% { transform: scaleX(0); } 38%, 90% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes dg-race-slow { 0% { transform: scaleX(0); } 72%, 90% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+.dg .dg-done { animation: 9s linear infinite; }
+.dg .dg-done-fast { animation-name: dg-done-fast; }
+.dg .dg-done-mid { animation-name: dg-done-mid; }
+.dg .dg-done-slow { animation-name: dg-done-slow; }
+@keyframes dg-done-fast { 0%, 11% { opacity: 0; } 14%, 90% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes dg-done-mid { 0%, 37% { opacity: 0; } 40%, 90% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes dg-done-slow { 0%, 71% { opacity: 0; } 74%, 90% { opacity: 1; } 100% { opacity: 0; } }
+
+/* layers: one packet goes down the client stack, over the wire, up the server stack */
+.dg .dg-packet { animation: dg-packet 6s ease-in-out infinite; }
+@keyframes dg-packet {
+  0%, 4% { transform: translate(117px, 46px); }
+  36% { transform: translate(117px, 286px); }
+  60% { transform: translate(497px, 286px); }
+  92%, 100% { transform: translate(497px, 46px); }
+}
+
+/* HTTP/1.1 vs HTTP/2: the same data streams through both pipes */
+.dg .dg-stream { animation: dg-stream 7s linear infinite; }
+@keyframes dg-stream {
+  from { transform: translate(-360px, 0); }
+  to { transform: translate(560px, 0); }
+}
+
+/* ── OS diagrams ── */
+/* OS sandwich: four requests take turns (2s each) through the OS to their hardware */
+.dg .dg-turn { animation: dg-turn 8s ease-in-out infinite backwards; }
+.dg .dg-hw-glow { fill: var(--accent-2); opacity: 0; animation: dg-hw-glow 8s ease-in-out infinite; }
+.dg .dg-turn-2 { animation-delay: 2s; }
+.dg .dg-turn-3 { animation-delay: 4s; }
+.dg .dg-turn-4 { animation-delay: 6s; }
+/* waiting (dim, under its program) → its turn → back in the queue */
+@keyframes dg-turn {
+  0% { transform: translate(0, 0); opacity: 0.45; }
+  3% { transform: translate(0, 0); opacity: 1; }
+  10%, 14% { transform: translate(0, 56px); opacity: 1; }
+  22% { transform: translate(0, 178px); opacity: 1; }
+  25% { transform: translate(0, 178px); opacity: 0; }
+  27% { transform: translate(0, 0); opacity: 0; }
+  34%, 100% { transform: translate(0, 0); opacity: 0.45; }
+}
+@keyframes dg-hw-glow { 0%, 18% { opacity: 0; } 21% { opacity: 0.28; } 30%, 100% { opacity: 0; } }
+
+/* System call: request crosses into the kernel, reaches hardware; the answer comes back up */
+.dg .dg-sys-req { animation: dg-sys-req 6s ease-in-out infinite; }
+.dg .dg-sys-res { animation: dg-sys-res 6s ease-in-out infinite; }
+.dg .dg-kernel-glow { fill: var(--accent-2); opacity: 0; animation: dg-kernel-glow 6s ease-in-out infinite; }
+.dg .dg-mode-user { animation: dg-mode-user 6s step-end infinite; }
+.dg .dg-mode-kernel { opacity: 0; animation: dg-mode-kernel 6s step-end infinite; }
+@keyframes dg-sys-req {
+  0% { transform: translate(0, 0); opacity: 0; }
+  5% { opacity: 1; }
+  28% { transform: translate(0, 92px); opacity: 1; }
+  44% { transform: translate(0, 204px); opacity: 1; }
+  50%, 100% { transform: translate(0, 204px); opacity: 0; }
+}
+@keyframes dg-sys-res {
+  0%, 52% { transform: translate(0, 0); opacity: 0; }
+  56% { opacity: 1; }
+  84% { transform: translate(0, -84px); opacity: 1; }
+  90%, 100% { transform: translate(0, -84px); opacity: 0; }
+}
+/* the mode flips when the request crosses the line (~22%) and when the answer does (~69%) */
+@keyframes dg-kernel-glow { 0%, 22% { opacity: 0; } 28%, 66% { opacity: 0.16; } 72%, 100% { opacity: 0; } }
+@keyframes dg-mode-user { 0% { opacity: 1; } 22% { opacity: 0; } 69% { opacity: 1; } }
+@keyframes dg-mode-kernel { 0% { opacity: 0; } 22% { opacity: 1; } 69% { opacity: 0; } }
+
+/* Kernel types: a driver crashes — monolithic/hybrid panic, the microkernel restarts one service */
+.dg .dg-fault { fill: var(--danger); opacity: 0; }
+.dg .dg-fault-driver { animation: dg-fault-driver 9s ease-in-out infinite; }
+.dg .dg-fault-all { animation: dg-fault-all 9s ease-in-out infinite; }
+.dg .dg-fault-micro { animation: dg-fault-micro 9s ease-in-out infinite; }
+.dg .dg-panic { opacity: 0; animation: dg-panic 9s ease-in-out infinite; }
+.dg .dg-panic-pill { fill: var(--danger); }
+.dg .dg-panic .dg-panic-text { fill: #fff; font-weight: 700; }
+.dg .dg-restarted { opacity: 0; animation: dg-restarted 9s ease-in-out infinite; }
+.dg .dg-msg { fill: var(--accent-1); animation: dg-msg 2.4s linear infinite; }
+.dg .dg-msg-2 { animation-delay: 0.8s; }
+.dg .dg-msg-3 { animation-delay: 1.6s; }
+/* a crashing service's label turns white while its box is red */
+.dg .dg-fault-driver-label { animation: dg-fault-driver-label 9s ease-in-out infinite; }
+.dg .dg-fault-micro-label { animation: dg-fault-micro-label 9s ease-in-out infinite; }
+@keyframes dg-fault-driver-label { 0%, 14% { fill: var(--fg); } 18%, 30% { fill: #fff; font-weight: 700; } 34%, 100% { fill: var(--fg); } }
+@keyframes dg-fault-micro-label { 0%, 14% { fill: var(--fg); } 18%, 38% { fill: #fff; font-weight: 700; } 46%, 100% { fill: var(--fg); } }
+@keyframes dg-fault-driver { 0%, 14% { opacity: 0; } 18%, 30% { opacity: 0.85; } 34%, 100% { opacity: 0; } }
+@keyframes dg-fault-all { 0%, 28% { opacity: 0; } 34%, 72% { opacity: 0.6; } 80%, 100% { opacity: 0; } }
+@keyframes dg-panic { 0%, 32% { opacity: 0; } 36%, 72% { opacity: 1; } 80%, 100% { opacity: 0; } }
+@keyframes dg-fault-micro { 0%, 14% { opacity: 0; } 18%, 30% { opacity: 0.85; } 34% { opacity: 0.2; } 38% { opacity: 0.85; } 46%, 100% { opacity: 0; } }
+@keyframes dg-restarted { 0%, 46% { opacity: 0; } 50%, 74% { opacity: 1; } 80%, 100% { opacity: 0; } }
+@keyframes dg-msg {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { transform: translate(0, 66px); opacity: 1; }
+  100% { transform: translate(0, 66px); opacity: 0; }
+}
+
+/* Syscall journey: the call hops 1 → 5 (positions relative to the dot's start at 96,30) */
+.dg .dg-hop { animation: dg-hop 10s ease-in-out infinite; }
+.dg .dg-hop-dot { fill: var(--accent-1); stroke: var(--bg); stroke-width: 2; }
+.dg .dg-hop-dot-res { fill: var(--accent-2); stroke: var(--bg); stroke-width: 2; }
+.dg .dg-stop-glow { fill: var(--accent-2); opacity: 0; animation: 10s ease-in-out infinite; }
+.dg .dg-stop-1 { animation-name: dg-stop-1; }
+.dg .dg-stop-2 { animation-name: dg-stop-2; }
+.dg .dg-stop-3 { animation-name: dg-stop-3; }
+.dg .dg-stop-4 { animation-name: dg-stop-4; }
+.dg .dg-stop-5 { animation-name: dg-stop-5; }
+.dg .dg-mode-kernel-j { opacity: 0; animation: dg-mode-kernel-j 10s step-end infinite; }
+.dg .dg-mode-user-j { animation: dg-mode-user-j 10s step-end infinite; }
+@keyframes dg-hop {
+  0%, 12% { transform: translate(0, 0); }
+  20%, 32% { transform: translate(170px, 66px); }
+  40%, 52% { transform: translate(170px, 150px); }
+  60%, 72% { transform: translate(354px, 150px); }
+  80%, 96% { transform: translate(420px, 0); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes dg-stop-1 { 0%, 12% { opacity: 0.22; } 16%, 100% { opacity: 0; } }
+@keyframes dg-stop-2 { 0%, 18% { opacity: 0; } 22%, 32% { opacity: 0.22; } 36%, 100% { opacity: 0; } }
+@keyframes dg-stop-3 { 0%, 38% { opacity: 0; } 42%, 52% { opacity: 0.22; } 56%, 100% { opacity: 0; } }
+@keyframes dg-stop-4 { 0%, 58% { opacity: 0; } 62%, 72% { opacity: 0.22; } 76%, 100% { opacity: 0; } }
+@keyframes dg-stop-5 { 0%, 78% { opacity: 0; } 82%, 96% { opacity: 0.22; } 100% { opacity: 0; } }
+@keyframes dg-mode-kernel-j { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 0; } }
+@keyframes dg-mode-user-j { 0% { opacity: 1; } 20% { opacity: 0; } 80% { opacity: 1; } }
+
+/* Traps, exceptions, interrupts: each event reaches the kernel while the program pauses */
+.dg .dg-ev { opacity: 0; animation: 9s ease-in-out infinite; }
+.dg .dg-ev-trap { animation-name: dg-ev-out; }
+.dg .dg-ev-fault { animation-name: dg-ev-out; animation-delay: 3s; animation-fill-mode: backwards; }
+.dg .dg-ev-irq { animation-name: dg-ev-in; animation-delay: 6s; animation-fill-mode: backwards; }
+.dg .dg-ev-pill { fill: var(--accent-1); }
+.dg .dg-ev-pill-fault { fill: var(--danger); }
+.dg .dg-ev .dg-ev-text { fill: #fff; font-weight: 700; }
+.dg .dg-pause { fill: var(--muted); opacity: 0; animation: dg-pause 9s ease-in-out infinite; }
+.dg .dg-ev-fault-pause { animation-delay: 3s; animation-fill-mode: backwards; }
+.dg .dg-ev-irq-pause { animation-delay: 6s; animation-fill-mode: backwards; }
+/* out of the program into the gap before the kernel (pill rests between the boxes) */
+@keyframes dg-ev-out {
+  0% { transform: translate(-60px, 0); opacity: 0; }
+  4% { opacity: 1; }
+  14% { transform: translate(14px, 0); opacity: 1; }
+  24%, 100% { transform: translate(14px, 0); opacity: 0; }
+}
+/* from the keyboard (x 560) into the same gap */
+@keyframes dg-ev-in {
+  0% { transform: translate(0, 0); opacity: 0; }
+  4% { opacity: 1; }
+  14% { transform: translate(-254px, 0); opacity: 1; }
+  24%, 100% { transform: translate(-254px, 0); opacity: 0; }
+}
+.dg .dg-kglow { fill: var(--accent-2); opacity: 0; animation: dg-kglow 9s ease-in-out infinite; }
+@keyframes dg-kglow { 0%, 12% { opacity: 0; } 16%, 26% { opacity: 0.28; } 32%, 100% { opacity: 0; } }
+@keyframes dg-pause { 0%, 8% { opacity: 0; } 12%, 26% { opacity: 0.35; } 32%, 100% { opacity: 0; } }
+
+/* vDSO: the fast dot zips across; the slow one goes down and back */
+.dg .dg-fast { animation: dg-fast 6s ease-in-out infinite; }
+.dg .dg-slow { animation: dg-slow 6s ease-in-out infinite; }
+@keyframes dg-fast {
+  0% { transform: translate(0, 0); opacity: 0; }
+  3% { opacity: 1; }
+  12% { transform: translate(160px, 0); opacity: 1; }
+  16% { transform: translate(160px, 0); opacity: 0; }
+  17% { transform: translate(0, 0); opacity: 0; }
+  20% { opacity: 1; }
+  29% { transform: translate(160px, 0); opacity: 1; }
+  33% { transform: translate(160px, 0); opacity: 0; }
+  34% { transform: translate(0, 0); opacity: 0; }
+  37% { opacity: 1; }
+  46% { transform: translate(160px, 0); opacity: 1; }
+  50%, 100% { transform: translate(160px, 0); opacity: 0; }
+}
+@keyframes dg-slow {
+  0% { transform: translate(0, 0); opacity: 0; }
+  3% { opacity: 1; }
+  30% { transform: translate(0, 113px); }
+  50% { transform: translate(99px, 113px); opacity: 1; }
+  58% { transform: translate(99px, 113px); }
+  78% { transform: translate(0, 113px); }
+  96% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(0, 0); opacity: 0; }
+}
+
+/* Reduced motion: drop the animations so each part rests at its readable position. */
+/* ── Blog: LLM ecosystem ── */
+.dg .dg-warn-text { fill: #e7a33e; font-weight: 700; }
+.dg .dg-solid { fill: color-mix(in oklab, var(--accent-2) 55%, transparent); }
+.dg .dg-fuzzy { fill: color-mix(in oklab, #e7a33e 30%, transparent); stroke: #e7a33e; stroke-width: 1.5; stroke-dasharray: 3 4; animation: dg-fuzzy 1.6s ease-in-out infinite alternate; }
+@keyframes dg-fuzzy { to { opacity: 0.3; } }
+
+/* tokens: pills appear one by one, then the model's next-token guess */
+.dg .dg-tok { animation: dg-tok 8s ease-out infinite both; }
+.dg .dg-tok-next { animation-delay: 3.8s; }
+@keyframes dg-tok { 0% { opacity: 0; } 5%, 80% { opacity: 1; } 90%, 100% { opacity: 0; } }
+
+/* context window: the conversation slides left, out of the window and into the fog */
+.dg .dg-ctx-strip { animation: dg-ctx 18s linear infinite; }
+@keyframes dg-ctx { to { transform: translateX(-744px); } }
+.dg .dg-ctx-fog { fill: var(--bg-elev); opacity: 0.78; }
+.dg .dg-ctx-window { fill: none; stroke: var(--accent-2); stroke-width: 3; }
+
+/* lossy zip: bits of the internet flow into the model */
+.dg .dg-zip-bit { fill: var(--accent-1); animation: dg-zip 3s ease-in infinite both; }
+.dg .dg-zip-bit-2 { animation-delay: 1s; }
+.dg .dg-zip-bit-3 { animation-delay: 2s; }
+@keyframes dg-zip {
+  0% { transform: translate(130px, 110px); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(262px, 110px); opacity: 0; }
+}
+
+/* ── Blog: Habitat ── */
+.dg .dg-bad-pill { fill: color-mix(in oklab, #e7a33e 18%, var(--bg)); stroke: #e7a33e; stroke-width: 1.5; }
+.dg .dg-bad-dot { fill: #e7a33e; }
+.dg .dg-good-dot { fill: var(--accent-2); }
+.dg .dg-fuzzy-solid { fill: color-mix(in oklab, #e7a33e 70%, transparent); }
+
+/* library vs service: the fix lands box by box (one gets rolled back) vs everywhere at once */
+.dg .dg-ship { animation: 12s ease-in-out infinite both; }
+.dg .dg-ship-1 { animation-name: dg-ship-1; }
+.dg .dg-ship-2 { animation-name: dg-ship-2; }
+.dg .dg-ship-3 { animation-name: dg-ship-3; }
+.dg .dg-ship-4 { animation-name: dg-ship-4; }
+.dg .dg-ship-all { animation-name: dg-ship-all; }
+.dg .dg-ship-rollback { opacity: 0; } /* at rest (reduced motion): the rollback won */
+.dg .dg-rollback-note { animation: dg-rollback-note 12s ease-in-out infinite both; }
+@keyframes dg-ship-1 { 0%, 12% { opacity: 0; } 16%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes dg-ship-2 { 0%, 28% { opacity: 0; } 32%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes dg-ship-3 { 0%, 44% { opacity: 0; } 48%, 66% { opacity: 1; } 70%, 100% { opacity: 0; } }
+@keyframes dg-ship-4 { 0%, 58% { opacity: 0; } 62%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes dg-ship-all { 0%, 12% { opacity: 0; } 16%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes dg-rollback-note { 0%, 66% { opacity: 0; } 70%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+
+/* tail latency: a curtain slides right at constant speed, revealing each call as it runs */
+.dg .dg-curtain { fill: var(--bg-elev); animation: dg-curtain 6s linear infinite both; }
+@keyframes dg-curtain {
+  0% { transform: translateX(-470px); }
+  75%, 92% { transform: translateX(0); }
+  100% { transform: translateX(0); opacity: 0; }
+}
+
+/* query guardrail: one heavy query pins the CPU; simple get/put flow steadily */
+.dg .dg-heavy { animation: dg-heavy 6s ease-in-out infinite both; }
+@keyframes dg-heavy {
+  0% { transform: translateX(0); }
+  30%, 100% { transform: translateX(22px); }
+}
+.dg .dg-stuck { animation: dg-stuck 0.6s ease-in-out infinite alternate; }
+@keyframes dg-stuck { to { transform: translateY(-2px); } }
+.dg .dg-gauge { transform-box: fill-box; transform-origin: left center; }
+.dg .dg-gauge-hot { fill: #e7a33e; animation: dg-gauge-hot 6s ease-in infinite both; }
+@keyframes dg-gauge-hot { 0% { transform: scaleX(0.25); } 35%, 100% { transform: scaleX(1); } }
+.dg .dg-gauge-calm { fill: var(--accent-2); animation: dg-gauge-calm 2.4s ease-in-out infinite alternate; }
+@keyframes dg-gauge-calm { from { transform: scaleX(0.3); } to { transform: scaleX(0.42); } }
+.dg .dg-flow { animation: dg-flow 3s linear infinite both; }
+@keyframes dg-flow {
+  0% { transform: translateX(0); opacity: 0; }
+  15% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(70px); opacity: 0; }
+}
+
+/* Rust rewrite: Python bars fill, then the much shorter Rust bars */
+.dg .dg-grow { transform-box: fill-box; transform-origin: left center; animation: dg-grow 7s ease-out infinite both; }
+.dg .dg-grow-late { animation-name: dg-grow-late; }
+.dg .dg-grow-note { animation: dg-grow-note 7s ease-out infinite both; }
+@keyframes dg-grow { 0% { transform: scaleX(0); } 25%, 92% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes dg-grow-late { 0%, 30% { transform: scaleX(0); } 45%, 92% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes dg-grow-note { 0%, 45% { opacity: 0; } 52%, 92% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ── DevOps: Linux for servers ── */
+.dg .dg-arrow-bad { stroke: #e7a33e; }
+
+/* pipe: a dot rides each pipe segment as the stages fill in */
+.dg .dg-pipe-dot { fill: var(--accent-1); animation: 9s ease-in-out infinite both; }
+.dg .dg-pipe-dot-1 { animation-name: dg-pipe-1; }
+.dg .dg-pipe-dot-2 { animation-name: dg-pipe-2; }
+.dg .dg-pipe-dot-3 { animation-name: dg-pipe-3; }
+@keyframes dg-pipe-1 { 0%, 8% { opacity: 0; transform: translate(158px, 46px); } 10% { opacity: 1; } 20% { opacity: 1; transform: translate(170px, 46px); } 22%, 100% { opacity: 0; transform: translate(170px, 46px); } }
+@keyframes dg-pipe-2 { 0%, 28% { opacity: 0; transform: translate(314px, 46px); } 30% { opacity: 1; } 40% { opacity: 1; transform: translate(326px, 46px); } 42%, 100% { opacity: 0; transform: translate(326px, 46px); } }
+@keyframes dg-pipe-3 { 0%, 46% { opacity: 0; transform: translate(470px, 46px); } 48% { opacity: 1; } 58% { opacity: 1; transform: translate(482px, 46px); } 60%, 100% { opacity: 0; transform: translate(482px, 46px); } }
+/* Programming: the interpreter's reading highlight, and the CPU's fetch–execute loop (9s) */
+.dg .dg-scan { fill: color-mix(in oklab, var(--accent-1) 35%, transparent); animation: dg-scan 3s steps(1) infinite; }
+@keyframes dg-scan { 0% { transform: translateY(0); } 33% { transform: translateY(8px); } 66% { transform: translateY(16px); } }
+.dg .dg-pc { animation: dg-pc 9s ease-in-out infinite; }
+@keyframes dg-pc {
+  0%, 22% { transform: translateY(-108px); } 25%, 47% { transform: translateY(-72px); }
+  50%, 72% { transform: translateY(-36px); } 75%, 100% { transform: translateY(0); }
+}
+.dg .dg-reg-0, .dg .dg-reg-2 { opacity: 0; }
+.dg .dg-reg-0 { animation: dg-reg-0 9s step-end infinite; }
+.dg .dg-reg-2 { animation: dg-reg-2 9s step-end infinite; }
+.dg .dg-reg-5 { animation: dg-reg-5 9s step-end infinite; }
+@keyframes dg-reg-0 { 0% { opacity: 1; } 12% { opacity: 0; } }
+@keyframes dg-reg-2 { 0% { opacity: 0; } 12% { opacity: 1; } 37% { opacity: 0; } }
+@keyframes dg-reg-5 { 0% { opacity: 0; } 37% { opacity: 1; } }
+.dg .dg-out { animation: dg-out 9s step-end infinite; }
+@keyframes dg-out { 0% { opacity: 0; } 60% { opacity: 1; } }
+.dg .dg-halt { animation: dg-halt 9s step-end infinite; }
+@keyframes dg-halt { 0% { opacity: 0; } 80% { opacity: 1; } }
+
+/* systemd restart: running → killed → activating → running (new PID), journal fills in */
+.dg .dg-sd-run1, .dg .dg-sd-dead, .dg .dg-sd-wait { opacity: 0; } /* at rest: the recovered state */
+.dg .dg-sd-run1 { animation: dg-sd-run1 9s step-end infinite; }
+.dg .dg-sd-dead { animation: dg-sd-dead 9s step-end infinite; }
+.dg .dg-sd-wait { animation: dg-sd-wait 9s step-end infinite; }
+.dg .dg-sd-run2 { animation: dg-sd-run2 9s step-end infinite; }
+.dg .dg-sd-restart { animation: dg-sd-restart 9s ease-in-out infinite; }
+.dg .dg-sd-j1 { animation: dg-sd-j1 9s step-end infinite; }
+.dg .dg-sd-j2 { animation: dg-sd-j2 9s step-end infinite; }
+.dg .dg-sd-j3 { animation: dg-sd-j3 9s step-end infinite; }
+@keyframes dg-sd-run1 { 0% { opacity: 1; } 30%, 100% { opacity: 0; } }
+@keyframes dg-sd-dead { 0% { opacity: 0; } 30% { opacity: 1; } 48%, 100% { opacity: 0; } }
+@keyframes dg-sd-wait { 0% { opacity: 0; } 48% { opacity: 1; } 66%, 100% { opacity: 0; } }
+@keyframes dg-sd-run2 { 0% { opacity: 0; } 66%, 100% { opacity: 1; } }
+@keyframes dg-sd-restart { 0%, 46% { opacity: 0; } 50%, 66% { opacity: 1; } 72%, 100% { opacity: 0; } }
+@keyframes dg-sd-j1 { 0% { opacity: 0; } 31%, 100% { opacity: 1; } }
+@keyframes dg-sd-j2 { 0% { opacity: 0; } 49%, 100% { opacity: 1; } }
+@keyframes dg-sd-j3 { 0% { opacity: 0; } 67%, 100% { opacity: 1; } }
+
+/* strict mode: the loose script's cursor runs on past the failure; the strict one stops */
+.dg .dg-cursor-loose { fill: #e7a33e; animation: dg-cursor-loose 9s steps(1) infinite; }
+.dg .dg-cursor-strict { fill: var(--accent-2); }
+@keyframes dg-cursor-loose {
+  0%, 30% { transform: translateY(0); }
+  30.01%, 55% { transform: translateY(30px); }
+  55.01%, 86% { transform: translateY(60px); }
+  86.01%, 100% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg * { animation: none !important; }
+}
+
+/* ───────── Lesson sidebar ("on this page") ───────── */
+.lesson-toc-scroll { scrollbar-width: thin; }
+.lesson-toc-link {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: 34px;
+  padding: 0.4rem 0.7rem;
+  border-radius: 10px;
+  color: var(--muted);
+  line-height: 1.4;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.lesson-toc-link[data-depth="3"] { margin-left: 52px; font-size: 0.8rem; padding-block: 0.3rem; }
+.lesson-toc-link:hover { color: var(--fg); }
+.lesson-toc-link[aria-current] {
+  color: var(--line, var(--accent-1));
+  background: color-mix(in oklab, var(--line, var(--accent-1)) 12%, transparent);
+  font-weight: 600;
+}
+.lesson-toc-rider { transition: transform 0.6s cubic-bezier(0.45, 0, 0.25, 1); }
+
+/* Lesson mini route: the learner walks to the chosen stop before the page changes. */
+.mini-route-rider { transition-property: transform; transition-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
+.mini-route-trail { animation-name: mini-route-trail; animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); animation-fill-mode: both; }
+@keyframes mini-route-trail { from { transform: translateY(-50%) scaleX(0); } to { transform: translateY(-50%) scaleX(1); } }
+
+/* Pricing: the Pro card glows with the brand gradient border */
+.pricing-pro {
+  background:
+    linear-gradient(var(--bg-elev), var(--bg-elev)) padding-box,
+    linear-gradient(135deg, var(--accent-1), var(--accent-2)) border-box;
+  border: 2px solid transparent;
+  box-shadow: 0 30px 80px -40px var(--glow);
+}
+
+/* "Complete this station?" dialog */
+.complete-dialog { box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.6); }
+.complete-dialog::backdrop { background: rgb(0 0 0 / 0.45); backdrop-filter: blur(3px); }
+.complete-dialog[open] { animation: complete-dialog-in 0.22s cubic-bezier(0.2, 0.8, 0.3, 1); }
+@keyframes complete-dialog-in { from { opacity: 0; transform: translateY(12px) scale(0.97); } }
+@media (prefers-reduced-motion: reduce) { .complete-dialog[open] { animation: none; } }
+
+/* ───────── Auth pages ───────── */
+.auth-ink { stroke: var(--fg); }
+.auth-ink-fill { fill: var(--fg); stroke: none; }
+.auth-doodle { stroke: var(--accent-1); }
+.auth-doodle-fill { fill: var(--accent-1); stroke: none; }
+.auth-peek-head { fill: var(--bg); }
+/* the peeking friend blinks now and then */
+.auth-peek-eyes { transform-box: fill-box; transform-origin: center; animation: auth-blink 5s infinite; }
+@keyframes auth-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+
+/* Kinetic keyword pill in the sign-in heading */
+.rotating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.12em 0.6em 0.12em 0.5em;
+  border-radius: 9999px;
+  vertical-align: baseline;
+  transition: background-color 0.5s ease;
+}
+.rotating-pill-dot { width: 0.42em; height: 0.42em; border-radius: 9999px; flex: none; transition: background-color 0.5s ease; }
+.rotating-pill-words { position: relative; display: inline-grid; overflow: hidden; transition: width 0.5s cubic-bezier(0.45, 0, 0.25, 1); }
+.rotating-pill-word {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  justify-self: start;
+  transition: transform 0.5s cubic-bezier(0.45, 0, 0.25, 1), opacity 0.4s ease;
+}
+.rotating-pill-word[data-active="false"] { transform: translateY(100%); opacity: 0; }
+.rotating-pill-word[data-active="true"] { transform: none; opacity: 1; }
+
+.interest-chip {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.interest-chip:hover { color: var(--fg); }
+.interest-chip:is([aria-pressed="true"], [aria-checked="true"]) {
+  border-color: var(--accent-1);
+  background: color-mix(in oklab, var(--accent-1) 14%, transparent);
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* ───────── Toasts ───────── */
+.toast { --c: var(--accent-2); background: var(--bg-elev); border-color: color-mix(in oklab, var(--c) 45%, var(--border)); animation: toast-in 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.toast[data-kind="error"] { --c: var(--danger); }
+.toast[data-kind="info"] { --c: var(--accent-1); }
+.toast-icon {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: none;
+  border-radius: 9999px;
+  background: var(--c);
+  color: var(--on-accent);
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+@keyframes toast-in { from { opacity: 0; transform: translateY(-12px) scale(0.98); } }
+
+/* ───────── DSA Metro ───────── */
+.metro-board {
+  background-color: var(--bg-elev);
+  /* faint city blocks under the map */
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--border) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--border) 45%, transparent) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+/* Lines draw in one after another (--i = line index). */
+.metro-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.1s calc(var(--i) * 180ms) cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.metro-dot { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.metro-station:focus-visible .metro-dot { transform: scale(1.25); }
+.metro-station:hover .metro-label,
+.metro-station:focus-visible .metro-label { text-decoration: underline; text-underline-offset: 3px; }
+/* Your station breathes. */
+.metro-pulse {
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: metro-pulse 1.8s ease-out infinite;
+}
+@keyframes metro-pulse {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(1.9); opacity: 0; }
+}
+/* The Next stop train: the world slides right past a train heading left. */
+.train-pillars { animation: train-slide-150 0.9s linear infinite; }
+.train-skyline { animation: train-slide-900 30s linear infinite; }
+.train-clouds { animation: train-slide-900 90s linear infinite; }
+@keyframes train-slide-150 { from { transform: translateX(0); } to { transform: translateX(150px); } }
+@keyframes train-slide-900 { from { transform: translateX(0); } to { transform: translateX(900px); } }
+.train-wheel { transform-box: fill-box; transform-origin: center; animation: train-wheel 0.5s linear infinite; }
+@keyframes train-wheel { to { transform: rotate(-360deg); } }
+.train-ride { animation: train-bob 0.45s ease-in-out infinite alternate; }
+@keyframes train-bob { to { transform: translateY(0.8px); } }
+.train-rider { animation: train-cheer 0.9s ease-in-out infinite alternate; }
+@keyframes train-cheer { to { transform: translateY(-3px); } }
+.train-flag { transform-box: fill-box; transform-origin: left center; animation: train-flag 0.6s ease-in-out infinite alternate; }
+@keyframes train-flag { from { transform: skewY(-6deg) scaleX(0.94); } to { transform: skewY(5deg) scaleX(1); } }
+/* Motivation card: the walker bounces, the sparks twinkle. */
+.motivation-walker { animation: mot-bounce 0.7s ease-in-out infinite alternate; }
+@keyframes mot-bounce { to { transform: translateY(-9px); } }
+.motivation-spark { transform-box: fill-box; transform-origin: center; animation: spark 1.6s ease-in-out infinite alternate; }
+@keyframes spark { from { opacity: 0.2; transform: scale(0.7); } to { opacity: 1; transform: scale(1.1); } }
+@media (prefers-reduced-motion: reduce) { .motivation-walker, .motivation-spark { animation: none; } }
+/* Build to Hire peeps (Notion-style): peek, lean, blink, tap, and drifting stickers */
+.peep-rise { animation: peep-rise 6s ease-in-out infinite; }
+@keyframes peep-rise { 0%, 15% { transform: translateY(22px); } 30%, 75% { transform: translateY(0); } 90%, 100% { transform: translateY(22px); } }
+.peep-blink { animation: peep-blink 4.2s infinite; }
+@keyframes peep-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+.peep-lean { animation: peep-lean 5s ease-in-out infinite alternate; }
+@keyframes peep-lean { from { rotate: -3deg; } to { rotate: 3deg; } }
+.peep-tap { animation: peep-tap 1.6s ease-in-out infinite; }
+@keyframes peep-tap { 0%, 60%, 100% { rotate: 0deg; } 70% { rotate: -6deg; } 80% { rotate: 2deg; } }
+.peep-tick { stroke-dasharray: 20; animation: peep-tick 4s ease-in-out infinite; }
+@keyframes peep-tick { 0%, 30% { stroke-dashoffset: 20; } 45%, 100% { stroke-dashoffset: 0; } }
+.sticker-float { animation: sticker-float 3.4s ease-in-out infinite alternate; }
+/* Home: the Walker signs "coding foding" (14 s loop, see WalkerSignature.tsx) */
+.sig-reveal { transform-box: fill-box; transform-origin: left center; }
+.sig-reveal-coding { animation: sig-coding 14s linear infinite; }
+.sig-reveal-wrong { scale: 0 1; animation: sig-wrong 14s linear infinite; }
+.sig-reveal-foding { animation: sig-foding 14s linear infinite; }
+@keyframes sig-coding { 0%, 4% { scale: 0 1; } 20%, 100% { scale: 1 1; } }
+@keyframes sig-wrong { 0%, 23% { scale: 0 1; } 35%, 40% { scale: 1 1; } 52%, 100% { scale: 0 1; } }
+@keyframes sig-foding { 0%, 55% { scale: 0 1; } 67%, 100% { scale: 1 1; } }
+.sig-underline { stroke-dasharray: 1; animation: sig-underline 14s ease-out infinite; }
+@keyframes sig-underline { 0%, 67% { stroke-dashoffset: 1; } 71%, 100% { stroke-dashoffset: 0; } }
+.sig-words { animation: sig-fade 14s linear infinite; }
+.sig-ground { stroke-dasharray: 1; animation: sig-ground 14s ease-out infinite; }
+@keyframes sig-ground { 0% { stroke-dashoffset: 1; } 4%, 92% { stroke-dashoffset: 0; } 97%, 100% { stroke-dashoffset: 1; } }
+.sig-doodle { transform-box: fill-box; transform-origin: center; animation: sig-doodle 7s ease-in-out infinite alternate; }
+@keyframes sig-doodle { from { rotate: -8deg; } to { rotate: 10deg; } }
+.sig-walker { animation: sig-walk 14s linear infinite, sig-fade 14s linear infinite; }
+/* a paper-coloured halo, so the Walker reads clearly while he walks over the letters */
+.sig-walker > g { filter: drop-shadow(0 0 1.5px var(--bg)) drop-shadow(0 0 1.5px var(--bg)) drop-shadow(0 0 1px var(--bg)); }
+@keyframes sig-fade { 0% { opacity: 0; } 2%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes sig-walk {
+  0%, 4% { transform: translateX(134px); }
+  20% { transform: translateX(294px); }
+  23% { transform: translateX(310px); }
+  35%, 40% { transform: translateX(478px); }
+  52%, 55% { transform: translateX(310px); }
+  67% { transform: translateX(478px); }
+  71%, 100% { transform: translateX(504px); }
+}
+.sig-turn { animation: sig-turn 14s steps(1, end) infinite; }
+@keyframes sig-turn { 0% { scale: 1 1; } 40% { scale: -1 1; } 52%, 100% { scale: 1 1; } }
+.sig-hop { animation: sig-hop 14s ease-in-out infinite; }
+@keyframes sig-hop {
+  0%, 71% { translate: 0 0; } 74% { translate: 0 -14px; } 77% { translate: 0 0; }
+  80% { translate: 0 -14px; } 83% { translate: 0 0; } 86% { translate: 0 -10px; } 89%, 100% { translate: 0 0; }
+}
+.sig-leg { transform-origin: 0 -22px; transform-box: view-box; }
+.sig-leg-a { animation: sig-leg-a 14s linear infinite; }
+.sig-leg-b { animation: sig-leg-b 14s linear infinite; }
+@keyframes sig-leg-a { 0% { rotate: 0deg; } 3.5% { rotate: 0deg; } 4% { rotate: 20deg; } 4.5% { rotate: -20deg; } 5% { rotate: 20deg; } 5.5% { rotate: -20deg; } 6% { rotate: 20deg; } 6.5% { rotate: -20deg; } 7% { rotate: 20deg; } 7.5% { rotate: -20deg; } 8% { rotate: 20deg; } 8.5% { rotate: -20deg; } 9% { rotate: 20deg; } 9.5% { rotate: -20deg; } 10% { rotate: 20deg; } 10.5% { rotate: -20deg; } 11% { rotate: 20deg; } 11.5% { rotate: -20deg; } 12% { rotate: 20deg; } 12.5% { rotate: -20deg; } 13% { rotate: 20deg; } 13.5% { rotate: -20deg; } 14% { rotate: 20deg; } 14.5% { rotate: -20deg; } 15% { rotate: 20deg; } 15.5% { rotate: -20deg; } 16% { rotate: 20deg; } 16.5% { rotate: -20deg; } 17% { rotate: 20deg; } 17.5% { rotate: -20deg; } 18% { rotate: 20deg; } 18.5% { rotate: -20deg; } 19% { rotate: 20deg; } 19.5% { rotate: -20deg; } 20% { rotate: 20deg; } 20.5% { rotate: -20deg; } 21% { rotate: 20deg; } 21.5% { rotate: -20deg; } 22% { rotate: 20deg; } 22.5% { rotate: -20deg; } 23% { rotate: 20deg; } 23.5% { rotate: -20deg; } 24% { rotate: 20deg; } 24.5% { rotate: -20deg; } 25% { rotate: 20deg; } 25.5% { rotate: -20deg; } 26% { rotate: 20deg; } 26.5% { rotate: -20deg; } 27% { rotate: 20deg; } 27.5% { rotate: -20deg; } 28% { rotate: 20deg; } 28.5% { rotate: -20deg; } 29% { rotate: 20deg; } 29.5% { rotate: -20deg; } 30% { rotate: 20deg; } 30.5% { rotate: -20deg; } 31% { rotate: 20deg; } 31.5% { rotate: -20deg; } 32% { rotate: 20deg; } 32.5% { rotate: -20deg; } 33% { rotate: 20deg; } 33.5% { rotate: -20deg; } 34% { rotate: 20deg; } 34.5% { rotate: -20deg; } 35% { rotate: 0deg; } 39.5% { rotate: 0deg; } 40% { rotate: 20deg; } 40.5% { rotate: -20deg; } 41% { rotate: 20deg; } 41.5% { rotate: -20deg; } 42% { rotate: 20deg; } 42.5% { rotate: -20deg; } 43% { rotate: 20deg; } 43.5% { rotate: -20deg; } 44% { rotate: 20deg; } 44.5% { rotate: -20deg; } 45% { rotate: 20deg; } 45.5% { rotate: -20deg; } 46% { rotate: 20deg; } 46.5% { rotate: -20deg; } 47% { rotate: 20deg; } 47.5% { rotate: -20deg; } 48% { rotate: 20deg; } 48.5% { rotate: -20deg; } 49% { rotate: 20deg; } 49.5% { rotate: -20deg; } 50% { rotate: 20deg; } 50.5% { rotate: -20deg; } 51% { rotate: 20deg; } 51.5% { rotate: -20deg; } 52% { rotate: 0deg; } 54.5% { rotate: 0deg; } 55% { rotate: 20deg; } 55.5% { rotate: -20deg; } 56% { rotate: 20deg; } 56.5% { rotate: -20deg; } 57% { rotate: 20deg; } 57.5% { rotate: -20deg; } 58% { rotate: 20deg; } 58.5% { rotate: -20deg; } 59% { rotate: 20deg; } 59.5% { rotate: -20deg; } 60% { rotate: 20deg; } 60.5% { rotate: -20deg; } 61% { rotate: 20deg; } 61.5% { rotate: -20deg; } 62% { rotate: 20deg; } 62.5% { rotate: -20deg; } 63% { rotate: 20deg; } 63.5% { rotate: -20deg; } 64% { rotate: 20deg; } 64.5% { rotate: -20deg; } 65% { rotate: 20deg; } 65.5% { rotate: -20deg; } 66% { rotate: 20deg; } 66.5% { rotate: -20deg; } 67% { rotate: 20deg; } 67.5% { rotate: -20deg; } 68% { rotate: 20deg; } 68.5% { rotate: -20deg; } 69% { rotate: 20deg; } 69.5% { rotate: -20deg; } 70% { rotate: 20deg; } 70.5% { rotate: -20deg; } 71% { rotate: 0deg; } 100% { rotate: 0deg; } }
+@keyframes sig-leg-b { 0% { rotate: 0deg; } 3.5% { rotate: 0deg; } 4% { rotate: -20deg; } 4.5% { rotate: 20deg; } 5% { rotate: -20deg; } 5.5% { rotate: 20deg; } 6% { rotate: -20deg; } 6.5% { rotate: 20deg; } 7% { rotate: -20deg; } 7.5% { rotate: 20deg; } 8% { rotate: -20deg; } 8.5% { rotate: 20deg; } 9% { rotate: -20deg; } 9.5% { rotate: 20deg; } 10% { rotate: -20deg; } 10.5% { rotate: 20deg; } 11% { rotate: -20deg; } 11.5% { rotate: 20deg; } 12% { rotate: -20deg; } 12.5% { rotate: 20deg; } 13% { rotate: -20deg; } 13.5% { rotate: 20deg; } 14% { rotate: -20deg; } 14.5% { rotate: 20deg; } 15% { rotate: -20deg; } 15.5% { rotate: 20deg; } 16% { rotate: -20deg; } 16.5% { rotate: 20deg; } 17% { rotate: -20deg; } 17.5% { rotate: 20deg; } 18% { rotate: -20deg; } 18.5% { rotate: 20deg; } 19% { rotate: -20deg; } 19.5% { rotate: 20deg; } 20% { rotate: -20deg; } 20.5% { rotate: 20deg; } 21% { rotate: -20deg; } 21.5% { rotate: 20deg; } 22% { rotate: -20deg; } 22.5% { rotate: 20deg; } 23% { rotate: -20deg; } 23.5% { rotate: 20deg; } 24% { rotate: -20deg; } 24.5% { rotate: 20deg; } 25% { rotate: -20deg; } 25.5% { rotate: 20deg; } 26% { rotate: -20deg; } 26.5% { rotate: 20deg; } 27% { rotate: -20deg; } 27.5% { rotate: 20deg; } 28% { rotate: -20deg; } 28.5% { rotate: 20deg; } 29% { rotate: -20deg; } 29.5% { rotate: 20deg; } 30% { rotate: -20deg; } 30.5% { rotate: 20deg; } 31% { rotate: -20deg; } 31.5% { rotate: 20deg; } 32% { rotate: -20deg; } 32.5% { rotate: 20deg; } 33% { rotate: -20deg; } 33.5% { rotate: 20deg; } 34% { rotate: -20deg; } 34.5% { rotate: 20deg; } 35% { rotate: 0deg; } 39.5% { rotate: 0deg; } 40% { rotate: -20deg; } 40.5% { rotate: 20deg; } 41% { rotate: -20deg; } 41.5% { rotate: 20deg; } 42% { rotate: -20deg; } 42.5% { rotate: 20deg; } 43% { rotate: -20deg; } 43.5% { rotate: 20deg; } 44% { rotate: -20deg; } 44.5% { rotate: 20deg; } 45% { rotate: -20deg; } 45.5% { rotate: 20deg; } 46% { rotate: -20deg; } 46.5% { rotate: 20deg; } 47% { rotate: -20deg; } 47.5% { rotate: 20deg; } 48% { rotate: -20deg; } 48.5% { rotate: 20deg; } 49% { rotate: -20deg; } 49.5% { rotate: 20deg; } 50% { rotate: -20deg; } 50.5% { rotate: 20deg; } 51% { rotate: -20deg; } 51.5% { rotate: 20deg; } 52% { rotate: 0deg; } 54.5% { rotate: 0deg; } 55% { rotate: -20deg; } 55.5% { rotate: 20deg; } 56% { rotate: -20deg; } 56.5% { rotate: 20deg; } 57% { rotate: -20deg; } 57.5% { rotate: 20deg; } 58% { rotate: -20deg; } 58.5% { rotate: 20deg; } 59% { rotate: -20deg; } 59.5% { rotate: 20deg; } 60% { rotate: -20deg; } 60.5% { rotate: 20deg; } 61% { rotate: -20deg; } 61.5% { rotate: 20deg; } 62% { rotate: -20deg; } 62.5% { rotate: 20deg; } 63% { rotate: -20deg; } 63.5% { rotate: 20deg; } 64% { rotate: -20deg; } 64.5% { rotate: 20deg; } 65% { rotate: -20deg; } 65.5% { rotate: 20deg; } 66% { rotate: -20deg; } 66.5% { rotate: 20deg; } 67% { rotate: -20deg; } 67.5% { rotate: 20deg; } 68% { rotate: -20deg; } 68.5% { rotate: 20deg; } 69% { rotate: -20deg; } 69.5% { rotate: 20deg; } 70% { rotate: -20deg; } 70.5% { rotate: 20deg; } 71% { rotate: 0deg; } 100% { rotate: 0deg; } }
+.sig-pencil { opacity: 0; animation: sig-pencil 14s steps(1, end) infinite; } /* hidden in the finished picture */
+@keyframes sig-pencil { 0% { opacity: 1; } 40% { opacity: 0; } 52% { opacity: 1; } 71%, 100% { opacity: 0; } }
+.sig-eraser { animation: sig-eraser 14s steps(1, end) infinite; }
+@keyframes sig-eraser { 0% { opacity: 0; } 40% { opacity: 1; } 52%, 100% { opacity: 0; } }
+.sig-crumbs { animation: sig-crumbs 14s linear infinite; }
+@keyframes sig-crumbs { 0%, 40% { opacity: 0; translate: 0 0; } 41% { opacity: 1; translate: 0 0; } 46% { opacity: 1; translate: 0 6px; } 46.5% { translate: 0 0; } 51% { opacity: 1; translate: 0 6px; } 52%, 100% { opacity: 0; } }
+.sig-cheer { animation: sig-cheer 14s steps(1, end) infinite; }
+@keyframes sig-cheer { 0% { opacity: 0; } 71%, 100% { opacity: 1; } }
+.sig-happy { animation: sig-happy 14s steps(1, end) infinite; }
+@keyframes sig-happy { 0% { opacity: 1; } 35% { opacity: 0; } 52%, 100% { opacity: 1; } }
+.sig-oops { animation: sig-oops 14s steps(1, end) infinite; }
+@keyframes sig-oops { 0% { opacity: 0; } 35% { opacity: 1; } 52%, 100% { opacity: 0; } }
+.sig-oh { transform-origin: 0 -72px; transform-box: view-box; animation: sig-oh 14s ease-out infinite; }
+@keyframes sig-oh { 0%, 35.5% { opacity: 0; scale: 0.4; } 37% { opacity: 1; scale: 1.15; } 38%, 39.5% { opacity: 1; scale: 1; } 40.5%, 100% { opacity: 0; scale: 1; } }
+.sig-sparkle { transform-box: fill-box; transform-origin: center; animation: sig-sparkle 14s ease-out infinite; }
+@keyframes sig-sparkle { 0%, 71% { opacity: 0; scale: 0.2; } 74% { opacity: 1; scale: 1.3; } 78% { scale: 0.9; } 82% { scale: 1.15; } 90% { opacity: 1; scale: 1; } 95%, 100% { opacity: 0; } }
+/* the navbar copy: plays once, rests on the finished picture, thicker strokes */
+.sig-once .sig-reveal-coding, .sig-once .sig-reveal-wrong, .sig-once .sig-reveal-foding, .sig-once .sig-underline,
+.sig-once .sig-turn, .sig-once .sig-hop, .sig-once .sig-leg-a, .sig-once .sig-leg-b, .sig-once .sig-pencil,
+.sig-once .sig-eraser, .sig-once .sig-crumbs, .sig-once .sig-cheer, .sig-once .sig-happy, .sig-once .sig-oops,
+.sig-once .sig-oh, .sig-once .sig-sparkle { animation-iteration-count: 1; animation-fill-mode: forwards; }
+.sig-once .sig-words { animation: sig-fade-once 14s linear 1 forwards; }
+.sig-once .sig-walker { animation: sig-walk 14s linear 1 forwards, sig-fade-once 14s linear 1 forwards; }
+.sig-once .sig-ground { animation: sig-ground-once 14s ease-out 1 forwards; }
+.sig-once .sig-sparkle { animation-name: sig-sparkle-once; }
+@keyframes sig-fade-once { 0% { opacity: 0; } 2%, 100% { opacity: 1; } }
+@keyframes sig-ground-once { 0% { stroke-dashoffset: 1; } 4%, 100% { stroke-dashoffset: 0; } }
+@keyframes sig-sparkle-once { 0%, 71% { opacity: 0; scale: 0.2; } 74% { opacity: 1; scale: 1.3; } 78% { scale: 0.9; } 82% { scale: 1.15; } 90%, 100% { opacity: 1; scale: 1; } }
+.sig-nav .sig-walker line, .sig-nav .sig-walker polyline, .sig-nav .sig-walker circle:not(.sig-eye) { stroke-width: 6.5px; }
+.sig-nav .sig-pencil-body { stroke-width: 9px; }
+.sig-nav .sig-eye { r: 2.4px; }
+.sig-nav .sig-happy { stroke-width: 3.2px; }
+.sig-nav .sig-ground { stroke-width: 5px; }
+.sig-nav .sig-rules { stroke-width: 2.6px; }
+.sig-nav .sig-underline { stroke-width: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .sig-reveal, .sig-underline, .sig-words, .sig-ground, .sig-doodle, .sig-walker, .sig-turn, .sig-hop, .sig-leg, .sig-pencil,
+  .sig-eraser, .sig-crumbs, .sig-cheer, .sig-happy, .sig-oops, .sig-oh, .sig-sparkle { animation: none; }
+}
+/* Build to Hire: a heart pops when liked */
+.like-pop { animation: like-pop 0.35s ease-out; }
+@keyframes like-pop { 0% { scale: 0.6; } 60% { scale: 1.25; } 100% { scale: 1; } }
+@keyframes sticker-float { from { translate: 0 0; rotate: -6deg; } to { translate: 0 -6px; rotate: 6deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .peep-rise, .peep-blink, .peep-lean, .peep-tap, .peep-tick, .sticker-float, .like-pop { animation: none; }
+  .peep-tick { stroke-dashoffset: 0; }
+}
+/* DSA page art (one scene per page, banner under the title) */
+.pa-spin { animation: pa-spin 1s linear infinite; }
+@keyframes pa-spin { to { rotate: 360deg; } }
+.pa-drip { animation: pa-drip 2.4s ease-in infinite; }
+@keyframes pa-drip { 0%, 30% { translate: 0 0; opacity: 0; } 40% { opacity: 1; } 90% { translate: 0 16px; opacity: 1; } 100% { translate: 0 18px; opacity: 0; } }
+.pa-write { stroke-dasharray: 22; animation: pa-write 4s ease-in-out infinite; }
+.pa-write-2 { animation-delay: 0.6s; }
+.pa-draw { stroke-dasharray: 160; animation: pa-draw 5s ease-in-out infinite; }
+@keyframes pa-draw { 0%, 15% { stroke-dashoffset: 160; } 45%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 160; } }
+@keyframes pa-write { 0%, 25% { stroke-dashoffset: 22; } 40%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 22; } }
+.pa-hop { animation: pa-hop 4.5s ease-in-out infinite; }
+@keyframes pa-hop { 0%, 18% { translate: 0 0; } 50% { translate: calc(var(--dx) * 0.5) calc(var(--dy) - 90px); } 78%, 92% { translate: var(--dx) var(--dy); opacity: 1; } 96% { opacity: 0; } 100% { translate: 0 0; opacity: 0; } }
+.pa-fall { animation: pa-fall 2.2s ease-in infinite; }
+@keyframes pa-fall { 0% { translate: 0 -30px; opacity: 0; } 15% { opacity: 1; } 70% { translate: 0 52px; opacity: 1; } 80%, 100% { translate: 0 56px; opacity: 0; } }
+.pa-bob { animation: pa-bob 2.4s ease-in-out infinite alternate; }
+@keyframes pa-bob { to { translate: 0 -5px; } }
+.pa-pulse { animation: pa-pulse 4s ease-in-out infinite; }
+@keyframes pa-pulse { 0%, 30% { opacity: 0.15; } 45%, 90% { opacity: 1; } 100% { opacity: 0.15; } }
+@media (prefers-reduced-motion: reduce) {
+  .pa-spin, .pa-drip, .pa-write, .pa-draw, .pa-hop, .pa-fall, .pa-bob, .pa-pulse { animation: none; }
+  .pa-write, .pa-draw { stroke-dashoffset: 0; }
+}
+/* DSA topic scenes (problem page right rail); --d = step in the sequence */
+.art-draw-3 { animation-delay: 1.2s; }
+.sc-seq { animation: sc-seq 4.5s calc(var(--d) * 0.45s) ease-in-out infinite; }
+@keyframes sc-seq { 0%, 8% { opacity: 0.18; } 18%, 82% { opacity: 1; } 100% { opacity: 0.18; } }
+.sc-seq-once { opacity: 0; animation: sc-seq-once 5s ease-in-out infinite; animation-delay: calc(var(--d) * 0.8s); }
+@keyframes sc-seq-once { 0% { opacity: 0; } 8%, 70% { opacity: 1; } 80%, 100% { opacity: 0; } }
+.sc-drop { animation: sc-drop 4.5s calc(var(--d) * 0.6s) cubic-bezier(0.5, 0, 0.7, 1.4) infinite; }
+@keyframes sc-drop { 0%, 10% { transform: none; opacity: 0; } 18% { opacity: 1; } 40%, 85% { transform: translateY(70px); opacity: 1; } 100% { transform: translateY(70px); opacity: 0; } }
+.sc-window { animation: sc-window 5s ease-in-out infinite; }
+@keyframes sc-window { 0%, 12% { transform: none; } 25%, 37% { transform: translateX(24px); } 50%, 62% { transform: translateX(48px); } 75%, 90% { transform: translateX(96px); } 100% { transform: none; } }
+.sc-plate { animation: sc-plate 5s calc(var(--d) * 0.5s) ease-out infinite; }
+@keyframes sc-plate { 0% { transform: translateY(-40px); opacity: 0; } 12%, 70% { transform: none; opacity: 1; } 85%, 100% { transform: translateY(-40px); opacity: 0; } }
+.sc-walk { animation: sc-walk 4s ease-in-out infinite; }
+@keyframes sc-walk { 0%, 10% { transform: none; } 30% { transform: translateX(44px); } 55% { transform: translateX(88px); } 80%, 92% { transform: translateX(132px); } 100% { transform: none; } }
+.sc-swap-down, .sc-swap-up { animation: 4s ease-in-out infinite; }
+.sc-swap-down { animation-name: sc-swap-down; }
+.sc-swap-up { animation-name: sc-swap-up; }
+@keyframes sc-swap-down { 0%, 25% { transform: none; } 50%, 85% { transform: translate(22px, 42px); } 100% { transform: none; } }
+@keyframes sc-swap-up { 0%, 25% { transform: none; } 50%, 85% { transform: translate(-22px, -42px); } 100% { transform: none; } }
+.sc-merge-b { animation: sc-merge 4.5s ease-in-out infinite; }
+@keyframes sc-merge { 0%, 20% { transform: none; } 50%, 85% { transform: translate(-30px, -26px); } 100% { transform: none; } }
+.sc-hop { animation: sc-hop 3.6s ease-in-out infinite; }
+@keyframes sc-hop {
+  0%, 6% { transform: none; }
+  18% { transform: translate(25px, -54px); }
+  30% { transform: translate(50px, 0); }
+  42% { transform: translate(70px, -34px); }
+  54% { transform: translate(90px, 0); }
+  70% { transform: translate(120px, -64px); }
+  86%, 100% { transform: translate(150px, 0); }
+}
+.sc-try { stroke-dasharray: 1; animation: sc-try 6s ease-in-out infinite; }
+@keyframes sc-try { 0% { stroke-dashoffset: 1; } 22%, 38% { stroke-dashoffset: 0; } 50%, 100% { stroke-dashoffset: 1; } }
+.sc-try-2 { stroke-dasharray: 1; animation: sc-try-2 6s ease-in-out infinite; }
+@keyframes sc-try-2 { 0%, 50% { stroke-dashoffset: 1; } 80%, 95% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
+.sc-try-x { opacity: 0; animation: sc-try-x 6s ease-in-out infinite; }
+@keyframes sc-try-x { 0%, 22% { opacity: 0; } 26%, 42% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.sc-ripple { transform-box: fill-box; transform-origin: center; animation: sc-ripple 2.2s ease-out infinite; }
+@keyframes sc-ripple { from { transform: scale(1); opacity: 0.9; } to { transform: scale(5); opacity: 0; } }
+.sc-bit-a { animation: sc-bit-a 4.8s calc(var(--d) * 0.25s) steps(1) infinite; }
+.sc-bit-b { opacity: 0; animation: sc-bit-b 4.8s calc(var(--d) * 0.25s) steps(1) infinite; }
+@keyframes sc-bit-a { 0% { opacity: 1; } 40% { opacity: 0; } 85% { opacity: 1; } }
+@keyframes sc-bit-b { 0% { opacity: 0; } 40% { opacity: 1; } 85% { opacity: 0; } }
+.sc-rotate { transform-box: fill-box; transform-origin: center; animation: sc-rotate 8s cubic-bezier(0.6, 0, 0.3, 1.2) infinite; }
+@keyframes sc-rotate {
+  0%, 15% { transform: rotate(0); } 25%, 40% { transform: rotate(90deg); }
+  50%, 65% { transform: rotate(180deg); } 75%, 90% { transform: rotate(270deg); } 100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  svg [class*=" sc-"], svg [class^="sc-"] { animation: none !important; opacity: 1; }
+  .sc-try, .sc-try-2 { stroke-dasharray: none; }
+  .sc-bit-b, .sc-try-x, .sc-ripple { opacity: 0; }
+}
+/* DSA overview illustrations */
+.art-steam { animation: art-steam 2.4s ease-in-out infinite; }
+.art-steam-2 { animation-delay: -1.1s; }
+@keyframes art-steam {
+  0% { opacity: 0; transform: translateY(6px); }
+  40% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+.art-wave { transform-box: view-box; transform-origin: 0 -66px; animation: art-wave 1.2s ease-in-out infinite alternate; }
+@keyframes art-wave { from { transform: rotate(-8deg); } to { transform: rotate(14deg); } }
+.art-bubble { animation: art-float 3s ease-in-out infinite alternate; }
+@keyframes art-float { to { transform: translateY(-5px); } }
+.art-ptr-l { animation: art-ptr-l 4s ease-in-out infinite; }
+.art-ptr-r { animation: art-ptr-r 4s ease-in-out infinite; }
+@keyframes art-ptr-l { 0%, 15% { transform: none; } 45%, 70% { transform: translateX(68px); } 100% { transform: none; } }
+@keyframes art-ptr-r { 0%, 15% { transform: none; } 45%, 70% { transform: translateX(-68px); } 100% { transform: none; } }
+.art-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: art-draw 5s ease-in-out infinite; }
+.art-draw-2 { animation-delay: 0.6s; }
+@keyframes art-draw { 0% { stroke-dashoffset: 1; } 35%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.art-point { transform-box: view-box; transform-origin: 0 -66px; animation: art-wave 1.6s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.art-steam, .art-wave, .art-bubble, .art-ptr-l, .art-ptr-r, .art-point) { animation: none; }
+  .art-draw { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .metro-line { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+  .metro-pulse { animation: none; opacity: 0; }
+  :is(.train-pillars, .train-skyline, .train-clouds, .train-wheel, .train-ride, .train-rider, .train-flag) { animation: none; }
 }

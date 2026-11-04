@@ -20,16 +20,27 @@ func toUser(u sqlcdb.User) *domain.User {
 	return &domain.User{
 		ID: u.ID, Email: u.Email, EmailVerified: u.EmailVerifiedAt != nil, Username: u.Username,
 		DisplayName: u.DisplayName, PasswordHash: u.PasswordHash, Role: domain.Role(u.Role),
-		PreferredLocale: domain.Locale(u.PreferredLocale), Theme: u.Theme, Division: u.Division,
-		XP: u.Xp, SolvedCount: u.SolvedCount, CurrentStreak: u.CurrentStreak, LongestStreak: u.LongestStreak,
+		PreferredLocale: domain.Locale(u.PreferredLocale), Theme: u.Theme, Font: u.Font, Division: u.Division,
+		Phone: u.Phone, District: u.District, Interests: u.Interests, AvatarKey: u.AvatarKey, AvatarChangedAt: u.AvatarChangedAt, JourneyStage: u.JourneyStage, AccountType: u.AccountType, ProUntil: u.ProUntil, BannedAt: u.BannedAt,
+		XP: u.Xp, CurrentStreak: u.CurrentStreak, LongestStreak: u.LongestStreak,
 		LastActiveDate: u.LastActiveDate, Version: u.Version, CreatedAt: u.CreatedAt,
 	}
 }
 
 func (r *UserRepo) Create(ctx context.Context, n domain.NewUser) (*domain.User, error) {
+	var verifiedAt *time.Time
+	if n.EmailVerified {
+		now := time.Now()
+		verifiedAt = &now
+	}
+	interests := n.Interests
+	if interests == nil {
+		interests = []string{} // column is NOT NULL
+	}
 	u, err := r.db.w(ctx).CreateUser(ctx, sqlcdb.CreateUserParams{
 		ID: n.ID, Email: n.Email, Username: n.Username, DisplayName: n.DisplayName,
 		PasswordHash: n.PasswordHash, Role: sqlcdb.UserRole(n.Role), PreferredLocale: string(n.Locale), Division: n.Division,
+		Phone: n.Phone, District: n.District, Interests: interests, EmailVerifiedAt: verifiedAt, JourneyStage: n.JourneyStage,
 	})
 	if err != nil {
 		return nil, mapErr(err)
@@ -77,7 +88,8 @@ func (r *UserRepo) UpdatePreferences(ctx context.Context, id uuid.UUID, p domain
 		locale = &s
 	}
 	u, err := r.db.w(ctx).UpdateUserPreferences(ctx, sqlcdb.UpdateUserPreferencesParams{
-		ID: id, DisplayName: p.DisplayName, PreferredLocale: locale, Theme: p.Theme, Division: p.Division,
+		ID: id, DisplayName: p.DisplayName, PreferredLocale: locale, Theme: p.Theme, Font: p.Font, Division: p.Division,
+		JourneyStage: p.JourneyStage, Phone: p.Phone, District: p.District, Interests: p.Interests,
 	})
 	if err != nil {
 		return nil, mapErr(err)
@@ -177,4 +189,23 @@ func (r *AuditRepo) Record(ctx context.Context, e domain.AuditEntry) error {
 		ID: id.New(), ActorID: actor, Action: e.Action, EntityType: e.EntityType, EntityID: e.EntityID,
 		Diff: diff, Ip: parseIP(e.IP), RequestID: e.RequestID,
 	}))
+}
+
+func (r *UserRepo) SetAvatar(ctx context.Context, id uuid.UUID, key *string, now, allowedBefore time.Time) (*string, error) {
+	prev, err := r.db.w(ctx).SetUserAvatar(ctx, sqlcdb.SetUserAvatarParams{
+		UserID: id, AvatarKey: key, Now: now, AllowedBefore: allowedBefore,
+	})
+	return prev, mapErr(err)
+}
+
+func (r *UserRepo) CountByJourneyStage(ctx context.Context) (map[string]int64, error) {
+	rows, err := r.db.r(ctx).CountUsersByJourneyStage(ctx)
+	if err != nil {
+		return nil, mapErr(err)
+	}
+	out := make(map[string]int64, len(rows))
+	for _, row := range rows {
+		out[row.JourneyStage] = row.Learners
+	}
+	return out, nil
 }

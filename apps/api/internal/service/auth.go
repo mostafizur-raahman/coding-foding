@@ -28,20 +28,23 @@ type AuthConfig struct {
 	VerifyTokenTTL time.Duration
 	ResetTokenTTL  time.Duration
 	AppURL         string // public web origin used in email links
+	CodeKey        []byte // HMAC key for emailed sign-in codes
 }
 
 type AuthDeps struct {
-	Users    domain.UserRepository
-	Sessions domain.SessionRepository
-	Tokens   domain.UserTokenRepository
-	OAuth    domain.OAuthRepository
-	Tx       domain.TxManager
-	Hasher   domain.PasswordHasher
-	Access   domain.AccessTokenIssuer
-	Guard    domain.LoginGuard
-	Jobs     domain.JobQueue
-	Clock    clock.Clock
-	Log      *slog.Logger
+	Users      domain.UserRepository
+	Sessions   domain.SessionRepository
+	Tokens     domain.UserTokenRepository
+	OAuth      domain.OAuthRepository
+	Challenges domain.ChallengeRepository
+	Board      domain.Board // optional: new learners join the leaderboard at once
+	Tx         domain.TxManager
+	Hasher     domain.PasswordHasher
+	Access     domain.AccessTokenIssuer
+	Guard      domain.LoginGuard
+	Jobs       domain.JobQueue
+	Clock      clock.Clock
+	Log        *slog.Logger
 }
 
 type AuthService struct {
@@ -128,7 +131,7 @@ func (s *AuthService) Register(ctx context.Context, in RegisterInput) (*domain.U
 	err = s.Tx.WithinTx(ctx, func(ctx context.Context) error {
 		u, err := s.Users.Create(ctx, domain.NewUser{
 			ID: id.New(), Email: email, Username: in.Username, DisplayName: name,
-			PasswordHash: &hash, Role: domain.RoleIntern, Locale: in.Locale, Division: in.Division,
+			PasswordHash: &hash, Role: domain.RoleLearner, Locale: in.Locale, Division: in.Division,
 		})
 		if err != nil {
 			return err
@@ -191,6 +194,11 @@ func (s *AuthService) Login(ctx context.Context, email, password string, ci Clie
 
 // startSession creates a new refresh session in familyID and an access token.
 func (s *AuthService) startSession(ctx context.Context, u *domain.User, familyID uuid.UUID, ci ClientInfo) (*AuthResult, error) {
+	// Every way of signing in (password, email code, OAuth) ends here, so one check covers
+	// them all: a banned account gets no session.
+	if u.BannedAt != nil {
+		return nil, domain.ErrAccountBanned
+	}
 	res, newID, digest, err := s.mint(u)
 	if err != nil {
 		return nil, err
@@ -229,6 +237,7 @@ func (s *AuthService) Refresh(ctx context.Context, refreshToken string, ci Clien
 	var (
 		result *AuthResult
 		reused bool
+		banned bool
 	)
 	err := s.Tx.WithinTx(ctx, func(ctx context.Context) error {
 		sess, err := s.Sessions.ByTokenHashForUpdate(ctx, security.HashToken(refreshToken))
@@ -248,6 +257,11 @@ func (s *AuthService) Refresh(ctx context.Context, refreshToken string, ci Clien
 		u, err := s.Users.ByID(ctx, sess.UserID)
 		if err != nil {
 			return domain.ErrUnauthorized
+		}
+		if u.BannedAt != nil {
+			// banned since this session started: end it (the ban revokes sessions too)
+			banned = true
+			return s.Sessions.RevokeFamily(ctx, sess.FamilyID)
 		}
 		res, newID, digest, err := s.mint(u)
 		if err != nil {
@@ -271,6 +285,9 @@ func (s *AuthService) Refresh(ctx context.Context, refreshToken string, ci Clien
 	if reused {
 		s.Log.WarnContext(ctx, "refresh token reuse detected; family revoked", "ip", ci.IP)
 		return nil, domain.ErrUnauthorized
+	}
+	if banned {
+		return nil, domain.ErrAccountBanned
 	}
 	return result, nil
 }
@@ -368,6 +385,10 @@ func (s *AuthService) ResetPassword(ctx context.Context, token, newPassword stri
 		if err := s.Users.UpdatePasswordHash(ctx, uid, hash); err != nil {
 			return err
 		}
+		// Following the emailed link proves the address too.
+		if err := s.Users.MarkEmailVerified(ctx, uid); err != nil {
+			return err
+		}
 		// A reset must kick every existing session (attacker may hold one).
 		return s.Sessions.RevokeAllForUser(ctx, uid)
 	})
@@ -448,7 +469,7 @@ func (s *AuthService) createOAuthUser(ctx context.Context, ident domain.OAuthIde
 	candidate := base
 	for attempt := 0; attempt < 5; attempt++ {
 		u, err := s.Users.Create(ctx, domain.NewUser{
-			ID: id.New(), Email: email, Username: candidate, DisplayName: name, Role: domain.RoleIntern, Locale: locale,
+			ID: id.New(), Email: email, Username: candidate, DisplayName: name, Role: domain.RoleLearner, Locale: locale,
 		})
 		if errors.Is(err, domain.ErrUsernameTaken) {
 			n, rerr := rand.Int(rand.Reader, big.NewInt(100000))
@@ -478,8 +499,45 @@ func (s *AuthService) UpdatePreferences(ctx context.Context, userID uuid.UUID, p
 	if p.Theme != nil && !contains(domain.Themes, *p.Theme) {
 		return nil, domain.E(domain.KindInvalid, "invalid_theme", "unknown theme")
 	}
+	if p.Font != nil && !contains(domain.Fonts, *p.Font) {
+		return nil, domain.E(domain.KindInvalid, "invalid_font", "unknown font")
+	}
 	if p.Division != nil && !domain.ValidDivision(*p.Division) {
 		return nil, domain.E(domain.KindInvalid, "invalid_division", "unknown division")
+	}
+	if p.JourneyStage != nil && !domain.ValidJourneyStage(*p.JourneyStage) {
+		return nil, domain.E(domain.KindInvalid, "invalid_stage", "unknown journey stage")
+	}
+	if p.Phone != nil {
+		e164, err := normalizePhone(*p.Phone)
+		if err != nil {
+			return nil, err
+		}
+		p.Phone = &e164 // "" clears it
+	}
+	if p.Interests != nil {
+		clean, err := cleanInterests(p.Interests)
+		if err != nil {
+			return nil, err
+		}
+		p.Interests = clean
+	}
+	var before *domain.User
+	if p.District != nil {
+		if !domain.ValidDistrict(*p.District) {
+			return nil, domain.E(domain.KindInvalid, "invalid_district", "unknown district")
+		}
+		var err error
+		if before, err = s.Users.ByID(ctx, userID); err != nil {
+			return nil, err
+		}
+		// The district is fixed once set: moving would let learners hop to an emptier
+		// district board to rank higher. Only accounts without one may set it (once).
+		if before.District != nil && *before.District != *p.District {
+			return nil, ErrDistrictLocked
+		}
+		div := domain.DistrictDivision[*p.District]
+		p.Division = &div // the division always follows the district
 	}
 	if p.DisplayName != nil {
 		n := strings.TrimSpace(*p.DisplayName)
@@ -488,8 +546,37 @@ func (s *AuthService) UpdatePreferences(ctx context.Context, userID uuid.UUID, p
 		}
 		p.DisplayName = &n
 	}
-	return s.Users.UpdatePreferences(ctx, userID, p)
+	u, err := s.Users.UpdatePreferences(ctx, userID, p)
+	if err != nil {
+		return nil, err
+	}
+	if before != nil {
+		s.moveBoards(ctx, before, u)
+	}
+	return u, nil
 }
+
+// moveBoards keeps the leaderboards in step after a district change: off the old
+// division/district boards, onto the new ones with the same XP. Best effort; the
+// periodic rebuild from Postgres repairs any miss.
+func (s *AuthService) moveBoards(ctx context.Context, before, after *domain.User) {
+	if s.Board == nil || ptrEq(before.District, after.District) || !domain.Ranked(after.Role, after.AccountType) {
+		return
+	}
+	old := domain.BoardsFor(before.Division, before.District)[1:] // keep the national board
+	now := domain.BoardsFor(after.Division, after.District)[1:]
+	if err := s.Board.Remove(ctx, after.ID, old); err != nil {
+		s.Log.WarnContext(ctx, "leaderboard move failed; rebuild will repair", "err", err)
+		return
+	}
+	if err := s.Board.Incr(ctx, after.ID, now, after.XP); err != nil {
+		s.Log.WarnContext(ctx, "leaderboard move failed; rebuild will repair", "err", err)
+	}
+}
+
+var ErrDistrictLocked = domain.E(domain.KindForbidden, "district_locked", "your district can't be changed once set")
+
+func ptrEq(a, b *string) bool { return (a == nil && b == nil) || (a != nil && b != nil && *a == *b) }
 
 func truncate(s string, n int) string {
 	if len(s) <= n {

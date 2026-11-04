@@ -1,0 +1,38 @@
+# Local development dependencies. The API itself runs with `make -C apps/api dev`.
+# Host ports are offset (5433, 6380) so they never clash with a local Postgres/Redis.
+name: codingfoding
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: cf
+      POSTGRES_PASSWORD: cf
+      POSTGRES_DB: codingfoding
+    ports: ["5433:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cf -d codingfoding"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"] # Asynq jobs survive restarts
+    ports: ["6380:6379"]
+    volumes: [redisdata:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # Catches every outgoing email. Inbox UI: http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:v1.21
+    ports: ["8025:8025", "1025:1025"]
+
+volumes:
+  pgdata:
+  redisdata:

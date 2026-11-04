@@ -53,18 +53,12 @@ type VoteResult struct {
 	Voted     bool      `json:"voted"`
 }
 
-// Upvote is idempotent: the (user_id, topic_id) PK guarantees one vote per user, and
-// the counter only moves when a row was actually inserted — in the same transaction.
+// Upvote records a learner's vote on a topic. One user = one vote, and it's final: the
+// (user_id, topic_id) primary key enforces it, voting again is a no-op that returns the
+// current count, and there is no way to take a vote back. The counter only moves when a
+// row was actually inserted, in the same transaction.
 func (s *VoteService) Upvote(ctx context.Context, userID, topicID uuid.UUID) (*VoteResult, error) {
-	return s.toggle(ctx, userID, topicID, true)
-}
-
-func (s *VoteService) Unvote(ctx context.Context, userID, topicID uuid.UUID) (*VoteResult, error) {
-	return s.toggle(ctx, userID, topicID, false)
-}
-
-func (s *VoteService) toggle(ctx context.Context, userID, topicID uuid.UUID, up bool) (*VoteResult, error) {
-	res := &VoteResult{TopicID: topicID, Voted: up}
+	res := &VoteResult{TopicID: topicID, Voted: true}
 	err := s.tx.WithinTx(ctx, func(ctx context.Context) error {
 		ok, err := s.repo.TopicExists(ctx, topicID)
 		if err != nil {
@@ -73,19 +67,13 @@ func (s *VoteService) toggle(ctx context.Context, userID, topicID uuid.UUID, up 
 		if !ok {
 			return domain.ErrNotFound
 		}
-		var changed bool
-		delta := int32(1)
-		if up {
-			changed, err = s.repo.InsertVote(ctx, userID, topicID)
-		} else {
-			changed, err = s.repo.DeleteVote(ctx, userID, topicID)
-			delta = -1
-		}
+		inserted, err := s.repo.InsertVote(ctx, userID, topicID)
 		if err != nil {
 			return err
 		}
-		if !changed {
-			delta = 0
+		delta := int32(0)
+		if inserted {
+			delta = 1
 		}
 		res.VoteCount, err = s.repo.AdjustVotes(ctx, topicID, delta)
 		return err

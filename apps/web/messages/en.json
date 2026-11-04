@@ -4,57 +4,135 @@
     "description": "A path-based learning platform for anyone who wants to learn: programming, DSA, OS, networking, system design, projects and interview prep — with a Bangladesh-wide leaderboard."
   },
   "nav": {
-    "problems": "Problems",
-    "leaderboard": "Leaderboard",
-    "plan": "Plan",
     "signIn": "Sign in",
     "skip": "Skip to content",
     "theme": "Theme",
     "language": "Language",
     "menu": "Menu",
     "learn": "Learn",
-    "blogs": "Blogs",
-    "learnItems": {
-      "programming": "Programming",
-      "dsa": "DSA",
-      "os": "Operating System",
-      "networking": "Networking Fundamentals",
-      "system-design": "System Design",
-      "frontend-system-design": "Frontend System Design",
-      "backend-first-principles": "Backend First Principles"
-    },
-    "learnDesc": {
-      "programming": "Pick a language, get fluent",
-      "dsa": "Patterns, problems, visualizer",
-      "os": "Processes, threads, memory",
-      "networking": "TCP/IP, HTTP, DNS, TLS",
-      "system-design": "LLD + HLD",
-      "frontend-system-design": "Rendering, state, performance, design systems",
-      "backend-first-principles": "Requests, storage & concurrency from scratch"
-    },
-    "problemItems": {
-      "dsa": "DSA",
-      "ai-ml": "AI / ML"
-    },
-    "problemDesc": {
-      "dsa": "Topic-wise practice ladder",
-      "ai-ml": "Models, math & ML coding"
-    },
-    "planItems": {
-      "next": "Next",
-      "horizon": "Horizon",
-      "plan": "Plan"
-    },
-    "planDesc": {
-      "next": "What we ship next",
-      "horizon": "Coming in a few months",
-      "plan": "Our long-term plan"
-    },
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "appearance": "Appearance",
     "font": "Font",
-    "mono": "Mono"
+    "mono": "Mono",
+    "careers": "Careers",
+    "pricing": "Pricing",
+    "practice": "Practice",
+    "interview": "Interview",
+    "community": "Community",
+    "soon": "Soon",
+    "menus": {
+      "learn": {
+        "items": {
+          "backend-first-principles": {
+            "label": "Backend First Principles",
+            "desc": "Requests, storage & concurrency from scratch"
+          },
+          "programming": {
+            "label": "Programming",
+            "desc": "Pick a language, get fluent"
+          },
+          "dsa": {
+            "label": "DSA",
+            "desc": "Patterns, problems, visualizer"
+          },
+          "os": {
+            "label": "Operating System",
+            "desc": "Processes, threads, memory"
+          },
+          "networking": {
+            "label": "Networking",
+            "desc": "TCP/IP, HTTP, DNS, TLS"
+          },
+          "devops-cloud": {
+            "label": "DevOps & Cloud",
+            "desc": "Linux, Docker, CI/CD, Kubernetes, AWS"
+          },
+          "system-design": {
+            "label": "System Design",
+            "desc": "LLD, HLD and a project"
+          },
+          "frontend-system-design": {
+            "label": "Frontend System Design",
+            "desc": "Rendering, state, performance, design systems"
+          }
+        },
+        "feature": {
+          "eyebrow": "Start here",
+          "title": "Backend First Principles",
+          "body": "How a request really travels — HTTP, routing, CORS — built up from zero, in bn + en.",
+          "cta": "Start the track"
+        }
+      },
+      "practice": {
+        "items": {
+          "dsa": {
+            "label": "DSA problems",
+            "desc": "A topic-wise ladder, easy to hard"
+          },
+          "ai-ml": {
+            "label": "AI / ML problems",
+            "desc": "Math, models & ML coding"
+          },
+          "system-design": {
+            "label": "System Design Problems",
+            "desc": "Parking lot to WhatsApp, solved end to end"
+          },
+          "build-to-hire": {
+            "label": "Build to Hire",
+            "desc": "Real projects that get you hired"
+          }
+        }
+      },
+      "interview": {
+        "items": {
+          "prep": {
+            "label": "Interview Prep",
+            "desc": "A week-by-week plan for your next interview"
+          },
+          "questions": {
+            "label": "Most Common Questions",
+            "desc": "What companies keep asking, with answers"
+          },
+          "experiences": {
+            "label": "Interview Experiences",
+            "desc": "Real rounds, shared by learners"
+          },
+          "stories": {
+            "label": "Success Stories",
+            "desc": "From the first line of code to the offer"
+          }
+        },
+        "feature": {
+          "eyebrow": "Give back",
+          "title": "Share your interview experience",
+          "body": "Which company, which rounds, what they asked. Your story helps the next learner walk in prepared.",
+          "cta": "Share yours"
+        }
+      },
+      "community": {
+        "items": {
+          "leaderboard": {
+            "label": "Leaderboard",
+            "desc": "Bangladesh, division & district boards"
+          },
+          "blogs": {
+            "label": "Blogs",
+            "desc": "Deep dives and notes from the team"
+          },
+          "roadmap": {
+            "label": "Roadmap",
+            "desc": "What shipped, what's next"
+          }
+        },
+        "feature": {
+          "eyebrow": "Your call",
+          "title": "What should we build next?",
+          "body": "Vote on the topics you need most — the top ones move up the roadmap.",
+          "cta": "Vote now"
+        }
+      }
+    }
   },
   "theme": {
     "system": "System",
@@ -89,8 +167,8 @@
     "listLabel": "Milestones on the path",
     "milestones": {
       "why": {
-        "label": "why?",
-        "title": "Why?",
+        "label": "Start with why?",
+        "title": "Start with why?",
         "desc": "Why CS fundamentals matter, what they unlock, and the mindset to keep going."
       },
       "programming": {
@@ -116,17 +194,27 @@
       "system-design": {
         "label": "System design",
         "title": "System Design",
-        "desc": "Design real systems in two layers — from classes up to whole architectures.",
+        "desc": "Design real systems in two layers, from classes up to whole architectures, then scale one you built. Practise on classic problems along the way.",
         "parts": {
           "lld": {
             "short": "LLD",
             "title": "Low Level Design",
-            "desc": "Classes, SOLID, design patterns, UML, clean interfaces."
+            "desc": "Intro, OOP, class relationships, principles, SOLID, design patterns."
           },
           "hld": {
             "title": "High Level Design",
             "short": "HLD",
             "desc": "Scalability, databases, caching, queues, trade-offs."
+          },
+          "problems": {
+            "short": "PRB",
+            "title": "Design Problems",
+            "desc": "Practice section: URL shortener, WhatsApp, Pathao, a mobile wallet."
+          },
+          "project": {
+            "short": "PRJ",
+            "title": "Build and Scale",
+            "desc": "Build a real system, load-test it, then scale it."
           }
         }
       },
@@ -138,6 +226,21 @@
     },
     "goalHint": "Pick what's next for you.",
     "whatsNext": "What's next"
+  },
+  "live": {
+    "title": "Who's where on the path",
+    "here": "You're at",
+    "peopleHere": "learners here right now",
+    "total": "{count} learners on the path",
+    "notes": {
+      "why": "Knowing why keeps you going on the hard days.",
+      "programming": "Pick one language. Go deep, not wide.",
+      "dsa": "This is where everyone gets stuck for a while — you're not alone 💪",
+      "os": "Now you'll see how your code really runs.",
+      "networking": "Every request has a story. Learn it.",
+      "system-design": "LLD + HLD — think in systems, not files.",
+      "goal": "You learned how to learn. What's next?"
+    }
   },
   "lost": {
     "eyebrow": "Before → After",
@@ -165,11 +268,9 @@
     "learner": "Learner",
     "xp": "XP",
     "streak": "Streak",
-    "solved": "Solved",
     "days": "{count}d",
     "viewAll": "View full leaderboard",
     "live": "Live",
-    "demo": "Preview data",
     "divisions": {
       "dhaka": "Dhaka",
       "chattogram": "Chattogram",
@@ -179,21 +280,45 @@
       "sylhet": "Sylhet",
       "rangpur": "Rangpur",
       "mymensingh": "Mymensingh"
-    }
+    },
+    "pageTitle": "The Bangladesh leaderboard",
+    "pageSub": "Everyone ranked by XP. Filter by division or district to see who's leading near you.",
+    "district": "District",
+    "allDistricts": "All districts",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {n}",
+    "showing": "{from}–{to} of {total} learners",
+    "emptyAll": "No one has earned XP yet. Finish a lesson and you'll be first.",
+    "emptyHere": "No one from here is on the board yet. Be the first!",
+    "yourRank": "Your rank",
+    "notRanked": "You're not on this board yet. Earn XP to get ranked.",
+    "topPercent": "Top {p}%",
+    "signInToSee": "Sign in to see your rank",
+    "you": "you",
+    "unavailable": "The leaderboard can't be loaded right now. Try again in a moment."
   },
   "mostNeeded": {
     "eyebrow": "Most needed",
     "title": "What should we build next?",
     "sub": "The community votes. The top topics get written first.",
     "upvote": "Upvote {topic}",
-    "removeVote": "Remove vote for {topic}",
-    "votes": "{count} votes"
+    "votes": "{count} votes",
+    "voted": "You voted for {topic}",
+    "already": "You've already voted for this one. One vote each, and it stays.",
+    "thanks": "Thanks! Your vote is in.",
+    "failed": "Couldn't save your vote",
+    "error": "Couldn't load the topics right now."
   },
   "roadmap": {
-    "eyebrow": "Next · Horizon · Plan",
+    "eyebrow": "Shipped · Next · Horizon · Plan",
     "title": "What we're building next",
     "sub": "Our public roadmap — the content, videos and features coming to Coding Foding.",
     "stages": {
+      "shipped": {
+        "title": "Shipped",
+        "when": "Already live"
+      },
       "next": {
         "title": "Next",
         "when": "Shipping in the next few weeks"
@@ -219,7 +344,11 @@
     },
     "progress": "Progress",
     "feedback": "Want something sooner?",
-    "feedbackCta": "Vote on what's most needed"
+    "feedbackCta": "Vote on what's most needed",
+    "empty": "Nothing here yet.",
+    "loadError": "Couldn't load the roadmap, please check back soon.",
+    "shippedOn": "Shipped · {date}",
+    "open": "Open"
   },
   "stats": {
     "eyebrow": "Numbers",
@@ -259,6 +388,1418 @@
     "terms": "Terms",
     "projects": "Projects",
     "interview": "Interview",
-    "made": "Made with ❤️ in Bangladesh"
+    "made": "Made with ❤️ in Bangladesh",
+    "more": "More"
+  },
+  "youVsYou": {
+    "you": "you",
+    "successful": "successful people",
+    "later": "I'll start tomorrow…",
+    "day": "Day {n}",
+    "work": [
+      "late-night practice",
+      "a thousand bugs",
+      "rejected interviews",
+      "one problem a day"
+    ],
+    "cap1": "They have success. You have a phone full of distractions.",
+    "cap2": "You see their success, never the work underneath it.",
+    "cap3": "Put the phone down and get 1% better every day: success is only a matter of time",
+    "factNote": "like the gym, 1% a day is 37× in a year",
+    "cap4": "And one day, you're one of them."
+  },
+  "course": {
+    "chapters": "Stations",
+    "parts": "Parts",
+    "time": "Reading time",
+    "languages": "Languages",
+    "progress": "Your progress",
+    "hours": "{range} h",
+    "hoursLong": "{range} hours",
+    "done": "Done",
+    "ticket": "Route ticket",
+    "ticketFrom": "From",
+    "ticketTo": "To",
+    "part": "Part {n}",
+    "station": "Station {n} of {total}",
+    "transfer": "change here for Part {n} →",
+    "start": "Start reading",
+    "finishTitle": "Terminal",
+    "comingSoon": "This chapter is being written.",
+    "comingSoonSub": "The route is mapped; the full walkthrough arrives here soon.",
+    "back": "Back to the route",
+    "prev": "Previous stop",
+    "next": "Next stop",
+    "walkThink": "Hmm… maybe the right side is better 🤔",
+    "walkGo": "Bismillah!",
+    "fallback": "This chapter isn't in English yet, so you're reading the Bangla version.",
+    "onThisPage": "On this page",
+    "lockedTitle": "Part {n} is for Pro",
+    "lockedSub": "Part 1 of every course is free. Go Pro to read this chapter and every part after it — and earn XP as you go.",
+    "lockedCta": "Get Pro",
+    "lockedSignIn": "Sign in",
+    "lockedSignInSub": "Already Pro? Sign in to keep reading.",
+    "lockedFree": "Start Part 1 for free →",
+    "lockedError": "Couldn't load this chapter.",
+    "lockedRetry": "Try again",
+    "quotes": [
+      "If nobody believes in you, be *unbelievable*.",
+      "Work in silence. Let your *success* make the noise.",
+      "Small steps every day beat big plans *someday*.",
+      "Confused? Good. That's what *learning* feels like.",
+      "Every expert was once a beginner who *didn't quit*.",
+      "Bugs today, *skills* tomorrow.",
+      "You don't have to be fast. Just *keep going*.",
+      "The best time to start was yesterday. The next best is *now*.",
+      "Read the error message. It's trying to *help* you.",
+      "Dream big. Start small. *Ship* today."
+    ]
+  },
+  "bfp": {
+    "eyebrow": "Course",
+    "title": "Backend First Principles",
+    "sub": "Follow one request from the moment its bytes hit a socket to the day it is served by a hundred machines. Every stop explains why, not just how — with code.",
+    "note": "one request, end to end ↓",
+    "from": "a socket",
+    "to": "planet scale",
+    "groups": {
+      "on-the-wire": {
+        "title": "On the Wire",
+        "sub": "how a stream of bytes becomes a request your code can answer"
+      },
+      "memory-and-muscle": {
+        "title": "Memory & Muscle",
+        "sub": "where data rests, and the workers that move it"
+      },
+      "living-in-prod": {
+        "title": "Living in Prod",
+        "sub": "staying visible, safe and quick when real traffic arrives"
+      },
+      "beyond-one-machine": {
+        "title": "Beyond One Machine",
+        "sub": "packaging, proving and wiring many services together"
+      }
+    },
+    "finish": "Ride the whole line and no backend will feel like magic again."
+  },
+  "auth": {
+    "brand": "Coding Foding",
+    "titleBefore": "Learn",
+    "titleAfter": "from first principles.",
+    "words": [
+      "HTTP",
+      "Caching",
+      "Kafka",
+      "DSA",
+      "System Design"
+    ],
+    "subLogin": "Sign in with your email and password",
+    "subSignup": "Create your free Coding Foding account",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailHint": "We'll email you a 6-digit code to confirm it's really yours.",
+    "continue": "Continue",
+    "working": "Just a moment…",
+    "codeTitle": "Check your inbox",
+    "codeSub": "We sent a 6-digit code to {email}. It expires in 10 minutes.",
+    "code": "Code",
+    "verify": "Verify code",
+    "resend": "Send a new code",
+    "resendIn": "Send a new code in {s}s",
+    "resent": "New code sent.",
+    "changeEmail": "Use a different email",
+    "profileTitle": "One last step",
+    "profileSub": "Tell us a little about you, so your route fits you.",
+    "name": "Your name",
+    "phone": "Phone (optional)",
+    "phonePlaceholder": "01XXXXXXXXX",
+    "phoneHint": "Only for important account notices. Never shown publicly.",
+    "district": "District",
+    "districtPlaceholder": "Pick your district",
+    "districtHint": "Puts you on your division's leaderboard.",
+    "interestsLabel": "What do you want to learn?",
+    "interestsHint": "Pick one or more.",
+    "interests": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "dsa": "DSA",
+      "system-design": "System Design",
+      "databases": "Databases",
+      "devops": "DevOps",
+      "ai-ml": "AI / ML",
+      "mobile": "Mobile",
+      "security": "Security",
+      "competitive-programming": "Competitive Programming"
+    },
+    "finish": "Start my route",
+    "newUser": "New here?",
+    "signUp": "Create an account",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "legal": "By continuing you agree to learn something every day. Be kind on the leaderboard.",
+    "errors": {
+      "invalid_email": "That email address doesn't look right.",
+      "invalid_code": "That code is wrong or has expired.",
+      "too_many_attempts": "Too many wrong codes. Send yourself a new one.",
+      "invalid_token": "This link has expired or was already used. Ask for a new one.",
+      "invalid_name": "Tell us your name (up to 64 characters).",
+      "invalid_phone": "Enter a Bangladeshi mobile number like 01712345678.",
+      "invalid_district": "Pick your district from the list.",
+      "invalid_interests": "Pick at least one thing you want to learn.",
+      "email_taken": "This email already has an account. Sign in with your password.",
+      "rate_limited": "Too many codes asked for. Wait a few minutes and try again.",
+      "validation_failed": "Some fields need another look.",
+      "network": "Can't reach the server right now. Try again in a moment.",
+      "generic": "Something went wrong. Please try again.",
+      "invalid_stage": "Pick where you are on the journey.",
+      "district_locked": "Your district can't be changed once it's set.",
+      "invalid_credentials": "Email or password is wrong.",
+      "account_locked": "Too many tries. Wait a few minutes and try again.",
+      "weak_password": "Password must be 10–128 characters."
+    },
+    "signOut": "Sign out",
+    "xp": "{xp} XP",
+    "photo": {
+      "add": "Add a profile photo",
+      "change": "Change photo",
+      "remove": "Remove photo",
+      "uploading": "Uploading…",
+      "type": "Use a JPEG, PNG or WebP image.",
+      "tooBig": "The photo must be 5 MB or smaller.",
+      "dims": "That image is too large in pixels.",
+      "slow": "Too many uploads. Try again later.",
+      "failed": "Couldn't update the photo. Try again.",
+      "cooldown": "You can change your photo once every 30 days."
+    },
+    "stageLabel": "Where are you on the journey right now?",
+    "stageHint": "Pick the stage you're working on. You can change it any time from your menu.",
+    "stageMenu": "Where I am now",
+    "password": "Password",
+    "passwordHint": "At least 10 characters. A short sentence works great.",
+    "show": "Show",
+    "hide": "Hide",
+    "loginButton": "Sign in",
+    "forgotLink": "Forgot your password?",
+    "forgotTitle": "Reset your password",
+    "forgotSub": "Enter your email and we'll send you a link to choose a new password.",
+    "forgotButton": "Send reset link",
+    "forgotSent": "If {email} has an account, a reset link is on its way. It works for 30 minutes.",
+    "backToLogin": "Back to sign in",
+    "resetTitle": "Choose a new password",
+    "newPassword": "New password",
+    "passwordAgain": "Type it again",
+    "passwordMismatch": "The two passwords don't match.",
+    "resetButton": "Save new password",
+    "resetDone": "Your password is set. You've been signed out everywhere, so sign in again with the new one.",
+    "resetInvalid": "This reset link has expired or was already used. Ask for a new one.",
+    "welcomeBack": "Welcome back, {name}! 👋",
+    "welcomeNew": "Your account is ready, {name}. Let's begin! 🎉",
+    "signedOut": "You've signed out.",
+    "getPro": "Get Pro ✦",
+    "renewPro": "Extend Pro",
+    "adminPayments": "Payments review (admin)",
+    "adminPanel": "Admin panel"
+  },
+  "profile": {
+    "title": "Your profile",
+    "sub": "Update your details. Your email stays as it is.",
+    "ranksTitle": "Where you stand",
+    "national": "Bangladesh",
+    "division": "{name} division",
+    "district": "{name} district",
+    "rankOf": "of {total}",
+    "noRank": "Not ranked yet",
+    "topPercent": "Top {p}%",
+    "noDistrict": "Pick a district below to see this rank.",
+    "detailsTitle": "Your details",
+    "email": "Email",
+    "emailHint": "Your email can't be changed. It's how you sign in.",
+    "language": "Language for emails",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "saved": "Saved.",
+    "nothing": "Nothing to save yet.",
+    "photoTitle": "Profile photo",
+    "photoNext": "You can change your photo again on {date}.",
+    "photoRule": "You can change your photo once every 30 days.",
+    "menuLink": "Profile & settings",
+    "signInFirst": "Sign in to see your profile.",
+    "districtLocked": "Your district can't be changed once it's set.",
+    "photoSaved": "Your new photo is up.",
+    "photoRemoved": "Photo removed.",
+    "tooMany": "You've updated a lot just now. Try again in a little while."
+  },
+  "toast": {
+    "close": "Dismiss"
+  },
+  "lesson": {
+    "stamp": "Station stamp",
+    "title": "Finish the chapter, earn +{xp} XP",
+    "doneTitle": "Chapter done! +{xp} XP earned 🎉",
+    "signInSub": "Reading is open to everyone; sign in to save your progress.",
+    "readySub": "Done reading? Press Complete and the XP is yours.",
+    "doneSub": "Your XP is on the leaderboard. On to the next stop.",
+    "signIn": "Sign in",
+    "completed": "Completed",
+    "completing": "Saving…",
+    "complete": "Complete · +{xp} XP",
+    "gained": "+{xp} XP! Chapter complete 🎉",
+    "alreadyDone": "You already earned this chapter's XP.",
+    "failed": "Couldn't save, please try again.",
+    "askTitle": "Done with station {n}?",
+    "askSub": "Complete it for +{xp} XP. Next alone won't complete this chapter; you can come back and do it later.",
+    "askComplete": "Complete",
+    "askNext": "Just Next",
+    "askBoth": "Complete + Next · +{xp} XP",
+    "askClose": "Close",
+    "titleFree": "Finish the chapter",
+    "doneTitleFree": "Chapter done! 🎉",
+    "readySubFree": "Done reading? Press Complete to save your progress. XP is Pro-only — on Pro this chapter is worth +{xp} XP.",
+    "doneSubFree": "Progress saved. Go Pro to earn XP and a leaderboard spot from your next chapter on.",
+    "getPro": "Go Pro to earn XP →",
+    "completeFree": "Complete",
+    "gainedFree": "Chapter complete 🎉",
+    "askSubFree": "Complete it to save your progress. Next alone won't complete this chapter; you can come back and do it later.",
+    "askBothFree": "Complete + Next"
+  },
+  "careers": {
+    "eyebrow": "Careers",
+    "pageTitle": "Job board",
+    "pageSub": "Open roles at Bangladeshi tech companies, in one place. Filter by department and apply in one click.",
+    "note": "learn → build → get hired ✦",
+    "filterLabel": "Filter by department",
+    "all": "All",
+    "showing": "{count, plural, one {# open role} other {# open roles}}",
+    "departments": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "mobile": "Mobile",
+      "data-ai": "Data & AI",
+      "devops": "DevOps & Cloud",
+      "qa": "QA & Testing",
+      "design": "Design",
+      "product": "Product"
+    },
+    "types": {
+      "full-time": "Full-time",
+      "part-time": "Part-time",
+      "internship": "Internship",
+      "contract": "Contract"
+    },
+    "levels": {
+      "intern": "Intern",
+      "junior": "Junior",
+      "mid": "Mid-level",
+      "senior": "Senior",
+      "lead": "Lead"
+    },
+    "workplaces": {
+      "onsite": "On-site",
+      "hybrid": "Hybrid",
+      "remote": "Remote"
+    },
+    "negotiable": "Negotiable",
+    "perMonth": "per month",
+    "perMonthShort": "/mo",
+    "today": "today",
+    "daysAgo": "{count, plural, one {# day ago} other {# days ago}}",
+    "verified": "Verified company",
+    "demo": "Demo",
+    "applied": "Applied",
+    "loadError": "Couldn't load jobs.",
+    "retry": "Try again",
+    "emptyHand": "Nothing yet…",
+    "empty": "No open roles in this department right now.",
+    "seeAll": "See all jobs",
+    "pagination": "Page",
+    "prev": "Previous",
+    "next": "Next",
+    "browseFree": "Browsing is free.",
+    "signInToApply": "Sign in to apply",
+    "backToJobs": "Back to all jobs",
+    "goneHand": "This role has closed",
+    "gone": "This job is no longer open or can't be found.",
+    "salary": "Salary",
+    "department": "Department",
+    "level": "Level",
+    "posted": "Posted",
+    "aboutRole": "About the role",
+    "youWill": "What you'll do",
+    "youHave": "What you'll need",
+    "skills": "Skills",
+    "aboutCompany": "About {name}",
+    "companySize": "{size} people",
+    "applyTitle": "Apply for this role",
+    "signInSub": "Browsing needs no account, but applying does.",
+    "noAccount": "No account?",
+    "signUp": "Sign up",
+    "companyCannotApply": "Company accounts can't apply to jobs.",
+    "appliedSub": "{company} will see your profile and note.",
+    "moreJobs": "See more jobs",
+    "applySub": "Your profile (name, district, XP, interests) is shared with the company.",
+    "noteLabel": "A short note to the company (optional)",
+    "notePlaceholder": "Why this role? Add a link to a project if you have one.",
+    "apply": "Apply",
+    "applying": "Sending…",
+    "profileShared": "Once sent, an application can't be edited.",
+    "appliedToast": "Applied! {company} has your application 🎉",
+    "alreadyApplied": "You've already applied to this job.",
+    "applyFailed": "Couldn't apply, please try again.",
+    "companiesEyebrow": "For companies",
+    "companiesTitle": "Hire people who've shown they can learn",
+    "companiesPost": "Post jobs and get applications here",
+    "companiesHire": "Hire directly from the leaderboard and profiles",
+    "companiesSoon": "Company accounts coming soon"
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "pageTitle": "Take learning seriously",
+    "pageSub": "Start free. Unlock the whole path with Pro — a month for the price of a tea and a burger.",
+    "note": "launch offer: ৳299, not ৳499 ✦",
+    "periodLabel": "Billing period",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "yearlyBadge": "extra 20% off",
+    "freeName": "Free",
+    "forever": "forever",
+    "freeSub": "See what the path is like. No card, no payment.",
+    "freeCta": "Start free",
+    "proName": "Pro",
+    "popular": "Most popular",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "off": "{pct}% off",
+    "yearlyMath": "Just {perMonth} a month — save {save} a year vs monthly",
+    "monthlyNote": "Stop any time, no auto-renew",
+    "proCta": "Get Pro",
+    "renewCta": "Extend Pro",
+    "payWith": "Pay with bKash or Nagad",
+    "perks": {
+      "free1": "The roadmap and journey path",
+      "free2": "The whole Programming course, plus Part 1 of every other course",
+      "free3": "Streaks, and a place on the leaderboard",
+      "free4": "Browse and apply on the careers portal",
+      "pro1": "Every part of every course, new ones too",
+      "pro2": "XP for every chapter you finish",
+      "pro3": "New chapters before everyone else",
+      "pro4": "A Pro badge on your profile and the leaderboard",
+      "pro5": "One payment, never auto-renewed",
+      "pro6": "Problem sets with detailed solutions"
+    },
+    "loadError": "Couldn't load prices, try again in a moment.",
+    "howTitle": "How payment works",
+    "how1Title": "Send Money",
+    "how1Body": "From the bKash or Nagad app, Send Money the amount shown at checkout to the number shown.",
+    "how2Title": "Enter the TrxID",
+    "how2Body": "Copy the Transaction ID from the SMS or the app and submit it at checkout.",
+    "how3Title": "Pro is on",
+    "how3Body": "We verify within 5 minutes to 1 day. You'll get an email and everything unlocks.",
+    "faqTitle": "Questions?",
+    "faq1Q": "How long does verification take?",
+    "faq1A": "Usually minutes, at most a day. We check every TrxID against our statement by hand, so it can take a little while.",
+    "faq2Q": "What if I enter the wrong TrxID?",
+    "faq2A": "The payment is rejected and you get an email with the reason. Submit the correct TrxID from checkout — no need to send money again.",
+    "faq3Q": "Does it auto-renew?",
+    "faq3A": "No. Nothing is charged when it ends. Renew early and the new time is added to what's left.",
+    "faq4Q": "Where do I enter a coupon?",
+    "faq4A": "In step 2 of checkout. Coupons apply on top of the launch price, and you see the total before paying."
+  },
+  "checkout": {
+    "eyebrow": "Checkout",
+    "pageTitle": "Get Pro",
+    "pageSub": "Pick a plan, add a coupon if you have one, send money with bKash or Nagad and give us the TrxID. We'll take it from there.",
+    "stepPlan": "Plan",
+    "stepCoupon": "Coupon code (optional)",
+    "stepPay": "Send the money",
+    "stepTrx": "Payment details",
+    "couponPlaceholder": "e.g. LAUNCH20",
+    "couponApply": "Apply",
+    "couponRemove": "Remove",
+    "couponApplied": "{code} applied — {pct}% off",
+    "methods": {
+      "bkash": "bKash",
+      "nagad": "Nagad"
+    },
+    "noMethods": "Payments are paused right now, try again later.",
+    "pay1": "Open the {app} app and go to Send Money",
+    "pay2": "To this number:",
+    "pay3": "Exactly this amount:",
+    "pay4": "Enter the TrxID from the confirmation SMS below",
+    "copied": "Copied",
+    "payerLabel": "The number you sent from",
+    "trxLabel": "Transaction ID (TrxID)",
+    "trxHint": "It's in the SMS, e.g. 9A7B6C5D4E",
+    "summary": "Order summary",
+    "planLine": "Pro · {plan}",
+    "launchDiscount": "Launch offer",
+    "couponLine": "Coupon {code}",
+    "total": "Total",
+    "access": "{days} days of Pro",
+    "submit": "Submit payment",
+    "submitting": "Sending…",
+    "reviewTime": "Verified within 5 minutes to 1 day, then Pro switches on.",
+    "submitted": "Payment submitted! You'll get an email once it's verified.",
+    "pendingHand": "Hang tight…",
+    "pendingTitle": "Your payment is under review",
+    "pendingSub": "We're matching your TrxID with our statement. Usually 5 minutes, at most a day. You'll get an email.",
+    "keepLearning": "Keep learning meanwhile →",
+    "proActive": "Your Pro is active until {date}. Buying now adds time after that date.",
+    "rejectedTitle": "Your last payment couldn't be verified.",
+    "rejectedReason": "Reason: {reason}.",
+    "rejectedRetry": "Submit the correct TrxID again — no need to resend money.",
+    "errors": {
+      "payer": "Enter a Bangladeshi mobile number (01XXXXXXXXX)",
+      "trx": "A TrxID has 8–20 letters/digits, please check it",
+      "invalid_trx_id": "That TrxID doesn't look right",
+      "trx_used": "This TrxID was already submitted",
+      "coupon_not_found": "This coupon doesn't exist",
+      "coupon_expired": "This coupon has expired",
+      "coupon_not_for_plan": "This coupon doesn't work with this plan",
+      "coupon_used_up": "This coupon has been fully used",
+      "coupon_already_used": "You've already used this coupon",
+      "payments_closed": "This payment method is closed right now",
+      "rate_limited": "Too many tries, wait a bit",
+      "failed": "Couldn't submit, please try again"
+    }
+  },
+  "admin": {
+    "pageTitle": "Payments",
+    "pageSub": "Match each TrxID with the bKash/Nagad statement, then approve or reject.",
+    "forbidden": "Admins only.",
+    "empty": "Nothing here.",
+    "tabs": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "plans": {
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "method": "Method",
+    "payer": "From",
+    "reason": "Reason",
+    "reasonPlaceholder": "e.g. TrxID not found in statement",
+    "approve": "Approve · {days} days",
+    "reject": "Reject",
+    "confirmReject": "Reject",
+    "cancel": "Cancel",
+    "approved": "Approved — {name} is Pro now",
+    "rejected": "Rejected, the buyer was emailed",
+    "failed": "Something went wrong"
+  },
+  "adminPanel": {
+    "eyebrow": "Admin",
+    "title": "Admin panel",
+    "forbidden": "Admins only.",
+    "signIn": "Sign in",
+    "navLabel": "Admin sections",
+    "nav": {
+      "payments": "Payments",
+      "roadmap": "Roadmap",
+      "coupons": "Coupons",
+      "users": "Users",
+      "settings": "Settings",
+      "overview": "Dashboard",
+      "topics": "Topics",
+      "jobs": "Jobs",
+      "activity": "Activity"
+    },
+    "settings": {
+      "title": "Payment numbers",
+      "sub": "Where checkout tells learners to Send Money.",
+      "on": "Shown at checkout",
+      "off": "Empty — this method is off at checkout",
+      "note": "Use an 11-digit number like 01712345678. Leave a field empty to turn that method off. Checkout may show the old number for up to 5 minutes (cache).",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Payment numbers saved",
+      "failed": "Couldn't save"
+    },
+    "coupons": {
+      "title": "Coupons",
+      "sub": "Discount codes learners type at checkout.",
+      "new": "New coupon",
+      "empty": "No coupons yet.",
+      "off": "{pct}% off",
+      "inactive": "Off",
+      "expired": "Expired",
+      "usedUp": "Used up",
+      "plans": {
+        "monthly": "Monthly",
+        "yearly": "Yearly"
+      },
+      "allPlans": "All plans",
+      "used": "{n} used",
+      "until": "until {date}",
+      "noEnd": "no end date",
+      "edit": "Edit",
+      "code": "Code",
+      "percent": "Percent off (1–90)",
+      "max": "Max uses",
+      "unlimited": "Unlimited",
+      "plansLabel": "Works on",
+      "validUntil": "Valid until (empty = forever)",
+      "note": "Note (only admins see it)",
+      "notePlaceholder": "e.g. Eid campaign",
+      "activeLabel": "Active",
+      "create": "Create coupon",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "created": "{code} created",
+      "updated": "{code} saved",
+      "failed": "Couldn't save"
+    },
+    "users": {
+      "title": "Users",
+      "sub": "Every account. Search, filter, create, edit, give Pro, or ban.",
+      "new": "New user",
+      "search": "Search name, email or username…",
+      "count": "{n, plural, one {# user} other {# users}}",
+      "empty": "No users match.",
+      "prev": "Previous",
+      "next": "Next",
+      "page": "Page {n} of {of}",
+      "tabs": {
+        "all": "All",
+        "pro": "Pro",
+        "free": "Free",
+        "banned": "Banned",
+        "companies": "Companies",
+        "admins": "Admins"
+      },
+      "col": {
+        "user": "User",
+        "type": "Type",
+        "plan": "Plan",
+        "status": "Status",
+        "joined": "Joined"
+      },
+      "badge": {
+        "admin": "Admin",
+        "company": "Company",
+        "learner": "Learner",
+        "banned": "Banned",
+        "active": "Active"
+      },
+      "until": "until {date}",
+      "free": "Free",
+      "manage": "Manage",
+      "verified": "Email verified",
+      "unverified": "Email not verified",
+      "joinedOn": "Joined {date}",
+      "profile": "Profile",
+      "f": {
+        "name": "Name",
+        "username": "Username",
+        "phone": "Phone",
+        "email": "Email",
+        "type": "Account type",
+        "password": "Password"
+      },
+      "emailNote": "The new email will be marked unverified until its owner confirms it.",
+      "roleNote": "Roles can't be changed here. Make admins with `make admin` on the server.",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "saved": "Saved {name}.",
+      "proTitle": "Pro",
+      "proActive": "Pro until {date}.",
+      "proNone": "Not on Pro.",
+      "days": "{n} days",
+      "customDays": "Custom days",
+      "grant": "Give Pro",
+      "extend": "Extend",
+      "revoke": "End Pro now",
+      "granted": "Gave {name} {days} days of Pro.",
+      "revoked": "Ended Pro for {name}.",
+      "confirmRevoke": "End Pro for {name} right now?",
+      "stackNote": "Days are added on top of any Pro time they already have.",
+      "banTitle": "Ban this user",
+      "bannedTitle": "Banned",
+      "banNote": "They'll be signed out everywhere at once and can't sign in again until you unban them.",
+      "banReason": "Reason (kept in the record)",
+      "ban": "Ban user",
+      "confirmBan": "Ban {name}? They'll be signed out everywhere.",
+      "banned": "Banned {name}.",
+      "bannedOn": "Banned on {date}.",
+      "unban": "Lift the ban",
+      "unbanned": "Unbanned {name}.",
+      "adminNoBan": "Admins can't be banned.",
+      "newTitle": "New user",
+      "newSub": "The account starts with a verified email. Send them the password, and they can change it after signing in.",
+      "regenerate": "New",
+      "passwordNote": "At least 10 characters. Copy it before you create the user.",
+      "create": "Create user",
+      "created": "Created {email}.",
+      "failed": "Something went wrong."
+    },
+    "roadmap": {
+      "title": "Roadmap",
+      "sub": "The Shipped · Next · Horizon · Plan columns on the home page. Changing the column marks shipped items with today's date.",
+      "add": "Add",
+      "empty": "Nothing in this column.",
+      "position": "Position (lower = higher up)",
+      "moveTo": "Move to column",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "Delete “{title}”?",
+      "deleted": "Deleted",
+      "moved": "“{title}” moved to {stage}",
+      "slug": "Slug (a short id)",
+      "stage": "Column",
+      "kind": "Kind",
+      "titleIn": "Title ({lang})",
+      "descIn": "Description ({lang})",
+      "progress": "Progress %",
+      "shippedAt": "Shipped on",
+      "link": "Link",
+      "shippedHint": "Leave “Shipped on” empty to use today.",
+      "create": "Add item",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "created": "Item added",
+      "saved": "Saved",
+      "failed": "Couldn't save"
+    },
+    "groups": {
+      "overview": "Overview",
+      "people": "People",
+      "money": "Money",
+      "content": "Content",
+      "system": "System"
+    },
+    "backToSite": "View site",
+    "signOut": "Sign out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "overview": {
+      "title": "Dashboard",
+      "sub": "How Coding Foding is doing, and what needs your attention.",
+      "pendingTitle": "{n, plural, one {# payment is} other {# payments are}} waiting for review.",
+      "pendingSub": "Learners get Pro the moment you approve.",
+      "review": "Review",
+      "users": "Users",
+      "newThisWeek": "+{n} this week",
+      "pro": "Pro members",
+      "proShare": "{n}% of all users",
+      "active": "Active this week",
+      "activeHint": "learned something in the last 7 days",
+      "revenue": "Revenue, 30 days",
+      "revenueHint": "approved payments",
+      "banned": "Banned",
+      "companies": "Companies",
+      "openJobs": "{n} open jobs",
+      "votes": "Topic votes",
+      "likes": "Project likes",
+      "recentSignups": "Newest signups",
+      "seeAll": "All users",
+      "topTopics": "Most wanted topics",
+      "manage": "Manage",
+      "topProjects": "Most liked projects",
+      "open": "Open",
+      "noLikes": "No likes yet.",
+      "none": "Nobody yet."
+    },
+    "topics": {
+      "title": "Topics",
+      "sub": "The home page's “What should we build next?” list. Votes are kept when you edit or hide a topic.",
+      "new": "New topic",
+      "newTitle": "New topic",
+      "editTitle": "Edit topic",
+      "noDescription": "No description yet.",
+      "votes": "{n, plural, one {# vote} other {# votes}}",
+      "status": {
+        "open": "Open for votes",
+        "planned": "Planned",
+        "hidden": "Hidden"
+      },
+      "titleEn": "Title (English)",
+      "titleBn": "Title (Bangla)",
+      "descEn": "Description (English)",
+      "descBn": "Description (Bangla)",
+      "tag": "Tag",
+      "statusLabel": "Status",
+      "statusNote": "Hidden takes it off the home page; Planned tells voters it's on the way.",
+      "save": "Save",
+      "saving": "Saving…",
+      "create": "Create topic",
+      "saved": "Topic saved.",
+      "created": "Topic created.",
+      "failed": "Something went wrong."
+    },
+    "jobs": {
+      "title": "Jobs",
+      "sub": "Every job on the careers page, from every company. Hide spam or put a job back.",
+      "empty": "No jobs yet.",
+      "demo": "demo",
+      "posted": "Posted {date}",
+      "applications": "{n, plural, one {# application} other {# applications}}",
+      "statusLive": "Live",
+      "statusClosed": "Closed",
+      "statusHidden": "Hidden",
+      "hide": "Hide",
+      "show": "Publish",
+      "hidden": "Hid “{title}”.",
+      "shown": "Published “{title}”.",
+      "failed": "Something went wrong."
+    },
+    "activity": {
+      "title": "Activity",
+      "sub": "Every admin action, newest first: who changed what, and when.",
+      "empty": "Nothing yet.",
+      "system": "System",
+      "newer": "Newer",
+      "older": "Older"
+    }
+  },
+  "comingSoon": {
+    "eyebrow": "Coming soon",
+    "body": "We're building this right now. Check the roadmap to see when it lands — or vote so we build it sooner.",
+    "roadmap": "See the roadmap",
+    "vote": "Vote for it",
+    "meanwhile": "Meanwhile, start with Backend First Principles →"
+  },
+  "dsa": {
+    "eyebrow": "Course",
+    "title": "Data Structures & Algorithms",
+    "sub": "Open up every data structure and algorithm and build it yourself: how it sits in memory, what each operation costs, and why it works. Animated at every step, with code in C++, Java, Python, JavaScript, Go and C#.",
+    "note": "from one box of memory to a search engine ↓",
+    "from": "one box of memory",
+    "to": "your own search engine",
+    "finish": "Ride the whole line and build a search engine out of the pieces you made. After that, no interview question is a black box.",
+    "groups": {
+      "counting-the-cost": {
+        "title": "Counting the Cost",
+        "sub": "memory, Big-O and recursion: the tools to judge everything after"
+      },
+      "lines-of-data": {
+        "title": "Lines of Data",
+        "sub": "arrays, strings, lists, stacks, queues and hash maps, built by hand"
+      },
+      "search-and-sort": {
+        "title": "Search and Sort",
+        "sub": "finding fast, ordering fast, and walking with two pointers"
+      },
+      "trees": {
+        "title": "Trees",
+        "sub": "from family trees to the B-trees inside every database"
+      },
+      "graphs": {
+        "title": "Graphs",
+        "sub": "maps, mazes and networks: exploring and finding the way"
+      },
+      "problem-solving": {
+        "title": "Problem-Solving Strategies",
+        "sub": "backtracking, greedy, dynamic programming and bits"
+      },
+      "dsa-in-production": {
+        "title": "DSA in Production",
+        "sub": "where these ideas run for real, and a project that uses them all"
+      }
+    }
+  },
+  "os": {
+    "eyebrow": "Course",
+    "title": "Operating Systems",
+    "sub": "Follow one program from the moment you press power to the moment it exits. Every stop shows what the OS is doing underneath, and why, with code in C, C++, Go, Python, Java and Rust.",
+    "note": "one program, power-on to exit ↓",
+    "from": "power button",
+    "to": "your own OS",
+    "finish": "Ride the whole line and boot an OS you built yourself. Nothing under your code will feel like magic again.",
+    "groups": {
+      "under-the-hood": {
+        "title": "Under the Hood",
+        "sub": "what an operating system really is, and how it wakes up"
+      },
+      "many-things-at-once": {
+        "title": "Many Things at Once",
+        "sub": "processes, threads, and who gets the CPU next"
+      },
+      "sharing-without-chaos": {
+        "title": "Sharing Without Chaos",
+        "sub": "races, locks and deadlocks — the interview favourite"
+      },
+      "where-programs-live": {
+        "title": "Where Programs Live",
+        "sub": "memory, pages, and the illusion of having it all"
+      },
+      "bytes-that-stay": {
+        "title": "Bytes That Stay",
+        "sub": "files, disks and talking to hardware"
+      },
+      "os-in-the-real-world": {
+        "title": "OS in the Real World",
+        "sub": "security, containers, and the interview"
+      },
+      "build-your-own": {
+        "title": "Build Your Own",
+        "sub": "two projects: your own Docker, then a kernel you wrote"
+      }
+    }
+  },
+  "notFound": {
+    "eyebrow": "Off the path",
+    "title": "You wandered off the path.",
+    "body": "This page doesn't exist — or it moved. Every journey has a wrong turn; let's get you back on track.",
+    "home": "Back to home",
+    "roadmap": "See the roadmap"
+  },
+  "blog": {
+    "eyebrow": "Blog",
+    "title": "Notes on learning, tools and engineering",
+    "sub": "Long-form explainers from the Coding Foding team, written so an intern and a senior both get something out of them.",
+    "empty": "No posts yet. The first one is on its way.",
+    "read": "Read",
+    "minutes": "{n, number} min read",
+    "back": "All posts",
+    "onThisPage": "On this page",
+    "fallback": "This post isn't translated yet, so you're reading the Bangla original.",
+    "vote": {
+      "title": "Was this post useful?",
+      "hint": "You get one vote, and it's final.",
+      "up": "Upvote",
+      "down": "Downvote",
+      "signIn": "Sign in to vote. You get one vote per post.",
+      "votedUp": "You upvoted this post. Votes are final, so it can't be changed.",
+      "votedDown": "You downvoted this post. Votes are final, so it can't be changed.",
+      "thanksUp": "Thanks for the upvote!",
+      "thanksDown": "Thanks, your feedback is recorded.",
+      "already": "You've already voted on this post.",
+      "failed": "Couldn't save your vote. Try again."
+    }
+  },
+  "net": {
+    "eyebrow": "Course",
+    "title": "Networking Fundamentals",
+    "sub": "Follow one click from your laptop to a server and back. Every stop opens one layer of the trip, from light in a fiber to the page on your screen, with code in C, C++, Go, Python, Java and Rust.",
+    "note": "one click, laptop to server ↓",
+    "from": "your laptop",
+    "to": "your own Kubernetes",
+    "finish": "Ride the whole line and build a mini Kubernetes whose network you wired yourself, from pod IPs to Services and DNS. The internet will never feel like magic again.",
+    "groups": {
+      "first-hello": {
+        "title": "First Hello",
+        "sub": "what a network is, the boxes in it, and the map of one click"
+      },
+      "signals-and-links": {
+        "title": "Signals and Links",
+        "sub": "bits on a wire, frames, errors and switches"
+      },
+      "finding-the-way": {
+        "title": "Finding the Way",
+        "sub": "IP addresses, subnets, NAT and routing"
+      },
+      "reliable-delivery": {
+        "title": "Reliable Delivery",
+        "sub": "ports, UDP, TCP and keeping the road clear"
+      },
+      "what-users-touch": {
+        "title": "What Users Touch",
+        "sub": "DNS, the web, email and everyday protocols"
+      },
+      "safe-and-wireless": {
+        "title": "Safe, Wireless, Cloud",
+        "sub": "security, VPNs, Wi-Fi, mobile and the cloud"
+      },
+      "build-your-own": {
+        "title": "Build Your Own",
+        "sub": "the capstone: a mini Kubernetes, network and all"
+      }
+    }
+  },
+  "devops": {
+    "eyebrow": "Course",
+    "title": "DevOps & Cloud",
+    "sub": "Take one app from your laptop to a monitored, reliable production system: Linux, Git, containers, Kubernetes, CI/CD, Terraform, monitoring and SRE. Take the Networking course first; this one only revises what DevOps must know.",
+    "note": "one app, laptop to production ↓",
+    "from": "your laptop",
+    "to": "production",
+    "finish": "Ride the whole line and ship a real app to production, with pipelines, infrastructure as code, dashboards and SLOs you built yourself.",
+    "groups": {
+      "linux-for-servers": {
+        "title": "Linux for Servers",
+        "sub": "the terminal, permissions, services and Bash"
+      },
+      "git-workflows": {
+        "title": "Git Workflows",
+        "sub": "how Git thinks, and Git in a team"
+      },
+      "networking-revision": {
+        "title": "Networking Revision",
+        "sub": "must-know revision · full depth in the Networking course"
+      },
+      "containers": {
+        "title": "Containers",
+        "sub": "Docker from first image to production"
+      },
+      "kubernetes": {
+        "title": "Kubernetes",
+        "sub": "running, configuring and healing a cluster"
+      },
+      "delivery": {
+        "title": "Delivery and Cloud",
+        "sub": "CI/CD, the cloud, and infrastructure as code"
+      },
+      "running-in-prod": {
+        "title": "Running in Production",
+        "sub": "monitoring, observability and SRE"
+      },
+      "interview-and-project": {
+        "title": "Interview and Project",
+        "sub": "the interview, then ship a real app end to end"
+      }
+    }
+  },
+  "sd": {
+    "eyebrow": "Course",
+    "title": "System Design",
+    "sub": "Design software in two layers: classes first, then whole architectures, then build a real system and scale it yourself, with code in Java, Go, Python, TypeScript and C++. Practise on the classic problems in Practice → System Design Problems.",
+    "note": "one class to a million users ↓",
+    "from": "one class",
+    "to": "a million users",
+    "finish": "Ride the whole line and scale a system you built yourself, measuring every step. The next design round will feel like a conversation, not an exam.",
+    "groups": {
+      "low-level-design": {
+        "title": "Low Level Design",
+        "sub": "intro, OOP, class relationships, principles, SOLID and design patterns"
+      },
+      "high-level-design": {
+        "title": "High Level Design",
+        "sub": "scale, databases, caching, queues and trade-offs"
+      },
+      "build-and-scale": {
+        "title": "Build and Scale",
+        "sub": "the capstone: build a real system, then make it grow"
+      }
+    }
+  },
+  "sdProblems": {
+    "eyebrow": "Practice",
+    "title": "System Design Problems",
+    "sub": "The classic LLD and HLD interview questions, each solved end to end: requirements, the design, the trade-offs, and the follow-up questions interviewers ask. New problems are added all the time.",
+    "theory": "New to system design? Learn the theory first in the System Design course →",
+    "lld": "Low Level Design",
+    "lldSub": "Classes, patterns and code for one well-scoped system.",
+    "hld": "High Level Design",
+    "hldSub": "Whole architectures that serve millions of users.",
+    "levels": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "hours": "{range} h",
+    "allProblems": "All topics and problems ({n})",
+    "howTitle": "How every problem is solved",
+    "startWith": "Start with {title}",
+    "outline": {
+      "lld": [
+        "Clarify the requirements",
+        "Find the entities",
+        "Class diagram",
+        "Core flows",
+        "Code",
+        "Extensions",
+        "Follow-up questions"
+      ],
+      "hld": [
+        "Requirements",
+        "Estimation",
+        "API design",
+        "High-level design",
+        "Data model",
+        "Deep dives",
+        "Trade-offs",
+        "Follow-up questions"
+      ],
+      "lesson": [
+        "The idea",
+        "Why it matters",
+        "Code",
+        "Common mistakes",
+        "Interview questions"
+      ]
+    },
+    "soonTitle": "This one is being written",
+    "soonSub": "The full solution is on its way. Here is its outline, so you can try designing it yourself first.",
+    "fallback": "This problem isn't translated yet, so you're reading the other language.",
+    "prev": "Previous",
+    "next": "Next",
+    "onThisPage": "On this page",
+    "willCover": "What this will cover",
+    "back": "System Design course",
+    "solvedShort": "done",
+    "signIn": "Sign in",
+    "signInSync": "to save your progress on every device.",
+    "search": "Search topics and problems...",
+    "filter": "Filter",
+    "difficulty": "Difficulty",
+    "status": "Status",
+    "all": "All",
+    "statuses": {
+      "all": "All",
+      "todo": "To do",
+      "solved": "Solved"
+    },
+    "mark": "Mark as solved",
+    "unmark": "Mark as not solved",
+    "solvedLabel": "Solved",
+    "noMatch": "No problem matches. Try another word or clear the filters.",
+    "markNote": "Designed it yourself and understood the solution? Mark it to track your progress.",
+    "doneNote": "Nice work. This one counts toward your progress.",
+    "groups": {
+      "start": "Introduction",
+      "objects": "OOP Basics",
+      "modeling": "Class Relationships & UML",
+      "smells": "Design Principles & SOLID",
+      "patterns": "Design Patterns",
+      "concurrency": "Concurrency",
+      "lld-problems": "LLD Problems",
+      "hld-problems": "HLD Problems"
+    },
+    "subs": {
+      "creating": "Creational · building objects",
+      "varying": "Behavioral · changing behaviour",
+      "wrapping": "Structural · fitting pieces",
+      "notifying": "Behavioral · notifying others"
+    },
+    "interviewQuestions": "Interview Questions",
+    "lessonSub": "A short lesson in {group}: the idea in plain words, why it matters, code, and the mistakes interviewers look for.",
+    "levelHint": "Difficulty applies to interview questions, so lessons are hidden.",
+    "lessonSoonSub": "The full lesson is on its way. Its outline is here so you know what's coming.",
+    "markLessonNote": "Read it and got the idea? Mark it done to track your progress.",
+    "markDone": "Mark as done",
+    "doneLabel": "Done"
+  },
+  "dsaProblems": {
+    "eyebrow": "Practice",
+    "title": "DSA Problems",
+    "sub": "Start at the Big-O depot, then ride 150 interview problems across 18 topics, in an order we picked so each topic builds on the last. Every problem gets a write-up: the intuition, a diagram, brute force to optimal, code in six languages, and where the idea shows up in real apps.",
+    "roadmap": "DSA Metro",
+    "howTitle": "How every problem is solved",
+    "outline": [
+      "Understand the problem",
+      "Brute force first",
+      "See it in a diagram",
+      "Spot the pattern",
+      "The optimal solution",
+      "Code in 6 languages",
+      "Time and space complexity",
+      "Edge cases and common mistakes",
+      "Where it's used in real apps"
+    ],
+    "startWith": "Start at the depot: {title}",
+    "stats": {
+      "problems": "problems",
+      "topics": "topics",
+      "easy": "easy",
+      "medium": "medium",
+      "hard": "hard"
+    },
+    "levels": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "allProblems": "All problems ({n})",
+    "soonTitle": "The write-up is being written",
+    "soonSub": "The full explanation is on its way. Try it on LeetCode first; here is the outline the write-up will follow.",
+    "fallback": "This problem isn't translated yet, so you're reading the other language.",
+    "leetcode": "Solve on LeetCode",
+    "prev": "Previous",
+    "next": "Next",
+    "onThisPage": "On this page",
+    "willCover": "What this will cover",
+    "solvedShort": "solved",
+    "signIn": "Sign in",
+    "signInSync": "to save your progress on every device.",
+    "search": "Search problems...",
+    "filter": "Filter",
+    "difficulty": "Difficulty",
+    "status": "Status",
+    "all": "All",
+    "statuses": {
+      "all": "All",
+      "todo": "To do",
+      "solved": "Solved"
+    },
+    "mark": "Mark as solved",
+    "unmark": "Mark as not solved",
+    "solvedLabel": "Solved",
+    "noMatch": "No problem matches. Try another word or clear the filters.",
+    "markNote": "Solved it yourself and understood the optimal approach? Mark it to track your progress.",
+    "doneNote": "Nice work. This one counts toward your progress.",
+    "groups": {
+      "complexity": "Big-O Basics",
+      "arrays-hashing": "Arrays & Hash Maps",
+      "two-pointers": "Two Pointers",
+      "sliding-window": "Sliding Window",
+      "stack": "Stack Tricks",
+      "binary-search": "Binary Search",
+      "linked-list": "Linked Lists",
+      "trees": "Trees & BST",
+      "tries": "Prefix Trees",
+      "heap": "Heaps",
+      "intervals": "Intervals & Sweeps",
+      "greedy": "Greedy Choices",
+      "backtracking": "Backtracking",
+      "graphs": "BFS & DFS",
+      "advanced-graphs": "Weighted Graphs",
+      "dp-1d": "DP on a Line",
+      "dp-2d": "DP on a Grid",
+      "bit-manipulation": "Bit Tricks",
+      "math-geometry": "Math & Matrices"
+    },
+    "roadmapHint": "Four lines, 18 stations. Ride a line station by station, and change where lines meet. Each ring fills as you solve; click a station to board its next problem.",
+    "lines": {
+      "array": "Array Line",
+      "tree": "Tree Line",
+      "graph": "Graph Line",
+      "dp": "DP Line"
+    },
+    "river": "Off-by-One River",
+    "interchange": "Interchange",
+    "nextStop": "Next stop",
+    "nextProblem": "Next problem:",
+    "board": "Board",
+    "terminus": "Terminus",
+    "terminusSub": "You've cleared every station. Time to ride it again from memory.",
+    "cleared": "Station cleared ✓",
+    "outlineSub": [
+      "Restate it in your own words, with a tiny example.",
+      "The simplest thing that works, even if it's slow.",
+      "Watch the data move, step by step, before any code.",
+      "Name the trick, so you recognise it next time.",
+      "Fix exactly what made brute force slow.",
+      "C++, Java, Python, JavaScript, Go and C#.",
+      "Count the steps and the memory, line by line.",
+      "Empty input, duplicates, overflow: what breaks.",
+      "Spell check, Google Maps, bKash: the idea at work."
+    ],
+    "lessonOutline": [
+      "The idea in plain words",
+      "A visual diagram",
+      "How to calculate it",
+      "Code examples",
+      "Common mistakes",
+      "Quick quiz"
+    ],
+    "lesson": "Lesson",
+    "lessonSub": "Part of the Big-O depot: read this before boarding, so every problem's complexity section makes sense.",
+    "lessonSoonSub": "The full lesson is on its way. Here is its outline so you know what's coming.",
+    "lessonCount": "{n} lessons",
+    "levelHint": "Difficulty applies to problems, so the Big-O lessons are hidden.",
+    "markLessonNote": "Read it and got the idea? Mark it done to track your progress.",
+    "markDone": "Mark as done",
+    "doneLabel": "Done",
+    "howSub": "Same nine stops for every problem, so you always know where you are.",
+    "art": {
+      "sign": "DSA Metro",
+      "signSub": "Station 00 · Big-O",
+      "tea": "Tea",
+      "bubble": "Big-O first, then the train!",
+      "board": "brute O(n²) → optimal O(n)"
+    },
+    "motivation": [
+      "Stuck is not failing. Stuck is your brain building a new road.",
+      "Nobody is born knowing two pointers. Everyone who knows it once didn't.",
+      "Solve it slowly today; tomorrow you'll solve it fast.",
+      "One problem a day is 365 problems a year.",
+      "Brute force first. Every elegant solution started as an ugly one.",
+      "Interviewers want to hear you think, not watch you be perfect.",
+      "Wrong answer? Good. Now you know one way it doesn't work.",
+      "Draw it before you code it. Paper never throws a segfault.",
+      "Ten minutes stuck is learning. Two hours stuck has earned you a hint.",
+      "Today's hard problem is next month's warm-up.",
+      "A little every day beats a lot once. Come back tomorrow.",
+      "You're not behind. You're on your own route, one station at a time.",
+      "Every pattern you learn makes ten more problems easy.",
+      "Read the constraints. They whisper the complexity you need.",
+      "The bug is never where you're looking. Breathe, look somewhere else.",
+      "One problem you understand beats three you memorised.",
+      "Off-by-one errors humble everyone. Laugh, fix, move on.",
+      "Future you, in the interview room, will thank you for this one.",
+      "Tea in one hand, logic in the other. Let's go.",
+      "Hard means unfamiliar, not impossible.",
+      "Edge cases are where good engineers are made.",
+      "Close the tab of doubt. Open the editor.",
+      "Slow progress is still progress. The train is moving.",
+      "Explain it to a rubber duck. If the duck gets it, so do you."
+    ],
+    "progress": {
+      "start": "Your first station is waiting. Every expert started at zero.",
+      "some": "{done} done, {left} to go. Keep the train moving 🚇",
+      "thisDone": "You've solved this one. Try it again without looking!",
+      "all": "Every station cleared. You're a legend. 🏆"
+    },
+    "scenes": {
+      "complexity": "1 stays calm, n climbs, n² runs away.",
+      "arrays-hashing": "Every key drops straight into its bucket.",
+      "two-pointers": "Two pointers walk in from both ends.",
+      "sliding-window": "The window slides; nothing is counted twice.",
+      "stack": "Last plate on is the first plate off.",
+      "binary-search": "Half the range is gone every step.",
+      "linked-list": "Node to node, until you reach null.",
+      "trees": "A tree grows one level at a time.",
+      "tries": "c → a → t: words share their prefixes.",
+      "heap": "The small one bubbles up to its place.",
+      "intervals": "Overlapping meetings merge into one.",
+      "greedy": "Take the best step you can see right now.",
+      "backtracking": "Dead end? Step back and try another way.",
+      "graphs": "BFS spreads like a ripple, ring by ring.",
+      "advanced-graphs": "Fewer hops isn't cheaper. Weights decide.",
+      "dp-1d": "Each answer is built from the last two.",
+      "dp-2d": "The table fills, diagonal by diagonal.",
+      "bit-manipulation": "One XOR, one bit flipped.",
+      "math-geometry": "Rotate the matrix: a quarter turn at a time."
+    },
+    "sceneTitle": "At this station"
+  },
+  "prog": {
+    "eyebrow": "Course",
+    "title": "Programming From Zero",
+    "sub": "Never written code? Start here. Every idea is taught once and shown in six languages side by side: C++, Go, Rust, Python, JavaScript and Java. Pick your tab; the thinking is the same.",
+    "note": "one idea, six languages ↓",
+    "from": "your first line",
+    "to": "your own tool",
+    "finish": "Ride the whole line and build a real tool in the language you chose: saved to disk, tested, with its own small API.",
+    "groups": {
+      "first-steps": {
+        "title": "First Steps",
+        "sub": "how code runs, variables, decisions, loops, functions"
+      },
+      "shapes-of-data": {
+        "title": "Shapes of Data",
+        "sub": "text, lists, maps, your own types, and memory"
+      },
+      "when-things-go-wrong": {
+        "title": "When Things Go Wrong",
+        "sub": "recursion, errors, files and debugging"
+      },
+      "building-bigger": {
+        "title": "Building Bigger",
+        "sub": "packages, objects, generics, functional style, tests"
+      },
+      "real-world": {
+        "title": "The Real World",
+        "sub": "concurrency, the internet, CLI tools, speed"
+      },
+      "build-it": {
+        "title": "Build It",
+        "sub": "one real tool, end to end"
+      }
+    }
+  },
+  "hire": {
+    "eyebrow": "Practice",
+    "title": "Build to Hire",
+    "sub": "{n} real-world projects, each written as a brief from a team with a real problem. Build one to its acceptance criteria and you'll have something to show in an interview that a certificate never could.",
+    "steps": [
+      {
+        "t": "Pick a brief",
+        "d": "Each one is a problem a real team would hand a new engineer."
+      },
+      {
+        "t": "Build to the checklist",
+        "d": "Milestones tell you what to build; acceptance criteria tell you when it's done."
+      },
+      {
+        "t": "Show it off",
+        "d": "A resume line you can honestly write, and what to say when they ask."
+      }
+    ],
+    "search": "Search projects, tools or skills...",
+    "category": "Track",
+    "level": "Difficulty",
+    "status": "Status",
+    "all": "All",
+    "categories": {
+      "backend": "Backend",
+      "devops": "DevOps & SRE",
+      "security": "Security",
+      "ai": "AI & LLM",
+      "ml": "Machine Learning"
+    },
+    "levels": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "showing": "{shown} of {total} projects",
+    "clear": "Clear filters",
+    "noMatch": "No project matches. Try another word or clear the filters.",
+    "hours": "{range} h",
+    "brief": "Brief #{n}",
+    "view": "Open brief",
+    "theBrief": "The brief",
+    "from": "From the team",
+    "build": "What you'll build",
+    "done": "Done when",
+    "stretch": "Stretch goals",
+    "showIt": "Show it off",
+    "resume": "On your resume",
+    "interview": "When they ask about it",
+    "copy": "Copy",
+    "copied": "Copied",
+    "stack": "Stack",
+    "prereqs": "Learn first",
+    "time": "Time",
+    "signIn": "Sign in",
+    "signInSync": "to save your progress on every device.",
+    "prev": "Previous",
+    "next": "Next",
+    "back": "All projects",
+    "filters": "Filters",
+    "finishedShort": "finished",
+    "stages": {
+      "notStarted": "Not started",
+      "inProgress": "In progress",
+      "finished": "Finished",
+      "shown": "Shown off"
+    },
+    "stageHint": {
+      "notStarted": "Read the brief, then start when you're ready.",
+      "inProgress": "Work through the milestones until every 'done when' holds.",
+      "finished": "Push it to GitHub with a README, a diagram and screenshots.",
+      "shown": "It's on your resume and LinkedIn. Go get that interview."
+    },
+    "journey": "Your project",
+    "actions": {
+      "start": "Start project",
+      "finish": "Mark as finished",
+      "showOff": "I've shown it off",
+      "undo": "Go back a step",
+      "allDone": "Shown off. Well done! 🎉",
+      "signInToStart": "Sign in to start",
+      "goPro": "Go Pro to start"
+    },
+    "proNote": "Every brief is free to read. Starting a project, tracking it and the show-off kit are part of Pro.",
+    "proUnlock": "Unlock the show-off kit with Pro",
+    "proLine": "Outlines are free · building with tracking needs Pro",
+    "guide": "Step-by-step walkthrough",
+    "guideLockedSub": "The full walkthrough, with every command, every line of code, and why and when each step is worth it, is part of Pro. Here's what it covers:",
+    "guideCta": "Unlock with Pro",
+    "guideSignIn": "Sign in",
+    "guideError": "Couldn't load the walkthrough.",
+    "guideRetry": "Try again",
+    "guideFallback": "This walkthrough isn't translated yet, so you're reading the other language.",
+    "soon": "Soon",
+    "soonTitle": "Walkthrough coming soon",
+    "soonBody": "This project's step-by-step walkthrough, with real outputs at every step, is still being written. You can read the brief and try it on your own meanwhile; tracking opens when the walkthrough is ready.",
+    "soonSide": "Not ready to practise yet. Progress tracking opens when the walkthrough is published.",
+    "readyChip": "{n} ready to practise",
+    "soonChip": "{n} coming soon",
+    "availability": "Availability",
+    "readyNow": "Ready now",
+    "comingSoon": "Coming soon",
+    "like": "I want to build this",
+    "mostWanted": "Most wanted!",
+    "startHere": "Start here!",
+    "wantCount": "{n, plural, one {# learner wants this} other {# learners want this}}",
+    "beFirst": "ready now · be the first to ♥",
+    "crown": "#{n} most liked",
+    "liked": "You want to build this ♥",
+    "alreadyLiked": "You've already liked this one. A like stays, it can't be taken back."
   }
 }

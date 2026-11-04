@@ -33,10 +33,15 @@ type Config struct {
 
 	SMTPAddr, SMTPUser, SMTPPass, MailFrom string
 
+	MediaDir string // local object store root (user uploads)
+
 	Judge0URL, Judge0Token string
 
 	GoogleClientID, GoogleClientSecret string
 	GitHubClientID, GitHubClientSecret string
+
+	// bKash/Nagad numbers learners send money to; empty = that method is off.
+	PayBkashNumber, PayNagadNumber string
 
 	WorkerConcurrency int
 	OTLPEndpoint      string
@@ -75,12 +80,15 @@ func Load() (*Config, error) {
 		SMTPUser:           os.Getenv("SMTP_USER"),
 		SMTPPass:           os.Getenv("SMTP_PASS"),
 		MailFrom:           get("MAIL_FROM", "Coding Foding <no-reply@codingfoding.dev>"),
+		MediaDir:           get("MEDIA_DIR", "./var/media"),
 		Judge0URL:          os.Getenv("JUDGE0_URL"),
 		Judge0Token:        os.Getenv("JUDGE0_TOKEN"),
 		GoogleClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
 		GoogleClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		GitHubClientID:     os.Getenv("GITHUB_CLIENT_ID"),
 		GitHubClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
+		PayBkashNumber:     os.Getenv("PAY_BKASH_NUMBER"),
+		PayNagadNumber:     os.Getenv("PAY_NAGAD_NUMBER"),
 		WorkerConcurrency:  getInt("WORKER_CONCURRENCY", 10, &errs),
 		OTLPEndpoint:       os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"),
 		SentryDSN:          os.Getenv("SENTRY_DSN"),
