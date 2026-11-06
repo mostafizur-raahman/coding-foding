@@ -23,7 +23,7 @@ export default async function BlogIndex({ params }: Props) {
 
   return (
     <section className="mx-auto max-w-4xl px-6 pt-28 pb-24 md:pt-36">
-      <p className="text-xs text-[var(--accent-1)] font-medium">{t("eyebrow")}</p>
+      <p className="eyebrow">{t("eyebrow")}</p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">{t("title")}</h1>
       <p className="mt-4 max-w-2xl text-lg text-[var(--muted)]">{t("sub")}</p>
 

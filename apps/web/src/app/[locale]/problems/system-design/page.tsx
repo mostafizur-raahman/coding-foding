@@ -30,7 +30,7 @@ export default async function SystemDesignProblems({ params }: Props) {
 
   return (
     <div className="max-w-3xl">
-      <p className="text-xs text-[var(--accent-1)] font-medium">
+      <p className="eyebrow">
         {t("eyebrow")}
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">

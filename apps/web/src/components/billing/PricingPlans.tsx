@@ -40,7 +40,7 @@ export function PricingPlans() {
             >
               {t(p)}
               {p === "yearly" && (
-                <span className="rounded-full bg-accent-2 px-2 py-0.5 font-mono text-[10px] text-[var(--on-accent)]">
+                <span className="mark-tag font-mono text-[10px]">
                   {t("yearlyBadge")}
                 </span>
               )}
@@ -68,7 +68,7 @@ export function PricingPlans() {
           </ul>
           <Link
             href="/learn/backend-first-principles"
-            className="mt-8 inline-flex h-12 items-center justify-center rounded-xl border border-line font-semibold hover:border-fg"
+            className="mt-8 inline-flex h-12 items-center justify-center rounded-full border border-line bg-elev font-semibold hover:border-fg"
           >
             {t("freeCta")}
           </Link>
@@ -76,9 +76,9 @@ export function PricingPlans() {
 
         {/* Pro */}
         <section className="pricing-pro relative flex flex-col rounded-lg p-7 md:p-8">
-          <p className="flex items-center gap-2 text-xs text-accent-1 font-medium">
+          <p className="flex items-center gap-2 eyebrow">
             {t("proName")}
-            <span className="rounded-full bg-accent-1 px-2 py-0.5 text-[10px] tracking-normal text-[var(--on-accent)] normal-case">
+            <span className="mark-tag text-[11px] font-semibold">
               {t("popular")}
             </span>
           </p>
@@ -116,7 +116,7 @@ export function PricingPlans() {
           </ul>
           <Link
             href={`/checkout?plan=${period}`}
-            className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-[var(--accent-1)] font-semibold text-[var(--on-accent)] transition hover:opacity-90"
+            className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[var(--btn)] font-semibold text-[var(--on-btn)] transition hover:brightness-110"
           >
             {pro ? t("renewCta") : t("proCta")}
           </Link>
@@ -136,7 +136,7 @@ export function PricingPlans() {
         <ol className="mt-10 grid gap-4 md:grid-cols-3">
           {(["how1", "how2", "how3"] as const).map((k, i) => (
             <li key={k} className="card relative p-6">
-              <span className="font-hand text-4xl text-accent-1">{i + 1}</span>
+              <span className="font-mono text-sm text-muted">{String(i + 1).padStart(2, "0")}</span>
               <p className="mt-2 font-semibold">{t(`${k}Title`)}</p>
               <p className="mt-1 text-sm text-muted">{t(`${k}Body`)}</p>
             </li>

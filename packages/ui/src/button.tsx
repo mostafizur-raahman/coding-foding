@@ -8,7 +8,7 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variants = {
   primary:
-    "bg-[linear-gradient(90deg,var(--accent-1),var(--accent-2))] text-[var(--on-accent)] shadow-[0_8px_30px_-8px_var(--glow)] hover:brightness-110",
+    "bg-[var(--btn)] text-[var(--on-btn)] hover:brightness-110",
   ghost: "text-[var(--fg)] hover:bg-[var(--bg-elev)]",
   outline: "border border-[var(--border)] text-[var(--fg)] hover:border-[var(--accent-2)] hover:bg-[var(--bg-elev)]",
 } as const;
@@ -25,7 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-[filter,background-color,border-color,transform] duration-200 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-2)] disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[filter,background-color,border-color,transform] duration-200 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-2)] disabled:pointer-events-none disabled:opacity-50",
         variants[variant],
         sizes[size],
         className,

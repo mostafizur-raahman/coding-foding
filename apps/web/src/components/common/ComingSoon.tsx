@@ -47,7 +47,7 @@ export async function ComingSoon({
           <NavIcon name={item.icon} className="size-8" />
         </span>
       </div>
-      <p className="mt-8 text-xs text-[var(--accent-1)] font-medium">
+      <p className="mt-8 eyebrow">
         {tn(menu)} · {t("eyebrow")}
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
@@ -60,13 +60,13 @@ export async function ComingSoon({
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
           href="/roadmap"
-          className="inline-flex h-11 items-center rounded-xl bg-[var(--accent-2)] px-5 font-semibold text-[var(--on-accent)] hover:brightness-110"
+          className="inline-flex h-11 items-center rounded-full bg-[var(--btn)] px-5 font-semibold text-[var(--on-btn)] hover:brightness-110"
         >
           {t("roadmap")}
         </Link>
         <Link
           href="/#most-needed"
-          className="inline-flex h-11 items-center rounded-xl border border-[var(--border)] px-5 font-semibold hover:bg-[var(--bg-elev-2)]"
+          className="inline-flex h-11 items-center rounded-full border border-[var(--border)] bg-[var(--bg-elev)] px-5 font-semibold hover:bg-[var(--bg-elev-2)]"
         >
           {t("vote")}
         </Link>

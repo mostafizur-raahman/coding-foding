@@ -40,7 +40,7 @@ export function UserMenu() {
     return (
       <Link
         href={`/auth/login${next}`}
-        className="hidden h-9 items-center rounded-md bg-[var(--accent-1)] px-4 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-90 sm:inline-flex"
+        className="hidden h-9 items-center rounded-full bg-[var(--btn)] px-4 text-sm font-semibold text-[var(--on-btn)] transition hover:opacity-90 sm:inline-flex"
       >
         {tn("signIn")}
       </Link>

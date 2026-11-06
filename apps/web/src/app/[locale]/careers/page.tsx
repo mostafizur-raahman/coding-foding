@@ -33,7 +33,7 @@ export default async function CareersPage({
     <div className="mx-auto max-w-6xl px-6 pt-28 pb-24 md:pt-36">
       <header className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div>
-          <p className="text-xs text-accent-1 font-medium">
+          <p className="eyebrow">
             {t("eyebrow")}
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-6xl">

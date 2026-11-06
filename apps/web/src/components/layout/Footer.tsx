@@ -26,8 +26,8 @@ export function Footer() {
     },
   ];
   return (
-    <footer className="border-t border-[var(--border)]">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-10 px-6 py-14 sm:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)]">
+    <footer className="border-t border-[var(--border)] bg-[var(--bg-elev)]">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-10 px-6 py-20 sm:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)]">
         <div className="col-span-2 sm:col-span-3 lg:col-span-1">
           <Link
             href="/"
@@ -45,11 +45,11 @@ export function Footer() {
         </div>
         {cols.map((c) => (
           <nav key={c.title} aria-label={c.title}>
-            <h2 className="text-sm font-semibold">{c.title}</h2>
-            <ul className="mt-4 space-y-2.5 text-sm text-[var(--muted)]">
+            <h2 className="font-mono text-xs font-medium tracking-normal text-[var(--muted)]">{"// "}{c.title}</h2>
+            <ul className="mt-4 space-y-2.5 text-sm text-[color-mix(in_oklab,var(--fg)_80%,transparent)]">
               {c.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="hover:text-[var(--fg)]">
+                  <Link href={l.href} className="hover:text-[var(--fg)] hover:underline hover:underline-offset-4">
                     {l.label}
                   </Link>
                   {l.soon && (
@@ -63,7 +63,7 @@ export function Footer() {
           </nav>
         ))}
       </div>
-      <p className="border-t border-[var(--border)] py-6 text-center text-xs text-[var(--muted)]">
+      <p className="mx-auto max-w-6xl border-t border-[var(--border)] px-6 py-8 text-sm text-[var(--muted)]">
         © {new Date().getFullYear()} Coding Foding · {t("made")}
       </p>
     </footer>

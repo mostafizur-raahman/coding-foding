@@ -8,7 +8,7 @@ export type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
 const variants = {
   secondary: "bg-[var(--bg-elev-2)] text-[var(--muted)]",
   outline: "border border-[var(--border)] text-[var(--muted)]",
-  accent: "bg-[color-mix(in_oklab,var(--accent-2)_14%,transparent)] text-[var(--accent-2)]",
+  accent: "bg-[var(--mark)] text-[var(--on-mark)]",
 } as const;
 
 /** shadcn/ui-style badge on theme tokens. */

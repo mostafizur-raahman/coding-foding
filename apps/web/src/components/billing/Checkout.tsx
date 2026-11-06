@@ -320,7 +320,7 @@ function CheckoutForm({ plan, locale }: { plan: PlanId; locale: "en" | "bn" }) {
           <button
             type="submit"
             disabled={busy || !q || !method}
-            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-xl bg-[var(--accent-1)] font-semibold text-[var(--on-accent)] transition hover:opacity-90 disabled:opacity-50"
+            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-full bg-[var(--btn)] font-semibold text-[var(--on-btn)] transition hover:opacity-90 disabled:opacity-50"
           >
             {busy ? t("submitting") : t("submit")}
           </button>

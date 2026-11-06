@@ -82,15 +82,14 @@ export function JobCard({ job, locale, applied }: { job: JobSummary; locale: "en
   return (
     <Link
       href={`/careers/${job.id}`}
-      className="card group relative flex gap-4 overflow-hidden p-5 transition hover:-translate-y-0.5 hover:border-[var(--c)] md:gap-5 md:p-6"
+      className="card group relative flex gap-4 overflow-hidden p-5 transition-colors hover:border-[color-mix(in_oklab,var(--fg)_22%,var(--border))] md:gap-5 md:p-6"
       style={{ "--c": color } as React.CSSProperties}
     >
-      <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1" style={{ background: color }} />
       <CompanyMark company={job.company} color={color} />
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
           <div className="min-w-0">
-            <h2 className="text-lg font-semibold tracking-tight group-hover:text-[var(--c)]">{job.title}</h2>
+            <h2 className="text-lg font-semibold tracking-tight group-hover:underline group-hover:underline-offset-4">{job.title}</h2>
             <p className="mt-0.5 text-sm text-muted">
               <CompanyName company={job.company} />
             </p>
@@ -106,10 +105,9 @@ export function JobCard({ job, locale, applied }: { job: JobSummary; locale: "en
         <p className="mt-3 line-clamp-2 text-sm">{job.summary}</p>
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-1.5">
-            <span
-              className="rounded-md px-2 py-0.5 font-mono text-xs font-medium"
-              style={{ color, background: `color-mix(in oklab, ${color} 12%, transparent)` }}
-            >
+            {/* Department keeps its colour only as a small dot; text stays ink for contrast. */}
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-elev-2 px-2 py-0.5 font-mono text-xs font-medium">
+              <span aria-hidden="true" className="size-1.5 rounded-full" style={{ background: color }} />
               {t(`departments.${job.department}`)}
             </span>
             {job.skills.slice(0, 4).map((s) => (

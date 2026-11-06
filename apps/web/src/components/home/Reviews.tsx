@@ -35,8 +35,9 @@ function useColumns() {
 /** One review: the words first, then who said them. Every card looks the same on purpose. */
 function ReviewCard({ r }: { r: Review }) {
   return (
-    <figure className="rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] p-5">
-      <blockquote className="text-[15px] leading-relaxed">{r.quote}</blockquote>
+    // A quote copied into the notebook: highlighter stroke down the margin, the words, who said it.
+    <figure className="rounded-xl border border-[var(--border)] bg-[var(--bg-elev)] p-6 shadow-[inset_3px_0_0_var(--mark)]">
+      <blockquote className="text-[17px] leading-relaxed">{r.quote}</blockquote>
       <figcaption className="mt-5 flex items-center gap-3 text-sm">
         <Avatar name={r.author_name} seed={r.username ?? r.author_name} src={r.avatar_url} size={32} />
         <span className="min-w-0">
@@ -86,7 +87,7 @@ export function Reviews() {
   const own = mine.data?.review ?? null;
 
   return (
-    <Section id="reviews" eyebrow={t("eyebrow")} title={t("title")} sub={t("sub")}>
+    <Section id="reviews" no={3} eyebrow={t("eyebrow")} title={t("title")} sub={t("sub")}>
       <div className="-mt-4 mb-10 flex flex-wrap items-center gap-3">
         <DotMorphButton onClick={write}>{own ? t("edit") : t("write")}</DotMorphButton>
       </div>
@@ -101,7 +102,7 @@ export function Reviews() {
           {Array.from({ length: columns }, (_, c) => (
             <ul key={c} className="flex min-w-0 flex-1 flex-col gap-4">
               {!list.isSuccess ? (
-                <li aria-hidden="true" className="h-56 animate-pulse rounded-lg border border-[var(--border)]" />
+                <li aria-hidden="true" className="h-56 animate-pulse rounded-xl bg-[var(--bg-elev)]" />
               ) : (
                 shown.map((r, i) =>
                   i % columns === c ? (

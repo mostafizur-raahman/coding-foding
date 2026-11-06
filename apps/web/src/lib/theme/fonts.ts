@@ -18,7 +18,8 @@ const hind = localFont({
   variable: "--font-hind",
   display: "swap",
 });
-// Wordmark only ("coding" 300, "foding" 800), preloaded because the navbar logo uses it.
+// Outfit: the wordmark ("coding" 300, "foding" 800) and every big heading, so headlines
+// and the logo read as one voice (docs/DESIGN.md). Preloaded: the navbar uses it.
 const brand = localFont({ src: "../../fonts/outfit/latin.woff2", weight: "100 900", variable: "--font-brand", display: "swap" });
 // Handwriting, used only by the home page's project sketches (not preloaded elsewhere).
 const sketch = localFont({ src: "../../fonts/caveat/latin.woff2", weight: "400 700", variable: "--font-sketch", display: "swap", preload: false });

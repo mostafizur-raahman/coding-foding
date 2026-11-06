@@ -6,13 +6,33 @@ export async function FinalCTA() {
   const t = await getTranslations("cta");
   return (
     <section aria-labelledby="cta-title">
-      <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-elev-2)] px-6 py-12 text-center">
-          <h2 id="cta-title" className="mx-auto max-w-2xl text-2xl font-bold tracking-tight md:text-3xl">
+      <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
+        {/* The last page: a terminal, because the next step is to run something yourself. */}
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 id="cta-title" className="text-[clamp(32px,4.2vw,52px)] leading-[1.08] font-semibold">
             {t("title")}
           </h2>
-          <p className="mt-3 text-[var(--muted)]">{t("sub")}</p>
-          <DotMorphLink href="/auth/register" variant="primary" className="mt-8">
+          <p className="mt-4 text-lg text-[var(--muted)]">{t("sub")}</p>
+        </div>
+        <div className="term mx-auto mt-10 max-w-2xl text-left" aria-hidden="true">
+          <div className="term-bar">
+            <i />
+            <i />
+            <i />
+          </div>
+          <div className="term-body">
+            <p>
+              <span className="term-prompt">you@learning</span> <span className="term-dim">~</span> $ codingfoding start
+            </p>
+            <p className="term-dim">✓ Part 1 unlocked · bn + en · 0 cards needed</p>
+            <p>
+              <span className="term-prompt">you@learning</span> <span className="term-dim">~</span> ${" "}
+              <span className="term-cursor" />
+            </p>
+          </div>
+        </div>
+        <div className="mt-8 text-center">
+          <DotMorphLink href="/auth/register" variant="primary">
             {t("button")}
           </DotMorphLink>
         </div>

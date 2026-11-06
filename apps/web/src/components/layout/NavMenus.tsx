@@ -211,9 +211,9 @@ function MegaPanel({ menu, onPick }: { menu: NavMenu; onPick: () => void }) {
         <Link
           href={menu.feature.href}
           onClick={onPick}
-          className="group/feat relative flex w-60 shrink-0 flex-col overflow-hidden rounded-lg border border-[color-mix(in_oklab,var(--accent-2)_30%,var(--border))] bg-[var(--accent-1)] p-4 focus-visible:outline-2 focus-visible:outline-[var(--accent-2)]"
+          className="group/feat relative flex w-60 shrink-0 flex-col overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-elev-2)] p-4 focus-visible:outline-2 focus-visible:outline-[var(--accent-2)]"
         >
-          <span className="text-xs text-[var(--accent-1)] font-medium">
+          <span className="eyebrow">
             {t(`menus.${menu.key}.feature.eyebrow`)}
           </span>
           <span className="mt-2 text-base leading-snug font-bold">
@@ -222,7 +222,7 @@ function MegaPanel({ menu, onPick }: { menu: NavMenu; onPick: () => void }) {
           <span className="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">
             {t(`menus.${menu.key}.feature.body`)}
           </span>
-          <span className="mt-auto pt-4 text-sm font-semibold text-[var(--accent-2)]">
+          <span className="mt-auto pt-4 text-sm font-semibold text-[var(--accent-1)]">
             {t(`menus.${menu.key}.feature.cta`)}{" "}
             <span className="inline-block transition-transform group-hover/feat:translate-x-0.5">
               →

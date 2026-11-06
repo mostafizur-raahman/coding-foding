@@ -46,7 +46,7 @@ export default async function DsaProblems({ params }: Props) {
     <div>
       <div className="grid items-center gap-8 xl:grid-cols-[minmax(0,1fr)_300px]">
         <div className="max-w-3xl">
-          <p className="text-xs text-[var(--accent-1)] font-medium">
+          <p className="eyebrow">
             {t("eyebrow")}
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
@@ -134,7 +134,7 @@ export default async function DsaProblems({ params }: Props) {
           </ol>
           <Link
             href={`/problems/dsa/${first.slug}`}
-            className="mt-8 inline-flex h-11 items-center justify-center rounded-xl bg-[var(--accent-2)] px-5 font-semibold text-[var(--on-accent)] hover:brightness-110"
+            className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-[var(--btn)] px-5 font-semibold text-[var(--on-btn)] hover:brightness-110"
           >
             {t("startWith", { title: first.title })} →
           </Link>

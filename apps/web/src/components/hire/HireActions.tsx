@@ -92,7 +92,7 @@ export function HireProgress({ slug }: { slug: string }) {
         ) : !signedIn ? (
           <Link
             href={`/auth/login?next=${encodeURIComponent(path)}`}
-            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-[var(--accent-2)] px-5 font-semibold text-[var(--on-accent)] hover:brightness-110"
+            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[var(--btn)] px-5 font-semibold text-[var(--on-btn)] hover:brightness-110"
           >
             {t("actions.signInToStart")}
           </Link>
@@ -101,7 +101,7 @@ export function HireProgress({ slug }: { slug: string }) {
             <p className="text-xs text-[var(--muted)]">{t("proNote")}</p>
             <Link
               href="/pricing"
-              className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent-2)] px-5 font-semibold text-[var(--on-accent)] hover:brightness-110"
+              className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-[var(--btn)] px-5 font-semibold text-[var(--on-btn)] hover:brightness-110"
             >
               <Lock /> {t("actions.goPro")}
             </Link>
@@ -111,7 +111,7 @@ export function HireProgress({ slug }: { slug: string }) {
             type="button"
             disabled={busy}
             onClick={() => go((stage + 1) as HireStage)}
-            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-[var(--accent-2)] px-5 font-semibold text-[var(--on-accent)] hover:brightness-110 disabled:opacity-50"
+            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[var(--btn)] px-5 font-semibold text-[var(--on-btn)] hover:brightness-110 disabled:opacity-50"
           >
             {nextAction[stage as 0 | 1 | 2]}
           </button>

@@ -16,7 +16,7 @@ export const Card = forwardRef<HTMLElement, HTMLAttributes<HTMLElement> & { as?:
     <Tag
       ref={ref as Ref<HTMLDivElement>}
       className={cn(
-        "flex flex-col rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)] text-[var(--fg)] shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-colors duration-200",
+        "flex flex-col rounded-xl border border-[var(--border)] bg-[var(--bg-elev)] text-[var(--fg)] transition-colors duration-200",
         className,
       )}
       {...props}

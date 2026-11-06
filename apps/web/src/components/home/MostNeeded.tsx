@@ -73,18 +73,20 @@ export function MostNeeded() {
   const topics = q.data?.items ?? [];
 
   return (
-    <Section id="most-needed" eyebrow={t("eyebrow")} title={t("title")} sub={t("sub")}>
+    <Section id="most-needed" no={2} tone="dark" eyebrow={t("eyebrow")} title={t("title")} sub={t("sub")}>
       {q.isError ? (
-        <p className="rounded-lg border border-dashed border-[var(--border)] p-8 text-center text-[var(--muted)]">{t("error")}</p>
+        <p className="rounded-xl border border-dashed border-[var(--border)] p-8 text-center text-[var(--muted)]">{t("error")}</p>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-busy={!q.isSuccess}>
+        // A pinboard of index cards: each topic is a request someone pinned up; votes decide the order we write.
+        <ul className="grid gap-3 sm:grid-cols-2" aria-busy={!q.isSuccess}>
           {!q.isSuccess
-            ? Array.from({ length: 8 }, (_, i) => (
-                <li key={i} aria-hidden="true" className="flex h-48 flex-col rounded-lg border border-[var(--border)] p-5">
-                  <div className="h-3 w-16 animate-pulse rounded bg-[var(--bg-elev-2)]" />
-                  <div className="mt-3 h-4 w-4/5 animate-pulse rounded bg-[var(--bg-elev-2)]" />
-                  <div className="mt-3 h-3 w-full animate-pulse rounded bg-[var(--bg-elev-2)]" />
-                  <div className="mt-auto h-8 w-20 animate-pulse rounded-md bg-[var(--bg-elev-2)]" />
+            ? Array.from({ length: 4 }, (_, i) => (
+                <li key={i} aria-hidden="true" className="index-card h-44">
+                  <div className="index-card-head">
+                    <div className="h-3 w-20 animate-pulse rounded bg-[var(--border)]" />
+                  </div>
+                  <div className="mt-4 h-5 w-3/4 animate-pulse rounded bg-[var(--border)]" />
+                  <div className="mt-3 h-3 w-full animate-pulse rounded bg-[var(--border)]" />
                 </li>
               ))
             : topics.map((tp) => {
@@ -93,22 +95,16 @@ export function MostNeeded() {
                 const on = tp.voted;
                 const label = on ? t("voted", { topic: title }) : t("upvote", { topic: title });
                 return (
-                  <li key={tp.id} className="flex flex-col rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] p-5">
-                    <p className="text-xs text-[var(--muted)]">{tp.tag}</p>
-                    <h3 className="mt-1 leading-snug font-semibold">{title}</h3>
-                    {description && (
-                      <p title={description} className="mt-2 line-clamp-3 text-sm leading-relaxed text-[var(--muted)]">
-                        {description}
-                      </p>
-                    )}
-                    <div className="mt-auto pt-5">
+                  <li key={tp.id} className="index-card">
+                    <div className="index-card-head">
+                      <span className="font-mono text-xs text-[var(--accent-1)]">#{tp.tag.replace(/\s+/g, "")}</span>
                       <button
                         type="button"
                         aria-pressed={on}
                         aria-label={label}
                         title={label}
                         onClick={() => vote(tp)}
-                        className="inline-flex h-8 items-center gap-1.5 rounded-md border border-[var(--border)] px-3 text-xs font-medium hover:bg-[var(--bg-elev-2)] aria-pressed:cursor-default aria-pressed:border-[var(--accent-1)] aria-pressed:text-[var(--accent-1)]"
+                        className="inline-flex h-8 items-center gap-1.5 rounded-full border border-[var(--border)] px-3 text-xs font-medium hover:bg-[rgb(255_255_255/0.06)] aria-pressed:cursor-default aria-pressed:border-[var(--mark)] aria-pressed:bg-[var(--mark)] aria-pressed:text-[var(--on-mark)]"
                       >
                         <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3.5" fill={on ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
                           <path d="M12 4 4 14h5v6h6v-6h5z" />
@@ -116,6 +112,12 @@ export function MostNeeded() {
                         <span className="tabular-nums">{t("votes", { count: formatNumber(tp.vote_count) })}</span>
                       </button>
                     </div>
+                    <h3 className="font-heading mt-4 text-xl leading-snug font-semibold">{title}</h3>
+                    {description && (
+                      <p title={description} className="mt-2 line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">
+                        {description}
+                      </p>
+                    )}
                   </li>
                 );
               })}

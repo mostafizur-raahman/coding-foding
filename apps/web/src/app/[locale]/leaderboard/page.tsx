@@ -30,7 +30,7 @@ export default async function LeaderboardPage({
   const t = await getTranslations("leaderboard");
   return (
     <div className="mx-auto max-w-5xl px-6 pt-28 pb-24 md:pt-36">
-      <p className="text-xs text-accent-1 font-medium">
+      <p className="eyebrow">
         {t("eyebrow")}
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">

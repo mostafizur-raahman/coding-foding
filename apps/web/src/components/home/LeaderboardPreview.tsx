@@ -33,6 +33,8 @@ export function LeaderboardPreview() {
   return (
     <Section
       id="leaderboard"
+      no={4}
+      tone="alt"
       eyebrow={t("eyebrow")}
       title={t("title")}
       sub={t("sub")}
@@ -46,7 +48,7 @@ export function LeaderboardPreview() {
                 type="button"
                 aria-pressed={division === d}
                 onClick={() => setDivision(d)}
-                className="rounded-md border border-[var(--border)] px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)] aria-pressed:border-transparent aria-pressed:bg-[var(--fg)] aria-pressed:text-[var(--bg)]"
+                className="rounded-full border border-[var(--border)] bg-[var(--bg-elev)] px-4 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)] aria-pressed:border-transparent aria-pressed:bg-[var(--fg)] aria-pressed:text-[var(--bg)]"
               >
                 {d === "all" ? t("all") : t(`divisions.${d}`)}
               </button>

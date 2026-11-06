@@ -27,7 +27,7 @@ export async function CoursePage({ course }: { course: Course }) {
           {/* xl: syllabus | hero | sidebar. lg: hero on top, then syllabus | sidebar. Phones: hero, sidebar, syllabus. */}
           <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_340px]">
             <header className="lg:col-span-2 xl:sticky xl:top-20 xl:col-span-1 xl:col-start-2 xl:row-start-1">
-              <p className="text-xs text-accent-1 font-medium">{t("eyebrow")}</p>
+              <p className="eyebrow">{t("eyebrow")}</p>
               <h1 className="mt-3 text-5xl leading-[1.05] font-bold tracking-tight md:text-7xl xl:text-6xl">
                 {course.title[0]} <span className="text-gradient">{course.title[1]}</span>
               </h1>

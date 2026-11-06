@@ -13,4 +13,4 @@ export const inputClass =
   "h-11 w-full rounded-md border border-line bg-bg px-3.5 text-[0.95rem] outline-none transition-colors placeholder:text-muted focus:border-accent-1 aria-[invalid=true]:border-[var(--danger)]";
 
 export const primaryButton =
-  "inline-flex h-11 w-full items-center justify-center rounded-md bg-accent-1 px-5 font-semibold text-[var(--on-accent)] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex h-11 w-full items-center justify-center rounded-full bg-[var(--btn)] px-5 font-semibold text-[var(--on-btn)] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60";

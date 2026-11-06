@@ -90,7 +90,7 @@ export async function Roadmap() {
     <section id="roadmap" aria-labelledby="roadmap-title" className="rm relative isolate scroll-mt-20 overflow-hidden">
       <div className="lost-wrap">
         <div className="lost-head">
-          <p className="text-xs text-[var(--accent-1)] font-medium">{t("eyebrow")}</p>
+          <p className="eyebrow">{t("eyebrow")}</p>
           <h1 id="roadmap-title" className="lost-title">
             {t("title")}
           </h1>
