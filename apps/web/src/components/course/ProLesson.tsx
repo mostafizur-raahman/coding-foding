@@ -155,7 +155,7 @@ export function ProLessonBody({
   }
   if (state.kind === "error") {
     return (
-      <div className="mt-14 rounded-2xl border border-line p-8 text-center">
+      <div className="mt-14 rounded-lg border border-line p-8 text-center">
         <p className="text-muted">{t("lockedError")}</p>
         <button
           type="button"
@@ -170,8 +170,8 @@ export function ProLessonBody({
 
   const anonymous = state.kind === "anonymous";
   return (
-    <section className="relative mt-14 overflow-hidden rounded-3xl border border-[color-mix(in_oklab,var(--line)_45%,var(--border))] bg-[linear-gradient(160deg,color-mix(in_oklab,var(--line)_12%,transparent),transparent_60%)] p-8 text-center md:p-10">
-      <div className="mx-auto grid size-14 place-items-center rounded-2xl border border-line bg-elev text-[var(--line)]">
+    <section className="relative mt-14 overflow-hidden rounded-lg border border-[color-mix(in_oklab,var(--line)_45%,var(--border))] bg-[var(--accent-1)] p-8 text-center md:p-10">
+      <div className="mx-auto grid size-14 place-items-center rounded-lg border border-line bg-elev text-[var(--line)]">
         <svg
           viewBox="0 0 24 24"
           aria-hidden="true"
@@ -185,7 +185,7 @@ export function ProLessonBody({
           <path d="M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3M12 15v2" />
         </svg>
       </div>
-      <p className="mt-5 font-mono text-xs tracking-[0.25em] text-[var(--line)] uppercase">
+      <p className="mt-5 text-xs text-[var(--line)] font-medium">
         Pro
       </p>
       <h2 className="mt-2 text-2xl font-bold md:text-3xl">

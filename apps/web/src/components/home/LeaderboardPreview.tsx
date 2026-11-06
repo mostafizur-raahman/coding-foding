@@ -1,17 +1,17 @@
 "use client";
 
+import { Card } from "@cf/ui";
 import { useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { Link } from "@/i18n/navigation";
 import { Avatar } from "@/components/common/Avatar";
 import { apiFetch } from "@/lib/api";
 import { DIVISIONS, districtInfo, type Division } from "@/lib/geo";
 import type { LeaderEntry } from "@/lib/leaderboard";
-import { formatNumber, useCountUp } from "@/lib/hooks/useCountUp";
+import { formatNumber } from "@/lib/hooks/useCountUp";
 import { useInView } from "@/lib/hooks/useInView";
-import { YouVsYou } from "@/components/decor/YouVsYou";
 import { Section } from "./Section";
+import { DotMorphLink } from "@/components/ui/dot-morph-button";
 
 const fetchBoard = (division: Division | "all") =>
   apiFetch<{ items: LeaderEntry[]; total: number }>("/leaderboard", {
@@ -37,8 +37,7 @@ export function LeaderboardPreview() {
       title={t("title")}
       sub={t("sub")}
     >
-      {/* The board compares you with others; the story beside it says why you shouldn't. */}
-      <div className="grid grid-cols-[minmax(0,1fr)] gap-10 xl:grid-cols-[minmax(0,1fr)_460px]">
+            <div>
         <div ref={ref}>
           <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t("eyebrow")}>
             {(["all", ...DIVISIONS] as const).map((d) => (
@@ -47,18 +46,18 @@ export function LeaderboardPreview() {
                 type="button"
                 aria-pressed={division === d}
                 onClick={() => setDivision(d)}
-                className="rounded-full border border-[var(--border)] px-3.5 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)] aria-pressed:border-transparent aria-pressed:bg-[var(--fg)] aria-pressed:text-[var(--bg)]"
+                className="rounded-md border border-[var(--border)] px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)] aria-pressed:border-transparent aria-pressed:bg-[var(--fg)] aria-pressed:text-[var(--bg)]"
               >
                 {d === "all" ? t("all") : t(`divisions.${d}`)}
               </button>
             ))}
             <span className="ml-auto inline-flex items-center gap-2 font-mono text-xs text-[var(--muted)]">
-              <span className="size-2 animate-pulse rounded-full bg-[var(--accent-2)]" aria-hidden="true" />
+              <span className="size-2 rounded-full bg-[var(--accent-2)]" aria-hidden="true" />
               {t("live")}
             </span>
           </div>
 
-          <div className="card mt-6 overflow-x-auto">
+          <Card className="mt-6 overflow-x-auto">
             <table className="w-full min-w-[560px] text-left text-sm">
               <thead className="border-b border-[var(--border)] text-xs text-[var(--muted)] uppercase">
                 <tr>
@@ -75,19 +74,16 @@ export function LeaderboardPreview() {
                   <MessageRow>{division === "all" ? t("emptyAll") : t("emptyHere")}</MessageRow>
                 ) : (
                   (data?.items ?? Array.from({ length: 5 }, () => null)).map((row, i) =>
-                    row ? <Row key={`${division}-${row.user_id}`} row={row} start={inView} /> : <SkeletonRow key={i} />,
+                    row ? <Row key={`${division}-${row.user_id}`} row={row} /> : <SkeletonRow key={i} />,
                   )
                 )}
               </tbody>
             </table>
-          </div>
-          <Link href="/leaderboard" className="mt-6 inline-flex font-semibold text-[var(--accent-2)] hover:underline">
-            {t("viewAll")} →
-          </Link>
+          </Card>
+          <DotMorphLink href="/leaderboard" className="mt-6">
+            {t("viewAll")}
+          </DotMorphLink>
         </div>
-        <aside className="mx-auto w-full max-w-2xl xl:sticky xl:top-24 xl:self-start">
-          <YouVsYou />
-        </aside>
       </div>
     </Section>
   );
@@ -95,11 +91,10 @@ export function LeaderboardPreview() {
 
 const MEDAL = ["🥇", "🥈", "🥉"];
 
-function Row({ row, start }: { row: LeaderEntry; start: boolean }) {
+function Row({ row }: { row: LeaderEntry }) {
   const t = useTranslations("leaderboard");
   const locale = useLocale() as "en" | "bn";
   const place = districtInfo(row.district)?.[locale] ?? (row.division ? t(`divisions.${row.division}`) : null);
-  const xp = useCountUp(row.xp, start);
   return (
     <tr className="border-b border-[var(--border)] last:border-0 hover:bg-[var(--bg-elev-2)]">
       <td className="px-5 py-3.5 font-mono">{MEDAL[row.rank - 1] ?? `#${row.rank}`}</td>
@@ -112,7 +107,7 @@ function Row({ row, start }: { row: LeaderEntry; start: boolean }) {
           </span>
         </span>
       </td>
-      <td className="px-5 py-3.5 text-right font-mono font-semibold tabular-nums">{formatNumber(xp)}</td>
+      <td className="px-5 py-3.5 text-right font-mono font-semibold tabular-nums">{formatNumber(row.xp)}</td>
       <td className="px-5 py-3.5 text-right font-mono tabular-nums">🔥 {t("days", { count: row.current_streak })}</td>
     </tr>
   );

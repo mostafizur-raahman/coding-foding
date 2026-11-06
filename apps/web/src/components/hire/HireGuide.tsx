@@ -75,7 +75,7 @@ export function HireGuide({
   }
   if (allowed && failed) {
     return (
-      <div className="rounded-2xl border border-[var(--border)] p-6 text-center">
+      <div className="rounded-lg border border-[var(--border)] p-6 text-center">
         <p className="text-[var(--muted)]">{t("guideError")}</p>
         <button
           type="button"
@@ -103,7 +103,7 @@ export function HireGuide({
 
   const anonymous = status === "anonymous";
   return (
-    <div className="rounded-2xl border border-[color-mix(in_oklab,var(--line)_40%,var(--border))] bg-[linear-gradient(160deg,color-mix(in_oklab,var(--line)_10%,transparent),transparent_60%)] p-6">
+    <div className="rounded-lg border border-[color-mix(in_oklab,var(--line)_40%,var(--border))] bg-[var(--accent-1)] p-6">
       <p className="text-[var(--muted)]">{t("guideLockedSub")}</p>
       <ol className="mt-5 space-y-2">
         {outline.map((title, n) => (

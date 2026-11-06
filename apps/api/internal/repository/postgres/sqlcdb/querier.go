@@ -16,6 +16,7 @@ type Querier interface {
 	AdjustTopicVotes(ctx context.Context, arg AdjustTopicVotesParams) (int32, error)
 	AdminCreateTopic(ctx context.Context, arg AdminCreateTopicParams) (uuid.UUID, error)
 	AdminListJobs(ctx context.Context) ([]AdminListJobsRow, error)
+	AdminListReviews(ctx context.Context) ([]AdminListReviewsRow, error)
 	AdminListTopics(ctx context.Context) ([]AdminListTopicsRow, error)
 	AdminStats(ctx context.Context) (AdminStatsRow, error)
 	AdminUpdateTopic(ctx context.Context, arg AdminUpdateTopicParams) (int64, error)
@@ -76,6 +77,7 @@ type Querier interface {
 	GetUserByUsername(ctx context.Context, username string) (User, error)
 	GetUserProUntil(ctx context.Context, id uuid.UUID) (*time.Time, error)
 	GetUserProgressState(ctx context.Context, id uuid.UUID) (GetUserProgressStateRow, error)
+	GetUserReview(ctx context.Context, userID uuid.NullUUID) (GetUserReviewRow, error)
 	// Same filter as above, so an account still left in a board (say, just made admin) never shows.
 	GetUsersByIDs(ctx context.Context, ids []uuid.UUID) ([]GetUsersByIDsRow, error)
 	InsertAuditLog(ctx context.Context, arg InsertAuditLogParams) error
@@ -102,6 +104,7 @@ type Querier interface {
 	// Open jobs, newest first; department NULL = all.
 	ListOpenJobs(ctx context.Context, arg ListOpenJobsParams) ([]ListOpenJobsRow, error)
 	ListOrdersForReview(ctx context.Context, arg ListOrdersForReviewParams) ([]ListOrdersForReviewRow, error)
+	ListPublishedReviews(ctx context.Context, lim int32) ([]ListPublishedReviewsRow, error)
 	// Enum order (shipped, next, horizon, plan) is the column order on the page.
 	ListRoadmapItems(ctx context.Context) ([]ListRoadmapItemsRow, error)
 	ListSettings(ctx context.Context) ([]ListSettingsRow, error)
@@ -133,6 +136,8 @@ type Querier interface {
 	SearchUsers(ctx context.Context, arg SearchUsersParams) ([]SearchUsersRow, error)
 	SetJobPublished(ctx context.Context, arg SetJobPublishedParams) (int64, error)
 	SetLastSection(ctx context.Context, arg SetLastSectionParams) error
+	// Publishing keeps the first publish date, so re-publishing doesn't jump the queue.
+	SetReviewPublished(ctx context.Context, arg SetReviewPublishedParams) (int64, error)
 	// Returns the previous key so the old file can be deleted after the swap. A new photo
 	// only lands if the cooldown has passed (checked under the row lock, so two parallel
 	// uploads can't both win); clearing (NULL key) is always allowed and keeps the clock.
@@ -157,6 +162,9 @@ type Querier interface {
 	// Content sync: the Markdown in content/ is the source of truth; these upserts mirror
 	// the metadata the API needs (ids, order, XP, sections) into Postgres.
 	UpsertTrack(ctx context.Context, arg UpsertTrackParams) (uuid.UUID, error)
+	// A learner writes or rewrites their one review. The name comes from their profile;
+	// any edit takes the review off the home page until an admin publishes it again.
+	UpsertUserReview(ctx context.Context, arg UpsertUserReviewParams) (UpsertUserReviewRow, error)
 }
 
 var _ Querier = (*Queries)(nil)

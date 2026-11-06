@@ -44,7 +44,7 @@ export function CompleteDialog({
       onClose={onClose}
       onClick={(e) => e.target === e.currentTarget && onClose()} // backdrop click
       aria-labelledby="complete-dialog-title"
-      className="complete-dialog m-auto w-[min(28rem,calc(100vw-2rem))] rounded-3xl border border-line bg-elev p-0 text-fg"
+      className="complete-dialog m-auto w-[min(28rem,calc(100vw-2rem))] rounded-lg border border-line bg-elev p-0 text-fg"
     >
       <div className="relative p-6 md:p-7">
         <button

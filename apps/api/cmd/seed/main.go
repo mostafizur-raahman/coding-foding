@@ -2,6 +2,8 @@
 //
 //	seed -careers          fictional companies + jobs for the careers portal
 //	seed -careers -remove  delete every demo company and job (and applications to them)
+//	seed -reviews          12 starter home-page reviews (published, is_demo)
+//	seed -reviews -remove  delete every demo review
 //	seed -roadmap          starter roadmap items (existing slugs are left untouched)
 //	seed -coupon EID20 -percent 20 [-max 100] [-days 7] [-plans yearly]
 //	                       create or update a coupon (-off to deactivate it)
@@ -28,10 +30,14 @@ var careersDemo string
 //go:embed roadmap.sql
 var roadmapSeed string
 
+//go:embed reviews_demo.sql
+var reviewsDemo string
+
 func main() {
 	careers := flag.Bool("careers", false, "seed demo companies and jobs")
 	remove := flag.Bool("remove", false, "remove the demo data instead")
 	roadmap := flag.Bool("roadmap", false, "seed the starter roadmap")
+	reviews := flag.Bool("reviews", false, "seed the starter home-page reviews")
 	var c couponFlags
 	flag.StringVar(&c.code, "coupon", "", "coupon code to create or update")
 	flag.IntVar(&c.percent, "percent", 0, "coupon: percent off (1–90)")
@@ -44,8 +50,13 @@ func main() {
 	switch {
 	case c.code != "":
 		err = coupon(c)
-	case *careers:
-		err = run(*remove)
+	case *careers || *reviews:
+		if *careers {
+			err = run(*remove)
+		}
+		if err == nil && *reviews {
+			err = seedReviews(*remove)
+		}
 	case *roadmap:
 		err = seedRoadmap()
 	default:
@@ -96,6 +107,33 @@ func run(remove bool) error {
 		slog.Info("demo careers seeded", "jobs", n)
 	}
 	return tx.Commit(ctx)
+}
+
+func seedReviews(remove bool) error {
+	cfg, err := config.Load()
+	if err != nil {
+		return err
+	}
+	ctx := context.Background()
+	pool, err := postgres.Connect(ctx, cfg.DatabaseURL, 2)
+	if err != nil {
+		return err
+	}
+	defer pool.Close()
+	if remove {
+		tag, err := pool.Exec(ctx, `DELETE FROM reviews WHERE is_demo`)
+		if err != nil {
+			return err
+		}
+		slog.Info("demo reviews removed", "reviews", tag.RowsAffected())
+		return nil
+	}
+	tag, err := pool.Exec(ctx, reviewsDemo)
+	if err != nil {
+		return err
+	}
+	slog.Info("demo reviews seeded", "added", tag.RowsAffected())
+	return nil
 }
 
 func seedRoadmap() error {

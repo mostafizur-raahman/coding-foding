@@ -38,8 +38,8 @@ export function HireProgress({ slug }: { slug: string }) {
   };
 
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)] p-5">
-      <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] p-5">
+      <p className="text-xs text-[var(--muted)] font-medium">
         {t("journey")}
       </p>
       <ol className="mt-4">

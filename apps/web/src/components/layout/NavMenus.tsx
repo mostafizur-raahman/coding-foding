@@ -21,7 +21,7 @@ import {
 import { NavIcon } from "./NavIcon";
 
 const TOP =
-  "relative flex items-center gap-1 rounded-full px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] hover:text-[var(--fg)]";
+  "relative flex items-center gap-1 rounded-md px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] hover:text-[var(--fg)]";
 
 /** Small dot under the top-level entry for the section you're in. */
 function HereDot() {
@@ -195,7 +195,7 @@ export function DesktopNav() {
 function MegaPanel({ menu, onPick }: { menu: NavMenu; onPick: () => void }) {
   const t = useTranslations("nav");
   return (
-    <div className="nav-pop card flex gap-2 rounded-3xl p-2 shadow-[0_28px_70px_-24px_rgb(0_0_0/0.55)]">
+    <div className="nav-pop card flex gap-2 rounded-lg p-2 shadow-[0_28px_70px_-24px_rgb(0_0_0/0.55)]">
       <ul
         className={
           menu.wide ? "grid w-[37rem] grid-cols-2 gap-1" : "grid w-80 gap-1"
@@ -211,9 +211,9 @@ function MegaPanel({ menu, onPick }: { menu: NavMenu; onPick: () => void }) {
         <Link
           href={menu.feature.href}
           onClick={onPick}
-          className="group/feat relative flex w-60 shrink-0 flex-col overflow-hidden rounded-2xl border border-[color-mix(in_oklab,var(--accent-2)_30%,var(--border))] bg-[linear-gradient(150deg,color-mix(in_oklab,var(--accent-1)_16%,transparent),color-mix(in_oklab,var(--accent-2)_14%,transparent))] p-4 focus-visible:outline-2 focus-visible:outline-[var(--accent-2)]"
+          className="group/feat relative flex w-60 shrink-0 flex-col overflow-hidden rounded-lg border border-[color-mix(in_oklab,var(--accent-2)_30%,var(--border))] bg-[var(--accent-1)] p-4 focus-visible:outline-2 focus-visible:outline-[var(--accent-2)]"
         >
-          <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--accent-2)] uppercase">
+          <span className="text-xs text-[var(--accent-1)] font-medium">
             {t(`menus.${menu.key}.feature.eyebrow`)}
           </span>
           <span className="mt-2 text-base leading-snug font-bold">
@@ -248,7 +248,7 @@ function MenuLink({
     <Link
       href={item.href}
       onClick={onPick}
-      className="group/item flex gap-3 rounded-2xl p-2.5 transition-colors hover:bg-[var(--bg-elev-2)] focus-visible:bg-[var(--bg-elev-2)] focus-visible:outline-none"
+      className="group/item flex gap-3 rounded-lg p-2.5 transition-colors hover:bg-[var(--bg-elev-2)] focus-visible:bg-[var(--bg-elev-2)] focus-visible:outline-none"
     >
       <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-[var(--border)] bg-[var(--bg-elev)] text-[var(--muted)] transition-colors group-hover/item:border-[color-mix(in_oklab,var(--accent-2)_45%,var(--border))] group-hover/item:text-[var(--accent-2)]">
         <NavIcon name={item.icon} className="size-[18px]" />
@@ -296,7 +296,7 @@ export function MobileNav() {
         aria-controls={panelId}
         aria-label={open ? t("closeMenu") : t("openMenu")}
         onClick={() => setOpen((v) => !v)}
-        className="grid size-9 place-items-center rounded-full border border-[var(--border)] hover:bg-[color-mix(in_oklab,var(--fg)_7%,transparent)]"
+        className="grid size-9 place-items-center rounded-md border border-[var(--border)] hover:bg-[color-mix(in_oklab,var(--fg)_7%,transparent)]"
       >
         <svg
           viewBox="0 0 24 24"
@@ -320,16 +320,16 @@ export function MobileNav() {
           <div
             id={panelId}
             hidden={!open}
-            className="nav-pop card fixed inset-x-3 top-[4.25rem] bottom-3 z-50 overflow-y-auto overscroll-contain rounded-3xl px-3 py-3 shadow-2xl lg:hidden"
+            className="nav-pop card fixed inset-x-3 top-[4.25rem] bottom-3 z-50 overflow-y-auto overscroll-contain rounded-lg px-3 py-3 shadow-2xl lg:hidden"
           >
             <nav aria-label="Mobile" className="space-y-1">
               {MENUS.map((m) => (
                 <details
                   key={m.key}
                   open={here === m.key || undefined}
-                  className="group/acc rounded-2xl open:bg-[color-mix(in_oklab,var(--fg)_4%,transparent)]"
+                  className="group/acc rounded-lg open:bg-[color-mix(in_oklab,var(--fg)_4%,transparent)]"
                 >
-                  <summary className="flex cursor-pointer list-none items-center justify-between rounded-2xl px-3 py-3.5 font-semibold [&::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-3.5 font-semibold [&::-webkit-details-marker]:hidden">
                     {t(m.key)}
                     <svg
                       viewBox="0 0 16 16"
@@ -363,7 +363,7 @@ export function MobileNav() {
                   key={l.key}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-2xl px-3 py-3.5 font-semibold"
+                  className="block rounded-lg px-3 py-3.5 font-semibold"
                 >
                   {t(l.key)}
                 </Link>

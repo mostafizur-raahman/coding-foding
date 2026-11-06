@@ -32,7 +32,7 @@ export function ProfileSettings() {
   }, [status, router]);
 
   if (!user) {
-    return <div className="h-96 animate-pulse rounded-3xl bg-elev" aria-label={t("title")} />;
+    return <div className="h-96 animate-pulse rounded-lg bg-elev" aria-label={t("title")} />;
   }
   return (
     <div className="space-y-8">

@@ -28,10 +28,6 @@
             "label": "Backend First Principles",
             "desc": "Requests, storage & concurrency from scratch"
           },
-          "programming": {
-            "label": "Programming",
-            "desc": "Pick a language, get fluent"
-          },
           "dsa": {
             "label": "DSA",
             "desc": "Patterns, problems, visualizer"
@@ -132,7 +128,8 @@
           "cta": "Vote now"
         }
       }
-    }
+    },
+    "home": "Home"
   },
   "theme": {
     "system": "System",
@@ -254,10 +251,7 @@
       "label": "With Coding Foding",
       "caption": "Step by step — learn how to learn",
       "desc": "One path, small steps, and you always know the next one."
-    },
-    "sad": "sad",
-    "understood": "understood",
-    "steps": "Step {n}"
+    }
   },
   "leaderboard": {
     "eyebrow": "Top 1% in BD 🇧🇩",
@@ -299,12 +293,13 @@
     "unavailable": "The leaderboard can't be loaded right now. Try again in a moment."
   },
   "mostNeeded": {
-    "eyebrow": "Most needed",
+    "eyebrow": "Most wanted",
     "title": "What should we build next?",
     "sub": "The community votes. The top topics get written first.",
     "upvote": "Upvote {topic}",
-    "votes": "{count} votes",
+    "votes": "{count, plural, one {# vote} other {# votes}}",
     "voted": "You voted for {topic}",
+    "topVoted": "Top voted",
     "already": "You've already voted for this one. One vote each, and it stays.",
     "thanks": "Thanks! Your vote is in.",
     "failed": "Couldn't save your vote",
@@ -344,7 +339,7 @@
     },
     "progress": "Progress",
     "feedback": "Want something sooner?",
-    "feedbackCta": "Vote on what's most needed",
+    "feedbackCta": "Vote on what's most wanted",
     "empty": "Nothing here yet.",
     "loadError": "Couldn't load the roadmap, please check back soon.",
     "shippedOn": "Shipped · {date}",
@@ -355,24 +350,7 @@
     "learners": "learners on the path",
     "problems": "problems solved",
     "lessons": "lessons in bn + en",
-    "hired": "got hired",
-    "testimonials": [
-      {
-        "quote": "I used to jump between tutorials. The path finally told me what to do next — and DSA stopped feeling impossible.",
-        "name": "Nusrat J.",
-        "role": "Intern → Junior SWE"
-      },
-      {
-        "quote": "The OS and networking deep-dives fixed gaps I didn't know I had after three years of shipping code.",
-        "name": "Tanvir A.",
-        "role": "Backend Engineer"
-      },
-      {
-        "quote": "Mentoring here keeps me sharp. The system design case studies are better than most paid courses.",
-        "name": "Farhana R.",
-        "role": "Senior Engineer"
-      }
-    ]
+    "hired": "got hired"
   },
   "cta": {
     "title": "Your path starts with one question: why?",
@@ -453,34 +431,77 @@
       "The best time to start was yesterday. The next best is *now*.",
       "Read the error message. It's trying to *help* you.",
       "Dream big. Start small. *Ship* today."
-    ]
+    ],
+    "syllabus": "The route",
+    "syllabusSub": "{parts} parts · {stations} stations · {hours} h",
+    "expandAll": "Open all",
+    "collapseAll": "Close all",
+    "stationsN": "{n, plural, one {# station} other {# stations}}",
+    "labsN": "{n, plural, one {# lab} other {# labs}}",
+    "sectionsN": "{n, plural, one {# section} other {# sections}}",
+    "free": "Free",
+    "pro": "Pro",
+    "soon": "Being written",
+    "partDone": "{done}/{total} done",
+    "continueTitle": "Pick up where you left off",
+    "continueStart": "Start the route",
+    "continueNext": "Next: {title}",
+    "continueDone": "You reached the terminal 🎉",
+    "continueCta": "Continue →",
+    "startCta": "Start Part 1 →",
+    "noteTitle": "Note for today",
+    "lessonsN": "{n, plural, one {# lesson} other {# lessons}}"
   },
   "bfp": {
     "eyebrow": "Course",
     "title": "Backend First Principles",
-    "sub": "Follow one request from the moment its bytes hit a socket to the day it is served by a hundred machines. Every stop explains why, not just how — with code.",
-    "note": "one request, end to end ↓",
-    "from": "a socket",
-    "to": "planet scale",
+    "sub": "Understand the problem before the solution, and the machine before the abstraction. Ten modules that take you from why a backend exists to running one in production.",
+    "note": "understand, design, build, debug, operate ↓",
+    "from": "one user",
+    "to": "production",
+    "finish": "Finish the route and you'll make backend decisions from trade-offs, not tutorials.",
     "groups": {
-      "on-the-wire": {
-        "title": "On the Wire",
-        "sub": "how a stream of bytes becomes a request your code can answer"
+      "backend-mindset": {
+        "title": "The Backend Mindset",
+        "sub": "understanding the problems behind software systems"
       },
-      "memory-and-muscle": {
-        "title": "Memory & Muscle",
-        "sub": "where data rests, and the workers that move it"
+      "machines-communicate": {
+        "title": "How Machines Communicate",
+        "sub": "networking from first principles"
       },
-      "living-in-prod": {
-        "title": "Living in Prod",
-        "sub": "staying visible, safe and quick when real traffic arrives"
+      "language-of-web": {
+        "title": "The Language of the Web",
+        "sub": "HTTP, APIs and communication contracts"
       },
-      "beyond-one-machine": {
-        "title": "Beyond One Machine",
-        "sub": "packaging, proving and wiring many services together"
+      "inside-runtime": {
+        "title": "Inside a Backend Runtime",
+        "sub": "from incoming request to executed code"
+      },
+      "designing-app": {
+        "title": "Designing the Application",
+        "sub": "turning business problems into software architecture"
+      },
+      "data-and-storage": {
+        "title": "Understanding Data and Storage",
+        "sub": "how applications remember things"
+      },
+      "reliability": {
+        "title": "Reliability and Failure Engineering",
+        "sub": "designing for things that go wrong"
+      },
+      "beyond-one-server": {
+        "title": "Beyond a Single Server",
+        "sub": "asynchronous processing and distributed systems"
+      },
+      "security-and-trust": {
+        "title": "Security and Trust",
+        "sub": "protecting users, data and systems"
+      },
+      "production": {
+        "title": "Operating Backend in Production",
+        "sub": "from working code to real engineering"
       }
-    },
-    "finish": "Ride the whole line and no backend will feel like magic again."
+    }
   },
   "auth": {
     "brand": "Coding Foding",
@@ -776,7 +797,7 @@
     "payWith": "Pay with bKash or Nagad",
     "perks": {
       "free1": "The roadmap and journey path",
-      "free2": "The whole Programming course, plus Part 1 of every other course",
+      "free2": "Part 1 of every course",
       "free3": "Streaks, and a place on the leaderboard",
       "free4": "Browse and apply on the careers portal",
       "pro1": "Every part of every course, new ones too",
@@ -903,7 +924,8 @@
       "overview": "Dashboard",
       "topics": "Topics",
       "jobs": "Jobs",
-      "activity": "Activity"
+      "activity": "Activity",
+      "reviews": "Reviews"
     },
     "settings": {
       "title": "Payment numbers",
@@ -1152,6 +1174,23 @@
       "system": "System",
       "newer": "Newer",
       "older": "Older"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "sub": "Learner reviews for the home page. Nothing shows until you publish it; an edited review comes back here.",
+      "empty": "No reviews yet.",
+      "demo": "demo",
+      "waiting": "Waiting",
+      "live": "Live",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "published": "Published {name}’s review.",
+      "unpublished": "Took {name}’s review down.",
+      "updated": "Updated {date}",
+      "failed": "Something went wrong.",
+      "filterAll": "All",
+      "filterWaiting": "Waiting",
+      "filterLive": "Live"
     }
   },
   "comingSoon": {
@@ -1475,7 +1514,7 @@
   "dsaProblems": {
     "eyebrow": "Practice",
     "title": "DSA Problems",
-    "sub": "Start at the Big-O depot, then ride 150 interview problems across 18 topics, in an order we picked so each topic builds on the last. Every problem gets a write-up: the intuition, a diagram, brute force to optimal, code in six languages, and where the idea shows up in real apps.",
+    "sub": "Start with Big-O, then solve 50 interview problems across 8 topics, in an order where each topic builds on the last. Every problem gets a write-up: the intuition, a diagram, brute force to optimal, and code.",
     "roadmap": "DSA Metro",
     "howTitle": "How every problem is solved",
     "outline": [
@@ -1532,26 +1571,26 @@
     "doneNote": "Nice work. This one counts toward your progress.",
     "groups": {
       "complexity": "Big-O Basics",
-      "arrays-hashing": "Arrays & Hash Maps",
+      "arrays-hashing": "Arrays, Strings and Hashing",
       "two-pointers": "Two Pointers",
       "sliding-window": "Sliding Window",
-      "stack": "Stack Tricks",
+      "stack": "Stacks, Queues and Binary Search",
       "binary-search": "Binary Search",
       "linked-list": "Linked Lists",
-      "trees": "Trees & BST",
+      "trees": "Trees and Binary Search Trees",
       "tries": "Prefix Trees",
-      "heap": "Heaps",
+      "heap": "Heaps, Greedy Algorithms and Intervals",
       "intervals": "Intervals & Sweeps",
       "greedy": "Greedy Choices",
-      "backtracking": "Backtracking",
-      "graphs": "BFS & DFS",
+      "backtracking": "Recursion and Backtracking",
+      "graphs": "Graphs",
       "advanced-graphs": "Weighted Graphs",
-      "dp-1d": "DP on a Line",
+      "dp-1d": "Dynamic Programming",
       "dp-2d": "DP on a Grid",
       "bit-manipulation": "Bit Tricks",
       "math-geometry": "Math & Matrices"
     },
-    "roadmapHint": "Four lines, 18 stations. Ride a line station by station, and change where lines meet. Each ring fills as you solve; click a station to board its next problem.",
+    "roadmapHint": "Four lines, 9 stations. Ride a line station by station, and change where lines meet. Each ring fills as you solve; click a station to board its next problem.",
     "lines": {
       "array": "Array Line",
       "tree": "Tree Line",
@@ -1654,42 +1693,20 @@
       "bit-manipulation": "One XOR, one bit flipped.",
       "math-geometry": "Rotate the matrix: a quarter turn at a time."
     },
-    "sceneTitle": "At this station"
-  },
-  "prog": {
-    "eyebrow": "Course",
-    "title": "Programming From Zero",
-    "sub": "Never written code? Start here. Every idea is taught once and shown in six languages side by side: C++, Go, Rust, Python, JavaScript and Java. Pick your tab; the thinking is the same.",
-    "note": "one idea, six languages ↓",
-    "from": "your first line",
-    "to": "your own tool",
-    "finish": "Ride the whole line and build a real tool in the language you chose: saved to disk, tested, with its own small API.",
-    "groups": {
-      "first-steps": {
-        "title": "First Steps",
-        "sub": "how code runs, variables, decisions, loops, functions"
-      },
-      "shapes-of-data": {
-        "title": "Shapes of Data",
-        "sub": "text, lists, maps, your own types, and memory"
-      },
-      "when-things-go-wrong": {
-        "title": "When Things Go Wrong",
-        "sub": "recursion, errors, files and debugging"
-      },
-      "building-bigger": {
-        "title": "Building Bigger",
-        "sub": "packages, objects, generics, functional style, tests"
-      },
-      "real-world": {
-        "title": "The Real World",
-        "sub": "concurrency, the internet, CLI tools, speed"
-      },
-      "build-it": {
-        "title": "Build It",
-        "sub": "one real tool, end to end"
-      }
-    }
+    "sceneTitle": "At this station",
+    "topicSub": {
+      "arrays-hashing": "The basics everything else builds on: scanning arrays and strings, two pointers, sliding windows, and hash maps for instant lookups.",
+      "linked-list": "A linked list stores data in nodes, each one linked to the next. Here you learn to add and remove nodes and rewire their links.",
+      "stack": "Stacks and queues keep data in a particular order; binary search finds an element in sorted data fast. Together they cover efficient handling and searching.",
+      "trees": "Trees are hierarchies of parent and child nodes. This is about traversing them, the depth of nodes, and how nodes relate to each other.",
+      "graphs": "Graphs show how things relate, with nodes and edges. This covers traversals (BFS, DFS) and the relationships between nodes.",
+      "backtracking": "Recursion solves a problem by calling itself on smaller pieces. Backtracking tries options one by one, and steps back when it hits a dead end.",
+      "dp-1d": "Dynamic programming stores the answers to subproblems that repeat, so nothing is computed twice and harder problems become fast.",
+      "heap": "Choosing by priority, handling overlapping intervals, and picking the right option at each step: Top-K, scheduling and merging intervals."
+    },
+    "topicsTitle": "Topics",
+    "topicsSub": "Eight topics, in learning order. Each one builds on the one before.",
+    "problemCount": "{n, plural, one {# problem} other {# problems}}"
   },
   "hire": {
     "eyebrow": "Practice",
@@ -1801,5 +1818,94 @@
     "crown": "#{n} most liked",
     "liked": "You want to build this ♥",
     "alreadyLiked": "You've already liked this one. A like stays, it can't be taken back."
+  },
+  "reviews": {
+    "eyebrow": "Reviews",
+    "title": "What learners say",
+    "sub": "Real words from people walking the path. Every review is read by us before it goes up.",
+    "write": "Write a review",
+    "edit": "Edit your review",
+    "showMore": "Show all {count} reviews",
+    "showLess": "Show fewer",
+    "empty": "No reviews yet — be the first to write one.",
+    "error": "Couldn't load reviews right now.",
+    "form": {
+      "title": "Your review",
+      "sub": "Tell the next learner what helped you. We read every review before it appears on the home page.",
+      "name": "Shown as",
+      "nameHint": "From your profile name.",
+      "role": "Who you are",
+      "rolePlaceholder": "e.g. CSE student, Junior Backend Engineer",
+      "quote": "Your review",
+      "quotePlaceholder": "What changed for you? Which chapter or feature helped most?",
+      "count": "{n} / 600",
+      "tooShort": "At least 20 characters.",
+      "submit": "Send for review",
+      "update": "Update review",
+      "saving": "Sending…",
+      "cancel": "Cancel",
+      "saved": "Thanks! We'll publish it after a quick read.",
+      "failed": "Something went wrong. Try again.",
+      "statusPending": "Waiting for review",
+      "statusLive": "Live on the home page",
+      "editNote": "Editing takes it off the home page until we read it again."
+    }
+  },
+  "home": {
+    "eyebrow": "Coding Foding",
+    "title": "Learn how things really work.",
+    "sub": "Backend, DevOps and system design, plus DSA practice — explained from first principles, in Bangla and English, with code you can run.",
+    "start": "Start for free",
+    "browse": "Browse courses",
+    "previewLabel": "Continue learning",
+    "previewCourse": "Backend First Principles",
+    "previewPart": "Part 1 · The Backend Mindset",
+    "previewDone": "Done",
+    "previewNow": "Up next",
+    "previewSoon": "Later",
+    "coursesEyebrow": "Courses",
+    "coursesTitle": "Everything in order, one course at a time",
+    "coursesSub": "Start anywhere. Part 1 of every course is free.",
+    "chapters": "{n} chapters",
+    "hours": "{range} h",
+    "free": "Free",
+    "freeAll": "Fully free",
+    "pro": "Part 1 free",
+    "open": "Open course",
+    "label": "From first principles · in Bangla and English",
+    "titleA": "Learn what's ",
+    "titleMark": "underneath",
+    "titleB": ".",
+    "stackTitle": "You tap “Save”. Underneath:",
+    "replay": "Replay",
+    "layers": {
+      "app": [
+        "Your app",
+        "a function call"
+      ],
+      "http": [
+        "HTTP",
+        "a request, in plain text"
+      ],
+      "tcp": [
+        "TCP",
+        "a reliable connection"
+      ],
+      "ip": [
+        "IP",
+        "packets find their way"
+      ],
+      "wire": [
+        "The wire",
+        "in the end, just bits"
+      ]
+    },
+    "buildTitle": "Projects you'll build",
+    "openProject": "Open project",
+    "level": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    }
   }
 }

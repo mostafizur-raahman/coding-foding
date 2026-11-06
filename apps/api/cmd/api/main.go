@@ -164,7 +164,7 @@ func run(mode string) error {
 	// ── HTTP API ──
 	if mode == "api" || mode == "all" {
 		router := httpapi.NewRouter(httpapi.Deps{
-			Handlers:    &handler.Handlers{Auth: auth, Progress: progress, Leaderboard: leaderboard, Avatars: avatars, Stats: service.NewStatsService(postgres.NewUserRepo(db)), Careers: service.NewCareerService(postgres.NewCareerRepo(db)), Billing: billing, Roadmap: service.NewRoadmapService(postgres.NewRoadmapRepo(db), clk), Admin: admin, Blog: service.NewBlogService(postgres.NewBlogRepo(db), db), Practice: service.NewPracticeService(postgres.NewPracticeRepo(db)), Like: service.NewLikeService(postgres.NewLikeRepo(db)), Vote: service.NewVoteService(postgres.NewVoteRepo(db), db), Cookies: handler.CookieConfig{Secure: cfg.CookieSecure}},
+			Handlers:    &handler.Handlers{Auth: auth, Progress: progress, Leaderboard: leaderboard, Avatars: avatars, Stats: service.NewStatsService(postgres.NewUserRepo(db)), Careers: service.NewCareerService(postgres.NewCareerRepo(db)), Billing: billing, Roadmap: service.NewRoadmapService(postgres.NewRoadmapRepo(db), clk), Admin: admin, Blog: service.NewBlogService(postgres.NewBlogRepo(db), db), Practice: service.NewPracticeService(postgres.NewPracticeRepo(db)), Like: service.NewLikeService(postgres.NewLikeRepo(db)), Vote: service.NewVoteService(postgres.NewVoteRepo(db), db), Reviews: service.NewReviewService(postgres.NewReviewRepo(db), postgres.NewAuditRepo(db), db), Cookies: handler.CookieConfig{Secure: cfg.CookieSecure}},
 			Access:      access,
 			RateLimiter: redis.NewRateLimiter(rdb),
 			Log:         log,

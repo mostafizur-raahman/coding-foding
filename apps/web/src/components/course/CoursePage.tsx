@@ -1,78 +1,58 @@
-import type { CSSProperties } from "react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { CourseProgressProvider } from "@/components/course/CourseProgress";
-import { RouteCanvas } from "@/components/course/RouteCanvas";
-import { RoutePart } from "@/components/course/RoutePart";
-import { RouteTicket } from "@/components/course/RouteTicket";
-import { partLine } from "@/components/course/lines";
 import type { Course } from "@/content/course";
-import { hasLessons } from "@/lib/content/markdown";
+import { hasLessons, lessonStats } from "@/lib/content/markdown";
+import { CourseSidebar } from "./CourseSidebar";
+import { CourseSyllabus, type ChapterStats } from "./CourseSyllabus";
 
-/** A course's route page: hero + ticket, then every part's stations along one line. */
+/**
+ * A course page in three columns on wide screens: the syllabus on the left (one accordion row
+ * per part, its stations inside), the hero in the middle, and the sidebar on the right. Only
+ * the syllabus scrolls with the page; the hero and the sidebar stay put (sticky grid items).
+ * (route ticket, next station, a note). Narrower screens stack them.
+ */
 export async function CoursePage({ course }: { course: Course }) {
   const t = await getTranslations(course.ns);
   const tc = await getTranslations("course");
-  const lastPart = course.groups.length - 1;
+  const locale = await getLocale();
+  // Section and lab counts per chapter, read from the markdown at build time.
+  const stats: ChapterStats = Object.fromEntries(
+    await Promise.all(course.chapters.map(async (c) => [c.slug, await lessonStats(course.slug, locale, c.slug)] as const)),
+  );
 
   return (
-    <CourseProgressProvider
-      track={course.slug}
-      tracked={await hasLessons(course.slug)}
-    >
+    <CourseProgressProvider track={course.slug} tracked={await hasLessons(course.slug)}>
       <div className="bg-grid overflow-x-clip">
-        <div className="mx-auto max-w-6xl px-6 pt-16 pb-28 md:pt-24">
-          <header className="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_420px]">
-            <div>
-              <p className="font-mono text-xs tracking-[0.25em] text-accent-2 uppercase">
-                {t("eyebrow")}
-              </p>
-              <h1 className="mt-3 text-5xl leading-[1.05] font-bold tracking-tight md:text-7xl">
-                {course.title[0]}{" "}
-                <span className="text-gradient">{course.title[1]}</span>
+        <div className="mx-auto max-w-6xl px-6 pt-16 pb-28 md:pt-24 xl:max-w-[1440px]">
+          {/* xl: syllabus | hero | sidebar. lg: hero on top, then syllabus | sidebar. Phones: hero, sidebar, syllabus. */}
+          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_340px]">
+            <header className="lg:col-span-2 xl:sticky xl:top-20 xl:col-span-1 xl:col-start-2 xl:row-start-1">
+              <p className="text-xs text-accent-1 font-medium">{t("eyebrow")}</p>
+              <h1 className="mt-3 text-5xl leading-[1.05] font-bold tracking-tight md:text-7xl xl:text-6xl">
+                {course.title[0]} <span className="text-gradient">{course.title[1]}</span>
               </h1>
               <p className="mt-6 max-w-xl text-lg text-muted">{t("sub")}</p>
-              <p className="font-hand mt-8 inline-block -rotate-2 text-2xl text-accent-1">
-                {t("note")}
-              </p>
-            </div>
-            <div className="flex justify-center lg:justify-end">
-              <RouteTicket course={course.slug} />
-            </div>
-          </header>
+              <p className="font-hand mt-8 inline-block -rotate-2 text-2xl text-accent-1">{t("note")}</p>
+            </header>
 
-          <div className="mt-24 md:mt-32">
-            <RouteCanvas>
-              {course.groups.map((g, i) => (
-                <RoutePart
-                  key={g.slug}
-                  course={course.slug}
-                  group={g}
-                  index={i}
-                />
-              ))}
+            <div className="min-w-0 lg:sticky lg:top-20 lg:col-start-2 lg:row-start-2 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:[scrollbar-width:none] xl:col-start-3 xl:row-start-1">
+              <CourseSidebar course={course.slug} />
+            </div>
 
-              {/* Terminal station: the route's last anchor. */}
-              <div
-                className="route-part flex flex-col items-start gap-5 pt-16 md:items-center md:text-center"
-                style={{ "--line": partLine(lastPart) } as CSSProperties}
-              >
-                <span
-                  data-anchor
-                  data-badge
-                  data-part={lastPart}
-                  aria-hidden="true"
-                  className="route-badge grid size-10 place-items-center rounded-full text-lg md:size-16 md:text-3xl"
-                >
+            <div className="min-w-0 lg:col-start-1 lg:row-start-2 xl:col-start-1 xl:row-start-1">
+              <CourseSyllabus course={course.slug} stats={stats} />
+
+              {/* Terminal: where the route ends. */}
+              <div className="mt-3 flex items-center gap-4 rounded-lg border border-dashed border-[color-mix(in_oklab,var(--fg)_18%,transparent)] px-5 py-4">
+                <span aria-hidden="true" className="text-2xl">
                   🏁
                 </span>
-                <div className="card max-w-md p-6">
-                  <p className="font-mono text-xs tracking-[0.25em] text-[var(--line)] uppercase">
-                    {tc("finishTitle")}
-                  </p>
-                  <p className="font-hand mt-2 text-2xl">{t("finish")}</p>
+                <div>
+                  <p className="text-xs text-muted font-medium">{tc("finishTitle")}</p>
+                  <p className="font-hand text-xl">{t("finish")}</p>
                 </div>
               </div>
-            </RouteCanvas>
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
+import { BFP_DIAGRAMS } from "./diagrams-bfp";
+import { DiagramFrame } from "./DiagramFrame";
 
 /**
  * Animated diagrams for lessons, referenced from Markdown as ```diagram blocks.
@@ -8,29 +10,11 @@ import type { CSSProperties, ReactNode } from "react";
  * Labels stay English (technical terms); the localized caption comes from the Markdown.
  */
 
-function Frame({
-  caption,
-  viewBox,
-  children,
-}: {
-  caption?: string;
-  viewBox: string;
-  children: ReactNode;
-}) {
+function Frame({ caption, viewBox, children }: { caption?: string; viewBox: string; children: ReactNode }) {
   return (
-    <figure className="dg">
-      <div className="dg-scroll">
-        <svg
-          viewBox={viewBox}
-          role="img"
-          aria-label={caption}
-          className="dg-svg"
-        >
-          {children}
-        </svg>
-      </div>
-      {caption && <figcaption>{caption}</figcaption>}
-    </figure>
+    <DiagramFrame caption={caption} viewBox={viewBox}>
+      {children}
+    </DiagramFrame>
   );
 }
 
@@ -2803,7 +2787,10 @@ const DIAGRAMS: Record<string, (p: { caption?: string }) => ReactNode> = {
   "scale-ladder": ScaleLadder,
   "read-your-writes": ReadYourWrites,
   "shard-move": ShardMove,
+  ...BFP_DIAGRAMS,
 };
+
+export const DIAGRAM_NAMES = Object.keys(DIAGRAMS);
 
 export function Diagram({
   name,

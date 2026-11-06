@@ -46,6 +46,10 @@ const GROUPS: { key: string; items: { key: string; icon: ReactNode }[] }[] = [
     items: [
       { key: "topics", icon: <path d="M12 4 4 14h5v6h6v-6h5z" /> },
       {
+        key: "reviews",
+        icon: <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2zM8 9h8M8 13h5" />,
+      },
+      {
         key: "roadmap",
         icon: <path d="M4 6h10M4 12h16M4 18h7M17 4l3 2-3 2M14 16l3 2-3 2" />,
       },
@@ -158,7 +162,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       >
         {GROUPS.map((g) => (
           <div key={g.key}>
-            <p className="px-3 pb-1.5 font-mono text-[10px] tracking-[0.2em] text-muted uppercase">
+            <p className="px-3 pb-1.5 text-xs text-muted font-medium">
               {t(`groups.${g.key}`)}
             </p>
             <ul className="space-y-0.5">

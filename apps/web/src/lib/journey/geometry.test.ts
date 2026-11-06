@@ -4,34 +4,27 @@ import {
   buildTimeWarp,
   leanFor,
   MILESTONE_IDS,
-  MILESTONE_POINTS,
+  milestonePoint,
   pathD,
-  project,
+  scribbleD,
 } from "./geometry";
 
-describe("journey geometry follows the sketch", () => {
-  const p = MILESTONE_POINTS;
-  it("DSA is the lowest milestone (largest y)", () => {
-    const lowest = MILESTONE_IDS.reduce((a, b) => (p[a].y > p[b].y ? a : b));
-    expect(lowest).toBe("dsa");
-  });
-  it("finish is the highest milestone", () => {
-    const highest = MILESTONE_IDS.reduce((a, b) => (p[a].y < p[b].y ? a : b));
+describe("journey geometry", () => {
+  const at = (id: (typeof MILESTONE_IDS)[number]) => milestonePoint(id, "landscape");
+  it("the goal is the highest milestone", () => {
+    const highest = MILESTONE_IDS.reduce((a, b) => (at(a).y < at(b).y ? a : b));
     expect(highest).toBe("goal");
   });
-  it("why? → C/C++ is a straight diagonal climb", () => {
-    expect(p.programming.y).toBeLessThan(p.why.y);
-    expect(p.programming.x).toBeGreaterThan(p.why.x);
-  });
-  it("final climb is near-vertical", () => {
-    const dx = p.goal.x - p["system-design"].x;
-    const dy = p["system-design"].y - p.goal.y;
-    expect(dy / dx).toBeGreaterThan(4);
-  });
-  it("milestones are left-to-right in order", () => {
+  it("milestones run left to right in order", () => {
     for (let i = 1; i < MILESTONE_IDS.length; i++) {
-      expect(p[MILESTONE_IDS[i]!].x).toBeGreaterThanOrEqual(p[MILESTONE_IDS[i - 1]!].x);
+      expect(at(MILESTONE_IDS[i]!).x).toBeGreaterThan(at(MILESTONE_IDS[i - 1]!).x);
     }
+  });
+  it("the waves grow: the first wobbles are smaller than the later swings", () => {
+    expect(Math.abs(at("dsa").y - at("os").y)).toBeGreaterThan(Math.abs(at("why").y - at("programming").y));
+  });
+  it("scribbles are deterministic, so server and client agree", () => {
+    expect(scribbleD(95, 170, 58, 3, 9)).toBe(scribbleD(95, 170, 58, 3, 9));
   });
 });
 
@@ -47,8 +40,8 @@ describe("arc table", () => {
   it("at() hits the milestone points", () => {
     MILESTONE_IDS.forEach((id, i) => {
       const pt = t.at(t.milestoneFractions[i]!);
-      expect(pt.x).toBeCloseTo(MILESTONE_POINTS[id].x, 0);
-      expect(pt.y).toBeCloseTo(MILESTONE_POINTS[id].y, 0);
+      expect(pt.x).toBeCloseTo(milestonePoint(id, "landscape").x, 0);
+      expect(pt.y).toBeCloseTo(milestonePoint(id, "landscape").y, 0);
     });
   });
 });
@@ -81,11 +74,11 @@ describe("time warp", () => {
   });
 });
 
-describe("portrait projection", () => {
-  it("keeps progress top → bottom and stays in bounds", () => {
-    const a = project(MILESTONE_POINTS.why, "portrait");
-    const b = project(MILESTONE_POINTS.goal, "portrait");
-    expect(b.y).toBeGreaterThan(a.y);
+describe("portrait layout", () => {
+  it("keeps progress top to bottom", () => {
+    for (let i = 1; i < MILESTONE_IDS.length; i++) {
+      expect(milestonePoint(MILESTONE_IDS[i]!, "portrait").y).toBeGreaterThan(milestonePoint(MILESTONE_IDS[i - 1]!, "portrait").y);
+    }
     expect(pathD("portrait")).toMatch(/^M [\d.]+ [\d.]+ C/);
   });
 });

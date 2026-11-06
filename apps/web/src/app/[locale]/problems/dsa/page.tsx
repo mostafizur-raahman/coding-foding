@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
-  DepotArt,
   StepIcon,
   WhiteboardArt,
 } from "@/components/problems/DsaArt";
-import { DsaRoadmap } from "@/components/problems/DsaRoadmap";
 import { Link } from "@/i18n/navigation";
 import {
   DSA_ITEMS,
@@ -39,7 +37,7 @@ export default async function DsaProblems({ params }: Props) {
   const count = (level: DsaLevel) =>
     DSA_PROBLEMS.filter((p) => p.level === level).length;
   const first = DSA_ITEMS[0]!;
-  // Topics with problems; the Big-O depot is a primer, not one of the 18.
+  // Topics with problems; the Big-O depot is a primer, not one of the 8.
   const topics = DSA_TOPICS.filter((x) =>
     DSA_PROBLEMS.some((p) => p.topic === x.key),
   ).length;
@@ -48,7 +46,7 @@ export default async function DsaProblems({ params }: Props) {
     <div>
       <div className="grid items-center gap-8 xl:grid-cols-[minmax(0,1fr)_300px]">
         <div className="max-w-3xl">
-          <p className="font-mono text-xs tracking-[0.25em] text-[var(--accent-2)] uppercase">
+          <p className="text-xs text-[var(--accent-1)] font-medium">
             {t("eyebrow")}
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
@@ -79,22 +77,35 @@ export default async function DsaProblems({ params }: Props) {
             ))}
           </div>
         </div>
-        <DepotArt
-          sign={t("art.sign")}
-          signSub={t("art.signSub")}
-          tea={t("art.tea")}
-          bubble={t("art.bubble")}
-          className="hidden w-full xl:block"
-        />
       </div>
 
-      <h2 className="mt-12 text-2xl font-bold tracking-tight">
-        {t("roadmap")}
-      </h2>
-      <p className="mt-1 text-sm text-[var(--muted)]">{t("roadmapHint")}</p>
-      <div className="mt-5">
-        <DsaRoadmap />
-      </div>
+      {/* The topics as a plain list: what each one is about, and its problems in order. */}
+      <h2 className="mt-14 text-2xl font-bold tracking-tight">{t("topicsTitle")}</h2>
+      <p className="mt-1 text-sm text-[var(--muted)]">{t("topicsSub")}</p>
+      <ol className="mt-6 grid gap-4 md:grid-cols-2">
+        {DSA_TOPICS.filter((x) => DSA_PROBLEMS.some((p) => p.topic === x.key)).map((topic, n) => {
+          const list = DSA_PROBLEMS.filter((p) => p.topic === topic.key);
+          return (
+            <li key={topic.key} id={`topic-${topic.key}`} className="rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] p-5">
+              <p className="text-xs text-[var(--muted)]">
+                {String(n + 1).padStart(2, "0")} · {t("problemCount", { n: list.length })}
+              </p>
+              <h3 className="mt-1 text-lg font-semibold">{t(`groups.${topic.key}`)}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">{t(`topicSub.${topic.key}`)}</p>
+              <ul className="mt-4 space-y-1.5 text-sm">
+                {list.map((p) => (
+                  <li key={p.slug} className="flex items-start gap-2">
+                    <span aria-hidden="true" className="mt-[0.45rem] size-1.5 shrink-0 rounded-full" style={{ background: DSA_LEVEL_COLOR[p.level] }} />
+                    <Link href={`/problems/dsa/${p.slug}`} className="hover:text-[var(--accent-1)] hover:underline">
+                      {p.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          );
+        })}
+      </ol>
 
       <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-center">
         <div>

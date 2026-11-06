@@ -8,7 +8,7 @@ import { LessonComplete } from "@/components/lesson/LessonComplete";
 import { LessonProgressProvider } from "@/components/lesson/LessonProgress";
 import { LessonToc } from "@/components/lesson/LessonToc";
 import { MiniRoute, type Stop } from "@/components/lesson/MiniRoute";
-import { Link } from "@/i18n/navigation";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { routing, type AppLocale } from "@/i18n/routing";
 import {
   courseTitle,
@@ -57,6 +57,7 @@ export async function ChapterPage({
     partLine(course.groups.findIndex((g) => g.slug === ch.group));
   const t = await getTranslations("course");
   const tg = await getTranslations(`${course.ns}.groups`);
+  const tn = await getTranslations("nav");
   const base = `/learn/${course.slug}`;
   const partIndex = course.groups.findIndex((g) => g.slug === c.group);
   // Part 1 is free and ships in the static page. A Pro chapter's text never does: the page
@@ -87,23 +88,18 @@ export async function ChapterPage({
       style={{ "--line": lineOf(c) } as CSSProperties}
     >
       <article className="min-w-0">
-        <Link
-          href={base}
-          className="font-mono text-sm text-muted hover:text-fg"
-        >
-          ← {t("back")}
-        </Link>
+        <Breadcrumb
+          items={[
+            { label: tn("home"), href: "/" },
+            { label: courseTitle(course), href: base },
+            { label: tg(`${c.group}.title`), href: `${base}#${c.group}` },
+            { label: c.title },
+          ]}
+        />
 
         <header className="relative mt-12">
-          {/* Oversized outlined station number behind the title. */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-10 right-0 font-mono text-[9rem] leading-none font-bold text-transparent opacity-25 select-none md:text-[12rem]"
-            style={{ WebkitTextStroke: "2px var(--line)" }}
-          >
-            {pad2(c.number)}
-          </span>
-          <p className="relative font-mono text-xs tracking-[0.25em] text-[var(--line)] uppercase">
+
+          <p className="relative text-xs text-[var(--line)] font-medium">
             {t("part", { n: pad2(partIndex + 1) })} · {tg(`${c.group}.title`)}
           </p>
           <h1 className="relative mt-3 text-4xl font-bold tracking-tight md:text-6xl">
@@ -119,7 +115,7 @@ export async function ChapterPage({
               </span>
             ))}
           </div>
-          <p className="relative mt-6 font-[family-name:var(--font-source-serif),var(--font-tiro)] text-lg leading-relaxed text-muted md:text-xl">
+          <p className="relative mt-6 text-lg leading-relaxed text-muted md:text-xl">
             {c.summary[locale as AppLocale]}
           </p>
           <p className="relative mt-5 font-mono text-xs tracking-wider text-muted uppercase">
@@ -148,7 +144,7 @@ export async function ChapterPage({
             {lessonId && <LessonComplete />}
           </>
         ) : (
-          <div className="mt-14 rounded-2xl border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] p-8 text-center">
+          <div className="mt-14 rounded-lg border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] p-8 text-center">
             <p className="font-hand text-3xl text-[var(--line)]">✎</p>
             <p className="mt-2 font-semibold">{t("comingSoon")}</p>
             <p className="mt-2 text-sm text-muted">{t("comingSoonSub")}</p>

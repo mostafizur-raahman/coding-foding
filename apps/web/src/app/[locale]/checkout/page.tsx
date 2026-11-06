@@ -31,7 +31,7 @@ export default async function CheckoutPage({
   const t = await getTranslations("checkout");
   return (
     <div className="mx-auto max-w-6xl px-6 pt-28 pb-24 md:pt-36">
-      <p className="font-mono text-xs tracking-[0.25em] text-accent-2 uppercase">
+      <p className="text-xs text-accent-1 font-medium">
         {t("eyebrow")}
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">

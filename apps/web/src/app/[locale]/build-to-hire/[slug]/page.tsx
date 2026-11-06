@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CopyLine, HireProgress, ProOnly } from "@/components/hire/HireActions";
 import { HireGuide } from "@/components/hire/HireGuide";
 import { LikeButton } from "@/components/hire/HireLikes";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "@/i18n/navigation";
 import { loadOutline } from "@/lib/content/markdown";
 import { routing, type AppLocale } from "@/i18n/routing";
@@ -83,6 +84,7 @@ export default async function HireProjectPage({ params }: Props) {
   const next = HIRE_PROJECTS[i + 1];
   const loc = locale as AppLocale;
   const t = await getTranslations("hire");
+  const tn = await getTranslations("nav");
   const color = HIRE_CATEGORY_COLOR[p.category];
   const lvl = HIRE_LEVEL_COLOR[p.level];
   // Only the walkthrough's outline ships in this static page; Pro readers fetch the text.
@@ -97,16 +99,17 @@ export default async function HireProjectPage({ params }: Props) {
       className="mx-auto max-w-[88rem] px-6 pt-28 pb-24 md:pt-32"
       style={{ "--line": color } as CSSProperties}
     >
-      <Link
-        href="/build-to-hire"
-        className="text-sm text-[var(--muted)] hover:text-[var(--fg)]"
-      >
-        ← {t("back")}
-      </Link>
+      <Breadcrumb
+        items={[
+          { label: tn("home"), href: "/" },
+          { label: tn("menus.practice.items.build-to-hire.label"), href: "/build-to-hire" },
+          { label: p.title },
+        ]}
+      />
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:gap-14">
         <article className="min-w-0">
-          <p className="font-mono text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
+          <p className="text-xs text-[var(--muted)] font-medium">
             {t("brief", { n: String(i + 1).padStart(2, "0") })} ·{" "}
             <span style={{ color }}>{t(`categories.${p.category}`)}</span>
           </p>
@@ -140,7 +143,7 @@ export default async function HireProjectPage({ params }: Props) {
           </p>
 
           {/* The brief, styled as a message from the team */}
-          <div className="mt-10 rounded-2xl border border-[color-mix(in_oklab,var(--line)_40%,var(--border))] bg-[color-mix(in_oklab,var(--line)_6%,var(--bg-elev))] p-6">
+          <div className="mt-10 rounded-lg border border-[color-mix(in_oklab,var(--line)_40%,var(--border))] bg-[color-mix(in_oklab,var(--line)_6%,var(--bg-elev))] p-6">
             <div className="flex items-center gap-3">
               <span
                 className="grid size-9 place-items-center rounded-full font-mono text-sm font-bold text-[var(--on-accent)]"
@@ -149,7 +152,7 @@ export default async function HireProjectPage({ params }: Props) {
                 {p.title.charAt(0)}
               </span>
               <span>
-                <span className="block font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+                <span className="block text-xs text-[var(--muted)] font-medium">
                   {t("theBrief")}
                 </span>
                 <span className="block text-sm font-semibold">{t("from")}</span>
@@ -219,13 +222,13 @@ export default async function HireProjectPage({ params }: Props) {
 
           <Section title={t("showIt")}>
             <ProOnly>
-              <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+              <p className="text-xs text-[var(--muted)] font-medium">
                 {t("resume")}
               </p>
               <div className="mt-2">
                 <CopyLine text={p.resume[loc]} />
               </div>
-              <p className="mt-6 font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+              <p className="mt-6 text-xs text-[var(--muted)] font-medium">
                 {t("interview")}
               </p>
               <ul className="mt-2 space-y-2">
@@ -276,8 +279,8 @@ export default async function HireProjectPage({ params }: Props) {
 
         <aside>
           <div className="space-y-5 lg:sticky lg:top-28">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)] p-5">
-              <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] p-5">
+              <p className="text-xs text-[var(--muted)] font-medium">
                 {t("stack")}
               </p>
               <div className="mt-3 flex flex-wrap gap-1.5">
@@ -287,7 +290,7 @@ export default async function HireProjectPage({ params }: Props) {
                   </span>
                 ))}
               </div>
-              <p className="mt-5 font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+              <p className="mt-5 text-xs text-[var(--muted)] font-medium">
                 {t("prereqs")}
               </p>
               <ul className="mt-3 space-y-1.5 text-sm">
@@ -322,8 +325,8 @@ export default async function HireProjectPage({ params }: Props) {
 /** Shown while a project's walkthrough isn't written yet, so nobody thinks it's ready. */
 function SoonNote({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-2xl border-2 border-dashed border-[color-mix(in_oklab,var(--line)_40%,var(--border))] p-5">
-      <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--line)] uppercase">
+    <div className="rounded-lg border-2 border-dashed border-[color-mix(in_oklab,var(--line)_40%,var(--border))] p-5">
+      <p className="text-xs text-[var(--line)] font-medium">
         {title}
       </p>
       <p className="mt-2 text-sm text-[var(--muted)]">{body}</p>

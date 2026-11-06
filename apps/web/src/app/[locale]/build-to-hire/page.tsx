@@ -43,7 +43,7 @@ export default async function BuildToHire({ params }: Props) {
       {/* A compact header, so the projects start on the first screen. */}
       <div className="grid items-center gap-6 xl:grid-cols-[minmax(0,1fr)_330px]">
         <div className="max-w-3xl">
-          <p className="font-mono text-xs tracking-[0.25em] text-[var(--accent-2)] uppercase">
+          <p className="text-xs text-[var(--accent-1)] font-medium">
             {t("eyebrow")}
           </p>
           <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">

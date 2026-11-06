@@ -29,7 +29,7 @@ export function LanguageSwitcher() {
     <div
       role="group"
       aria-label={t("language")}
-      className="flex h-9 items-center rounded-full border border-[var(--border)] p-0.5 text-sm"
+      className="flex h-9 items-center rounded-md border border-[var(--border)] p-0.5 text-sm"
       data-pending={pending || undefined}
     >
       {routing.locales.map((l) => (
@@ -39,7 +39,7 @@ export function LanguageSwitcher() {
           lang={l}
           aria-pressed={l === locale}
           onClick={() => change(l)}
-          className="h-full rounded-full px-2.5 font-semibold text-[var(--muted)] transition-colors aria-pressed:bg-[var(--bg-elev-2)] aria-pressed:text-[var(--fg)]"
+          className="h-full rounded px-2.5 font-semibold text-[var(--muted)] transition-colors aria-pressed:bg-[var(--bg-elev-2)] aria-pressed:text-[var(--fg)]"
         >
           {LABEL[l]}
         </button>

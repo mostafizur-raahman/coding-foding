@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogVotes } from "@/components/blog/BlogVotes";
 import { LessonBody } from "@/components/lesson/LessonBody";
 import { LessonToc } from "@/components/lesson/LessonToc";
-import { Link } from "@/i18n/navigation";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { routing } from "@/i18n/routing";
 import { formatPostDate, loadPost, postSlugs } from "@/lib/content/blog";
 
@@ -34,13 +34,18 @@ export default async function BlogPost({ params }: Props) {
   const post = await loadPost(locale, slug);
   if (!post) notFound();
   const t = await getTranslations("blog");
+  const tn = await getTranslations("nav");
 
   return (
     <div className="mx-auto grid max-w-7xl gap-12 px-6 pt-28 pb-28 md:pt-36 lg:grid-cols-[minmax(0,48rem)_270px] lg:justify-center xl:gap-20">
       <article className="min-w-0">
-        <Link href="/blogs" className="font-mono text-sm text-[var(--muted)] hover:text-[var(--fg)]">
-          ← {t("back")}
-        </Link>
+        <Breadcrumb
+          items={[
+            { label: tn("home"), href: "/" },
+            { label: tn("menus.community.items.blogs.label"), href: "/blogs" },
+            { label: post.title },
+          ]}
+        />
 
         <header className="mt-10">
           <div className="flex flex-wrap gap-1.5">
@@ -54,7 +59,7 @@ export default async function BlogPost({ params }: Props) {
             ))}
           </div>
           <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">{post.title}</h1>
-          <p className="mt-6 font-[family-name:var(--font-source-serif),var(--font-tiro)] text-lg leading-relaxed text-[var(--muted)] md:text-xl">
+          <p className="mt-6 text-lg leading-relaxed text-[var(--muted)] md:text-xl">
             {post.description}
           </p>
           <p className="mt-5 font-mono text-xs tracking-wider text-[var(--muted)] uppercase">

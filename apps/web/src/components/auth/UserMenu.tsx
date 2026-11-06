@@ -40,7 +40,7 @@ export function UserMenu() {
     return (
       <Link
         href={`/auth/login${next}`}
-        className="hidden h-9 items-center rounded-full bg-[linear-gradient(90deg,var(--accent-1),var(--accent-2))] px-4 text-sm font-semibold text-[var(--on-accent)] shadow-[0_6px_20px_-8px_var(--glow)] transition hover:brightness-110 sm:inline-flex"
+        className="hidden h-9 items-center rounded-md bg-[var(--accent-1)] px-4 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-90 sm:inline-flex"
       >
         {tn("signIn")}
       </Link>
@@ -62,14 +62,14 @@ export function UserMenu() {
         <Avatar name={user.display_name} seed={user.username} src={user.avatar_url} />
       </button>
       {open && (
-        <div role="menu" className="absolute right-0 mt-3 w-72 rounded-2xl border border-line bg-elev p-2 shadow-[0_24px_60px_-24px_rgb(0_0_0/0.6)]">
+        <div role="menu" className="absolute right-0 mt-3 w-72 rounded-lg border border-line bg-elev p-2 shadow-[0_24px_60px_-24px_rgb(0_0_0/0.6)]">
           <div className="flex items-center gap-3 px-3 py-2">
             <Avatar name={user.display_name} seed={user.username} src={user.avatar_url} size={48} />
             <div className="min-w-0">
               <p className="flex items-center gap-1.5 truncate font-semibold">
                 {user.display_name}
                 {isPro(user.pro_until) && (
-                  <span className="rounded-md bg-[linear-gradient(90deg,var(--accent-1),var(--accent-2))] px-1.5 py-px font-mono text-[10px] text-[var(--on-accent)]">
+                  <span className="rounded-md bg-[var(--accent-1)] px-1.5 py-px font-mono text-[10px] text-[var(--on-accent)]">
                     PRO
                   </span>
                 )}

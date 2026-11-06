@@ -206,7 +206,7 @@ export function HireBoard({ readySlugs }: { readySlugs: string[] }) {
           </summary>
           <div className="mt-4">{filters}</div>
         </details>
-        <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl [scrollbar-width:thin] border border-[var(--border)] bg-[var(--bg-elev)] p-4 lg:block">
+        <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto rounded-lg [scrollbar-width:thin] border border-[var(--border)] bg-[var(--bg-elev)] p-4 lg:block">
           {filters}
         </div>
       </aside>
@@ -223,7 +223,7 @@ export function HireBoard({ readySlugs }: { readySlugs: string[] }) {
           {t("showing", { shown: shown.length, total: HIRE_PROJECTS.length })}
         </p>
         {shown.length === 0 ? (
-          <div className="mt-4 rounded-2xl border border-dashed border-[var(--border)] p-10 text-center text-[var(--muted)]">
+          <div className="mt-4 rounded-lg border border-dashed border-[var(--border)] p-10 text-center text-[var(--muted)]">
             <p>{t("noMatch")}</p>
             <button
               type="button"
@@ -377,7 +377,7 @@ function FilterGroup({ label, options }: { label: string; options: Option[] }) {
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left hover:bg-[var(--bg-elev-2)]"
       >
-        <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase">
+        <span className="text-xs text-[var(--muted)] font-medium">
           {label}
         </span>
         <span className="ml-auto flex min-w-0 items-center gap-1.5 text-sm font-semibold">
@@ -459,7 +459,7 @@ function HireCard({
         style={{ background: color }}
       />
       <div className="flex items-center justify-between gap-3">
-        <span className="font-mono text-[11px] tracking-[0.15em] text-[var(--muted)] uppercase">
+        <span className="text-xs text-[var(--muted)] font-medium">
           {t("brief", { n: String(n).padStart(2, "0") })} ·{" "}
           <span style={{ color }}>{t(`categories.${p.category}`)}</span>
         </span>

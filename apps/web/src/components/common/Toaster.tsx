@@ -40,7 +40,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={x.id}
             role={x.kind === "error" ? "alert" : "status"}
             data-kind={x.kind}
-            className="toast pointer-events-auto flex max-w-md items-center gap-3 rounded-2xl border px-4 py-3 text-sm shadow-[0_18px_50px_-20px_rgb(0_0_0/0.55)]"
+            className="toast pointer-events-auto flex max-w-md items-center gap-3 rounded-lg border px-4 py-3 text-sm shadow-[0_18px_50px_-20px_rgb(0_0_0/0.55)]"
           >
             <span aria-hidden="true" className="toast-icon">
               {x.kind === "success" ? "✓" : x.kind === "error" ? "!" : "i"}

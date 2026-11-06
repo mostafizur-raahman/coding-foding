@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { mouthPath, Walker } from "@/components/journey/Walker";
 import { Link, useRouter } from "@/i18n/navigation";
-import { prefersReducedMotion } from "@/lib/gsap";
+/** Navigate straight away; the walking animation between stops is off site-wide. */
+const CALM = true;
 import { CompleteDialog, type CompleteChoice } from "./CompleteDialog";
 import { useLessonProgress } from "./LessonProgress";
 
@@ -95,7 +96,8 @@ export function MiniRoute({
   }, []);
 
   const walk = (dir: "prev" | "next", stop: Stop) => {
-    if (prefersReducedMotion() || !xs) return router.push(stop.href);
+    // The site is still: no walking hand-over between lessons, just go.
+    if (CALM || !xs) return router.push(stop.href);
     router.prefetch(stop.href);
     const walker = rider.current?.querySelector(".walker");
     setGoing(dir);
@@ -128,7 +130,7 @@ export function MiniRoute({
         e.preventDefault();
         return setAsking(true);
       }
-      if (prefersReducedMotion() || !xs) return; // plain navigation
+      if (CALM || !xs) return; // plain navigation
       e.preventDefault();
       walk(dir, stop);
     };

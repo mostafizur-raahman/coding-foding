@@ -29,6 +29,7 @@ type Handlers struct {
 	Practice    *service.PracticeService
 	Like        *service.LikeService
 	Vote        *service.VoteService
+	Reviews     *service.ReviewService
 	Cookies     CookieConfig
 }
 

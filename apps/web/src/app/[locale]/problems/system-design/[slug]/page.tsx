@@ -7,6 +7,7 @@ import { LessonBody } from "@/components/lesson/LessonBody";
 import { LessonToc } from "@/components/lesson/LessonToc";
 import { GroupIcon } from "@/components/problems/GroupIcon";
 import { MarkSolved } from "@/components/problems/MarkSolved";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { LEVEL_COLOR, SD_GROUPS, SD_ITEMS } from "@/content/sd-problems";
@@ -52,6 +53,7 @@ export default async function SystemDesignProblem({ params }: Props) {
   const next = SD_ITEMS[i + 1];
   const section = SD_GROUPS.find((g) => g.key === p.group)!.section;
   const t = await getTranslations("sdProblems");
+  const tn = await getTranslations("nav");
 
   const other = routing.locales.find((l) => l !== locale)!;
   const own = await loadLesson(CONTENT, locale, slug);
@@ -64,7 +66,16 @@ export default async function SystemDesignProblem({ params }: Props) {
   return (
     <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_230px] xl:gap-12">
       <article className="min-w-0" style={{ "--line": color } as CSSProperties}>
-        <p className="font-mono text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
+        <Breadcrumb
+          className="mb-6"
+          items={[
+            { label: tn("home"), href: "/" },
+            { label: tn("menus.practice.items.system-design.label"), href: "/problems/system-design" },
+            { label: t(section) },
+            { label: p.title },
+          ]}
+        />
+        <p className="text-xs text-[var(--muted)] font-medium">
           {t("eyebrow")} · {t(section)}
           {p.type === "lesson" && <> · {t(`groups.${p.group}`)}</>}
         </p>
@@ -107,7 +118,7 @@ export default async function SystemDesignProblem({ params }: Props) {
             )}
           </div>
         </header>
-        <p className="mt-6 font-[family-name:var(--font-source-serif),var(--font-tiro)] text-lg leading-relaxed text-[var(--muted)]">
+        <p className="mt-6 text-lg leading-relaxed text-[var(--muted)]">
           {p.type === "problem"
             ? p.summary[locale as AppLocale]
             : t("lessonSub", { group: t(`groups.${p.group}`) })}
@@ -125,7 +136,7 @@ export default async function SystemDesignProblem({ params }: Props) {
             </div>
           </>
         ) : (
-          <div className="mt-12 rounded-2xl border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] p-8 text-center">
+          <div className="mt-12 rounded-lg border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] p-8 text-center">
             <p className="font-hand text-3xl text-[var(--line)]">✎</p>
             <p className="mt-2 font-semibold">{t("soonTitle")}</p>
             <p className="mt-2 text-sm text-[var(--muted)]">
@@ -184,7 +195,7 @@ export default async function SystemDesignProblem({ params }: Props) {
             <LessonToc items={lesson.sections} label={t("onThisPage")} />
           ) : (
             <>
-              <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+              <p className="text-xs text-[var(--muted)] font-medium">
                 {t("willCover")}
               </p>
               <ol className="mt-3 space-y-2 border-l border-[var(--border)] pl-4 text-sm text-[var(--muted)]">

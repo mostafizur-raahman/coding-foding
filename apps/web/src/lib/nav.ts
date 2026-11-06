@@ -55,18 +55,14 @@ export const MENUS: NavMenu[] = [
         href: "/learn/backend-first-principles",
         icon: "server",
       },
-      {
-        key: "programming",
-        href: "/learn/programming",
-        icon: "code",
-      },
-      { key: "dsa", href: "/learn/dsa", icon: "tree" },
-      { key: "os", href: "/learn/operating-system", icon: "cpu" },
-      {
-        key: "networking",
-        href: "/learn/networking",
-        icon: "globe",
-      },
+      // Off for now (also commented out in content/courses.ts):
+      // { key: "dsa", href: "/learn/dsa", icon: "tree" },
+      // { key: "os", href: "/learn/operating-system", icon: "cpu" },
+      // {
+      //   key: "networking",
+      //   href: "/learn/networking",
+      //   icon: "globe",
+      // },
       {
         key: "devops-cloud",
         href: "/learn/devops-cloud",
@@ -121,7 +117,7 @@ export const MENUS: NavMenu[] = [
     items: [
       { key: "leaderboard", href: "/leaderboard", icon: "chart" },
       { key: "blogs", href: "/blogs", icon: "pen" },
-      { key: "roadmap", href: "/#roadmap", icon: "map" },
+      { key: "roadmap", href: "/roadmap", icon: "map" },
     ],
   },
 ];

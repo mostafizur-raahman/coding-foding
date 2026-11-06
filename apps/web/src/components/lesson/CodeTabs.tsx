@@ -51,7 +51,7 @@ const choose = (lang: string) => {
   window.dispatchEvent(new Event(EVENT));
 };
 
-type Pre = ReactElement<{ "data-lang"?: string }>;
+type Pre = ReactElement<{ "data-lang"?: string; "data-label"?: string }>;
 
 /** One example in several languages: a tab per highlighted <pre> from the Markdown. */
 export function CodeTabs({ children }: { children?: ReactNode }) {
@@ -87,7 +87,7 @@ export function CodeTabs({ children }: { children?: ReactNode }) {
             onClick={() => choose(lang)}
             onKeyDown={(e) => onKey(e, i)}
           >
-            {LABELS[lang] ?? lang}
+            {blocks[i]!.props["data-label"] ?? LABELS[lang] ?? lang}
           </button>
         ))}
       </div>
