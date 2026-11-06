@@ -56,7 +56,7 @@ export function Checkout() {
   return (
     <div>
       {isPro(proUntil) && (
-        <p className="mb-6 rounded-2xl border border-[color-mix(in_oklab,var(--accent-2)_45%,var(--border))] bg-[color-mix(in_oklab,var(--accent-2)_8%,transparent)] px-5 py-4 text-sm">
+        <p className="mb-6 rounded-lg border border-[color-mix(in_oklab,var(--accent-2)_45%,var(--border))] bg-[color-mix(in_oklab,var(--accent-2)_8%,transparent)] px-5 py-4 text-sm">
           ✦ {t("proActive", { date: new Date(proUntil!).toLocaleDateString(locale === "bn" ? "bn-BD" : "en-GB", { dateStyle: "long" }) })}
         </p>
       )}
@@ -65,7 +65,7 @@ export function Checkout() {
       ) : (
         <>
           {last?.status === "rejected" && (
-            <p role="alert" className="mb-6 rounded-2xl border border-[color-mix(in_oklab,var(--danger)_45%,var(--border))] bg-[color-mix(in_oklab,var(--danger)_8%,transparent)] px-5 py-4 text-sm">
+            <p role="alert" className="mb-6 rounded-lg border border-[color-mix(in_oklab,var(--danger)_45%,var(--border))] bg-[color-mix(in_oklab,var(--danger)_8%,transparent)] px-5 py-4 text-sm">
               <strong>{t("rejectedTitle")}</strong> {last.reject_reason && t("rejectedReason", { reason: last.reject_reason })}{" "}
               {t("rejectedRetry")}
             </p>
@@ -158,7 +158,7 @@ function CheckoutForm({ plan, locale }: { plan: PlanId; locale: "en" | "bn" }) {
                 role="radio"
                 aria-checked={plan === p.id}
                 onClick={() => switchPlan(p.id)}
-                className="rounded-2xl border-2 border-line p-4 text-left transition aria-checked:border-accent-1 aria-checked:bg-[color-mix(in_oklab,var(--accent-1)_6%,transparent)]"
+                className="rounded-lg border-2 border-line p-4 text-left transition aria-checked:border-accent-1 aria-checked:bg-[color-mix(in_oklab,var(--accent-1)_6%,transparent)]"
               >
                 <span className="flex items-center justify-between font-semibold">
                   {tp(p.id)}
@@ -231,7 +231,7 @@ function CheckoutForm({ plan, locale }: { plan: PlanId; locale: "en" | "bn" }) {
                     role="radio"
                     aria-checked={method === m.id}
                     onClick={() => setMethod(m.id)}
-                    className="flex h-14 items-center justify-center gap-2 rounded-2xl border-2 border-line font-bold transition aria-checked:border-[var(--m)] aria-checked:bg-[color-mix(in_oklab,var(--m)_8%,transparent)]"
+                    className="flex h-14 items-center justify-center gap-2 rounded-lg border-2 border-line font-bold transition aria-checked:border-[var(--m)] aria-checked:bg-[color-mix(in_oklab,var(--m)_8%,transparent)]"
                     style={{ "--m": METHOD_COLOR[m.id] } as React.CSSProperties}
                   >
                     <span aria-hidden="true" className="size-3 rounded-full" style={{ background: METHOD_COLOR[m.id] }} />
@@ -240,7 +240,7 @@ function CheckoutForm({ plan, locale }: { plan: PlanId; locale: "en" | "bn" }) {
                 ))}
               </div>
               {chosen && q && (
-                <ol className="mt-5 space-y-3 rounded-2xl bg-elev p-5 text-sm" style={{ "--m": METHOD_COLOR[chosen.id] } as React.CSSProperties}>
+                <ol className="mt-5 space-y-3 rounded-lg bg-elev p-5 text-sm" style={{ "--m": METHOD_COLOR[chosen.id] } as React.CSSProperties}>
                   <li>1. {t("pay1", { app: t(`methods.${chosen.id}`) })}</li>
                   <li className="flex flex-wrap items-center gap-2">
                     2. {t("pay2")} <CopyChip value={chosen.number} label={t("copied")} />
@@ -296,7 +296,7 @@ function CheckoutForm({ plan, locale }: { plan: PlanId; locale: "en" | "bn" }) {
       {/* Order summary */}
       <aside>
         <div className="card p-6 lg:sticky lg:top-28">
-          <p className="font-mono text-xs tracking-[0.2em] text-muted uppercase">{t("summary")}</p>
+          <p className="text-xs text-muted font-medium">{t("summary")}</p>
           {q ? (
             <dl className="mt-4 space-y-2 text-sm">
               <Row label={t("planLine", { plan: tp(plan) })} value={<span className="text-muted line-through">{fmt(q.list_amount)}</span>} />
@@ -320,7 +320,7 @@ function CheckoutForm({ plan, locale }: { plan: PlanId; locale: "en" | "bn" }) {
           <button
             type="submit"
             disabled={busy || !q || !method}
-            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-xl bg-[linear-gradient(90deg,var(--accent-1),var(--accent-2))] font-semibold text-[var(--on-accent)] transition hover:brightness-110 disabled:opacity-50"
+            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-xl bg-[var(--accent-1)] font-semibold text-[var(--on-accent)] transition hover:opacity-90 disabled:opacity-50"
           >
             {busy ? t("submitting") : t("submit")}
           </button>
@@ -335,7 +335,7 @@ function PendingOrder({ order, locale }: { order: PaymentOrder; locale: "en" | "
   const t = useTranslations("checkout");
   const tp = useTranslations("pricing");
   return (
-    <div className="mx-auto max-w-xl rounded-3xl border-2 border-dashed border-[color-mix(in_oklab,var(--accent-1)_45%,var(--border))] p-8 text-center">
+    <div className="mx-auto max-w-xl rounded-lg border-2 border-dashed border-[color-mix(in_oklab,var(--accent-1)_45%,var(--border))] p-8 text-center">
       <p className="font-hand text-4xl text-accent-1">{t("pendingHand")}</p>
       <h2 className="mt-2 text-2xl font-bold">{t("pendingTitle")}</h2>
       <p className="mt-2 text-sm text-muted">{t("pendingSub")}</p>

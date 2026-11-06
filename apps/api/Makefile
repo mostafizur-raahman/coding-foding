@@ -16,8 +16,8 @@ migrate:
 content:         ## sync lesson metadata (ids, XP, sections) from ../../content into Postgres
 	$(ENV) go run ./cmd/contentsync -dir ../../content
 
-seed-demo:       ## load demo companies + jobs for the careers portal (idempotent)
-	$(ENV) go run ./cmd/seed -careers
+seed-demo:       ## load demo companies + jobs and the 12 starter reviews (idempotent)
+	$(ENV) go run ./cmd/seed -careers -reviews
 
 admin:           ## make EMAIL an admin (creates the account if missing; asks for its password)
 	$(ENV) go run ./cmd/admin -email "$(EMAIL)" $(if $(REVOKE),-revoke)
@@ -25,8 +25,8 @@ admin:           ## make EMAIL an admin (creates the account if missing; asks fo
 seed-roadmap:    ## load the starter roadmap (keeps items you already edited)
 	$(ENV) go run ./cmd/seed -roadmap
 
-seed-demo-remove: ## delete all demo companies + jobs
-	$(ENV) go run ./cmd/seed -careers -remove
+seed-demo-remove: ## delete all demo companies + jobs and demo reviews
+	$(ENV) go run ./cmd/seed -careers -reviews -remove
 
 coupon:          ## create/update a coupon: make coupon CODE=EID20 PERCENT=20 [MAX=100] [DAYS=7] [PLANS=yearly]
 	$(ENV) go run ./cmd/seed -coupon "$(CODE)" -percent "$(or $(PERCENT),0)" -max "$(or $(MAX),0)" -days "$(or $(DAYS),0)" -plans "$(PLANS)"

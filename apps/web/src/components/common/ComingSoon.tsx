@@ -43,11 +43,11 @@ export async function ComingSoon({
           aria-hidden="true"
           className="absolute inset-0 animate-[spin_18s_linear_infinite] rounded-full border-2 border-dashed border-[color-mix(in_oklab,var(--accent-2)_45%,transparent)]"
         />
-        <span className="grid size-16 place-items-center rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)] text-[var(--accent-2)] shadow-[0_18px_40px_-20px_var(--accent-2)]">
+        <span className="grid size-16 place-items-center rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] text-[var(--accent-2)] shadow-[0_18px_40px_-20px_var(--accent-2)]">
           <NavIcon name={item.icon} className="size-8" />
         </span>
       </div>
-      <p className="mt-8 font-mono text-xs tracking-[0.25em] text-[var(--accent-2)] uppercase">
+      <p className="mt-8 text-xs text-[var(--accent-1)] font-medium">
         {tn(menu)} · {t("eyebrow")}
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
@@ -59,7 +59,7 @@ export async function ComingSoon({
       <p className="mt-6 max-w-md text-sm text-[var(--muted)]">{t("body")}</p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
-          href="/#roadmap"
+          href="/roadmap"
           className="inline-flex h-11 items-center rounded-xl bg-[var(--accent-2)] px-5 font-semibold text-[var(--on-accent)] hover:brightness-110"
         >
           {t("roadmap")}

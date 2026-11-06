@@ -8,6 +8,7 @@ import { DsaPageArt } from "@/components/problems/DsaPageArt";
 import { MarkSolved } from "@/components/problems/MarkSolved";
 import { Motivation } from "@/components/problems/Motivation";
 import { TopicScene } from "@/components/problems/TopicScene";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import {
@@ -57,6 +58,7 @@ export default async function DsaProblem({ params }: Props) {
   const topicNo = DSA_TOPICS.findIndex((x) => x.key === p.topic);
   const inTopic = DSA_ITEMS.filter((x) => x.topic === p.topic);
   const t = await getTranslations("dsaProblems");
+  const tn = await getTranslations("nav");
 
   const other = routing.locales.find((l) => l !== locale)!;
   const own = await loadLesson(CONTENT, locale, slug);
@@ -69,7 +71,16 @@ export default async function DsaProblem({ params }: Props) {
     <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_230px] xl:gap-12">
       <article className="min-w-0" style={{ "--line": color } as CSSProperties}>
         <Motivation slug={slug} />
-        <p className="font-mono text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
+        <Breadcrumb
+          className="mb-6"
+          items={[
+            { label: tn("home"), href: "/" },
+            { label: tn("menus.practice.items.dsa.label"), href: "/problems/dsa" },
+            { label: t(`groups.${p.topic}`) },
+            { label: p.title },
+          ]}
+        />
+        <p className="text-xs text-[var(--muted)] font-medium">
           {t("eyebrow")} · {String(topicNo).padStart(2, "0")}{" "}
           {t(`groups.${p.topic}`)} · {inTopic.indexOf(p) + 1}/{inTopic.length}
         </p>
@@ -78,6 +89,7 @@ export default async function DsaProblem({ params }: Props) {
         </h1>
         {p.kind === "problem" ? (
           <>
+            <p className="mt-3 text-lg leading-relaxed text-[var(--muted)]">{p.blurb[locale === "bn" ? "bn" : "en"]}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2">
               <span
                 className="rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold"
@@ -100,7 +112,7 @@ export default async function DsaProblem({ params }: Props) {
             </a>
           </>
         ) : (
-          <p className="mt-4 font-[family-name:var(--font-source-serif),var(--font-tiro)] text-lg leading-relaxed text-[var(--muted)]">
+          <p className="mt-4 text-lg leading-relaxed text-[var(--muted)]">
             {t("lessonSub")}
           </p>
         )}
@@ -119,7 +131,7 @@ export default async function DsaProblem({ params }: Props) {
             </div>
           </>
         ) : (
-          <div className="mt-12 rounded-2xl border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] p-8 text-center">
+          <div className="mt-12 rounded-lg border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] p-8 text-center">
             <p className="font-hand text-3xl text-[var(--line)]">✎</p>
             <p className="mt-2 font-semibold">{t("soonTitle")}</p>
             <p className="mt-2 text-sm text-[var(--muted)]">
@@ -183,7 +195,7 @@ export default async function DsaProblem({ params }: Props) {
             <LessonToc items={lesson.sections} label={t("onThisPage")} />
           ) : (
             <>
-              <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+              <p className="text-xs text-[var(--muted)] font-medium">
                 {t("willCover")}
               </p>
               <ol className="mt-3 space-y-2 border-l border-[var(--border)] pl-4 text-sm text-[var(--muted)]">
@@ -199,7 +211,7 @@ export default async function DsaProblem({ params }: Props) {
             </>
           )}
           <div className="mt-10 border-t border-dashed border-[var(--border)] pt-6">
-            <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--muted)] uppercase">
+            <p className="text-xs text-[var(--muted)] font-medium">
               {t("sceneTitle")}
             </p>
             <TopicScene

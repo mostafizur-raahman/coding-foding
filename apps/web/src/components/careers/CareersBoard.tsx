@@ -103,7 +103,7 @@ export function CareersBoard() {
         </p>
       )}
       {jobs.isSuccess && jobs.data.items.length === 0 && (
-        <div className="mt-3 rounded-2xl border-2 border-dashed border-line p-10 text-center">
+        <div className="mt-3 rounded-lg border-2 border-dashed border-line p-10 text-center">
           <p className="font-hand text-3xl text-accent-1">{t("emptyHand")}</p>
           <p className="mt-2 text-sm text-muted">{t("empty")}</p>
           {department && (

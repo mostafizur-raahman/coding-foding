@@ -1,29 +1,22 @@
 import { setRequestLocale } from "next-intl/server";
+import { CourseGrid } from "@/components/home/CourseGrid";
 import { FinalCTA } from "@/components/home/FinalCTA";
-import { LostToPath } from "@/components/home/LostToPath";
+import { Hero } from "@/components/home/Hero";
 import { LeaderboardPreview } from "@/components/home/LeaderboardPreview";
 import { MostNeeded } from "@/components/home/MostNeeded";
-import { Roadmap } from "@/components/home/Roadmap";
-import { Stats } from "@/components/home/Stats";
-import { Journey } from "@/components/journey/Journey";
-import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { Reviews } from "@/components/home/Reviews";
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+/** Home: a calm, readable page. What we teach, how much, what learners say, and one way in. */
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   return (
     <>
-      <SmoothScroll />
-      <Journey />
-      <LostToPath />
-      <LeaderboardPreview />
+      <Hero />
+      <CourseGrid />
       <MostNeeded />
-      <Roadmap />
-      <Stats />
+      <Reviews />
+      <LeaderboardPreview />
       <FinalCTA />
     </>
   );

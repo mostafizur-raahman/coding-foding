@@ -21,7 +21,7 @@ export function JobDetail({ id }: { id: string }) {
   if (job.isError) {
     const gone = job.error instanceof ApiError && job.error.status === 404;
     return (
-      <div className="rounded-2xl border-2 border-dashed border-line p-10 text-center">
+      <div className="rounded-lg border-2 border-dashed border-line p-10 text-center">
         <p className="font-hand text-3xl text-accent-1">{gone ? t("goneHand") : t("emptyHand")}</p>
         <p className="mt-2 text-sm text-muted">{gone ? t("gone") : t("loadError")}</p>
         <Link href="/careers" className="mt-4 inline-block text-sm font-semibold underline">
@@ -52,7 +52,7 @@ export function JobDetail({ id }: { id: string }) {
           </div>
         </div>
 
-        <dl className="mt-8 grid grid-cols-2 gap-4 rounded-2xl border border-line p-5 sm:grid-cols-4">
+        <dl className="mt-8 grid grid-cols-2 gap-4 rounded-lg border border-line p-5 sm:grid-cols-4">
           {[
             [t("salary"), salary ? `${salary} ${t("perMonthShort")}` : t("negotiable")],
             [t("department"), t(`departments.${j.department}`)],
@@ -85,7 +85,7 @@ export function JobDetail({ id }: { id: string }) {
           </section>
         )}
         {j.company.about && (
-          <section className="mt-10 rounded-2xl bg-elev p-6">
+          <section className="mt-10 rounded-lg bg-elev p-6">
             <h2 className="text-xl font-bold">{t("aboutCompany", { name: j.company.name })}</h2>
             {j.company.tagline && <p className="mt-1 text-sm text-muted">{j.company.tagline}</p>}
             <p className="mt-3 leading-relaxed">{j.company.about}</p>

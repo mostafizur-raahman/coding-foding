@@ -35,7 +35,7 @@ export function Motivation({ slug }: { slug: string }) {
           : t("progress.some", { done, left: total - done });
 
   return (
-    <aside className="motivation mb-8 flex items-center gap-4 rounded-2xl border border-[color-mix(in_oklab,var(--accent-2)_35%,var(--border))] bg-[color-mix(in_oklab,var(--accent-2)_7%,var(--bg-elev))] px-4 py-3">
+    <aside className="motivation mb-8 flex items-center gap-4 rounded-lg border border-[color-mix(in_oklab,var(--accent-2)_35%,var(--border))] bg-[color-mix(in_oklab,var(--accent-2)_7%,var(--bg-elev))] px-4 py-3">
       <svg
         viewBox="-30 -125 60 130"
         className="h-14 w-8 shrink-0 overflow-visible"

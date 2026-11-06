@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Walker } from "@/components/journey/Walker";
+import { DotMorphButton } from "@/components/ui/dot-morph-button";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LESSON_END_ID, useLessonProgress } from "./LessonProgress";
 
@@ -20,7 +21,7 @@ export function LessonComplete() {
     <section
       id={LESSON_END_ID}
       aria-live="polite"
-      className="relative mt-16 overflow-hidden rounded-3xl border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] bg-[color-mix(in_oklab,var(--line)_6%,transparent)] p-6 md:p-8"
+      className="relative mt-16 overflow-hidden rounded-lg border-2 border-dashed border-[color-mix(in_oklab,var(--line)_45%,var(--border))] bg-[color-mix(in_oklab,var(--line)_6%,transparent)] p-6 md:p-8"
     >
       <div className="flex items-center gap-5">
         <svg
@@ -37,7 +38,7 @@ export function LessonComplete() {
           />
         </svg>
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-xs tracking-[0.2em] text-[var(--line)] uppercase">
+          <p className="text-xs text-[var(--line)] font-medium">
             {t("stamp")}
           </p>
           <p className="mt-1 text-xl font-bold md:text-2xl">
@@ -71,23 +72,21 @@ export function LessonComplete() {
           >
             {t("signIn")}
           </Link>
-        ) : finished ? (
-          <p className="inline-flex h-11 items-center gap-2 rounded-xl border border-[var(--line)] px-5 font-semibold text-[var(--line)]">
-            ✓ {t("completed")}
-          </p>
         ) : (
-          <button
-            type="button"
+          <DotMorphButton
             onClick={() => void p.complete()}
-            disabled={p.phase !== "open" || p.completing}
-            className="inline-flex h-11 items-center rounded-xl bg-[var(--line)] px-5 font-semibold text-[var(--on-accent)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={finished || p.phase !== "open" || p.completing}
+            state={finished ? "success" : p.completing ? "loading" : "idle"}
+            tone="var(--line)"
           >
-            {p.completing
-              ? t("completing")
-              : free
-                ? t("completeFree")
-                : t("complete", { xp: p.xp })}
-          </button>
+            {finished
+              ? t("completed")
+              : p.completing
+                ? t("completing")
+                : free
+                  ? t("completeFree")
+                  : t("complete", { xp: p.xp })}
+          </DotMorphButton>
         )}
       </div>
     </section>

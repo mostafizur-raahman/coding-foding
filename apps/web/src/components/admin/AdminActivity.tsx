@@ -38,7 +38,7 @@ export function AdminActivity() {
   return (
     <div>
       <SectionHead title={t("title")} sub={t("sub")} />
-      <div className="overflow-hidden rounded-2xl border border-line bg-elev">
+      <div className="overflow-hidden rounded-lg border border-line bg-elev">
         {list.isPending ? (
           <div className="h-48 animate-pulse" />
         ) : items.length === 0 ? (

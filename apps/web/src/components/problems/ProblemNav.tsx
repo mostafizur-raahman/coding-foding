@@ -226,7 +226,7 @@ function Panel() {
       {showFilters && (
         <div className="mt-3 space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-elev)] p-3">
           <div>
-            <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase">
+            <p className="text-xs text-[var(--muted)] font-medium">
               {t("difficulty")}
             </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -249,7 +249,7 @@ function Panel() {
             )}
           </div>
           <div>
-            <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase">
+            <p className="text-xs text-[var(--muted)] font-medium">
               {t("status")}
             </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -327,7 +327,7 @@ function Panel() {
                       out.push(
                         <li
                           key={`sub-${sub}`}
-                          className="px-1.5 pt-2 pb-0.5 font-mono text-[10px] tracking-[0.15em] text-[var(--muted)] uppercase"
+                          className="px-1.5 pt-2 pb-0.5 text-xs text-[var(--muted)] font-medium"
                         >
                           {t(`subs.${sub}`)}
                         </li>,
@@ -369,7 +369,7 @@ export function ProblemNav() {
           <Panel />
         </div>
       </details>
-      <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)]/60 p-4 lg:block">
+      <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--bg-elev)]/60 p-4 lg:block">
         <Panel />
       </div>
     </>

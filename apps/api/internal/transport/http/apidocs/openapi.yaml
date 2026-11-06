@@ -269,6 +269,39 @@ paths:
         "200": { description: Updated user, content: { application/json: { schema: { $ref: "#/components/schemas/User" } } } }
         "401": { $ref: "#/components/responses/Unauthorized" }
 
+  /me/review:
+    get:
+      tags: [me]
+      summary: Your own review, published or waiting
+      responses:
+        "200":
+          description: OK (`review` is null if you haven't written one)
+          content: { application/json: { schema: { type: object, properties: { review: { $ref: "#/components/schemas/MyReview" } } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    put:
+      tags: [me]
+      summary: Write or rewrite your review
+      description: |
+        One review per learner; the name comes from your profile. It stays off the home page
+        until an admin publishes it, and any edit takes it down again until it is re-published.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [quote]
+              properties:
+                role: { type: string, maxLength: 80, example: "CSE student" }
+                quote: { type: string, minLength: 20, maxLength: 600 }
+      responses:
+        "200":
+          description: Saved, waiting for review
+          content: { application/json: { schema: { type: object, properties: { review: { $ref: "#/components/schemas/MyReview" } } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/Invalid" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
   /me/applications:
     get:
       tags: [careers]
@@ -603,6 +636,24 @@ paths:
         "404": { $ref: "#/components/responses/NotFound" }
 
   # ───────────────────────────── topics ─────────────────────────────
+  /reviews:
+    get:
+      tags: [misc]
+      summary: Published learner reviews for the home page
+      description: Only reviews an admin has published, newest first. Public; cached for a minute.
+      security: []
+      parameters:
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 24, default: 12 } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items: { type: array, items: { $ref: "#/components/schemas/Review" } }
+
   /topics:
     get:
       tags: [learning]
@@ -1092,6 +1143,30 @@ paths:
         "403": { $ref: "#/components/responses/Forbidden" }
         "404": { $ref: "#/components/responses/NotFound" }
 
+  /admin/reviews:
+    get:
+      tags: [admin]
+      summary: Every learner review, waiting ones first
+      responses:
+        "200": { description: OK }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+
+  /admin/reviews/{reviewID}/published:
+    parameters:
+      - { name: reviewID, in: path, required: true, schema: { type: string, format: uuid } }
+    put:
+      tags: [admin]
+      summary: Publish a review on the home page, or take it down
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [published], properties: { published: { type: boolean } } } } }
+      responses:
+        "204": { description: Saved }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
   /admin/audit:
     get:
       tags: [admin]
@@ -1282,6 +1357,26 @@ components:
       content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
 
   schemas:
+    Review:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        author_name: { type: string }
+        author_role: { type: string }
+        quote: { type: string }
+        published_at: { type: string, format: date-time }
+        username: { type: string }
+        avatar_url: { type: string }
+    MyReview:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        author_name: { type: string }
+        author_role: { type: string }
+        quote: { type: string }
+        is_published: { type: boolean }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
     Error:
       type: object
       properties:

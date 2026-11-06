@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { JobDetail } from "@/components/careers/JobDetail";
-import { Link } from "@/i18n/navigation";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { fetchJob } from "@/lib/careers";
 
 type Params = Promise<{ locale: string; jobId: string }>;
@@ -35,15 +35,17 @@ export async function generateMetadata({
 export default async function JobPage({ params }: { params: Params }) {
   const { locale, jobId } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("careers");
+  const tn = await getTranslations("nav");
+  const job = await fetchJob(jobId).catch(() => null);
   return (
     <div className="mx-auto max-w-6xl px-6 pt-28 pb-24 md:pt-36">
-      <Link
-        href="/careers"
-        className="font-mono text-sm text-muted hover:text-fg"
-      >
-        ← {t("backToJobs")}
-      </Link>
+      <Breadcrumb
+        items={[
+          { label: tn("home"), href: "/" },
+          { label: tn("careers"), href: "/careers" },
+          ...(job ? [{ label: job.title }] : []),
+        ]}
+      />
       <div className="mt-10">
         <JobDetail id={jobId} />
       </div>

@@ -8,7 +8,7 @@ export default function NotFound() {
   return (
     <section className="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center px-6 pt-28 pb-24 text-center">
       <Logo animate showWordmark={false} className="scale-[2.2]" />
-      <p className="mt-14 font-mono text-xs tracking-[0.25em] text-[var(--accent-2)] uppercase">
+      <p className="mt-14 text-xs text-[var(--accent-1)] font-medium">
         404 · {t("eyebrow")}
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
@@ -23,7 +23,7 @@ export default function NotFound() {
           {t("home")}
         </Link>
         <Link
-          href="/#roadmap"
+          href="/roadmap"
           className="inline-flex h-11 items-center rounded-xl border border-[var(--border)] px-5 font-semibold hover:bg-[var(--bg-elev-2)]"
         >
           {t("roadmap")}

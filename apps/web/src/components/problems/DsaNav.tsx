@@ -197,7 +197,7 @@ function Panel() {
       {showFilters && (
         <div className="mt-3 space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-elev)] p-3">
           <div>
-            <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase">
+            <p className="text-xs text-[var(--muted)] font-medium">
               {t("difficulty")}
             </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -220,7 +220,7 @@ function Panel() {
             )}
           </div>
           <div>
-            <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase">
+            <p className="text-xs text-[var(--muted)] font-medium">
               {t("status")}
             </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -307,7 +307,7 @@ export function DsaNav() {
           <Panel />
         </div>
       </details>
-      <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)]/60 p-4 lg:block">
+      <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--bg-elev)]/60 p-4 lg:block">
         <Panel />
       </div>
     </>

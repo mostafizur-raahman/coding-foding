@@ -38,15 +38,14 @@ const blogDir = "blogs"
 var notTracks = []string{blogDir, "sd-problems", "dsa-problems", "build-to-hire"}
 
 // Track order on the site; tracks not listed here sort after these.
-var trackOrder = []string{"programming", "dsa", "backend-first-principles", "operating-system", "networking", "devops-cloud", "system-design"}
+var trackOrder = []string{"dsa", "backend-first-principles", "operating-system", "networking", "devops-cloud", "system-design"}
 
 // The free part (Part 1) of each track; every later part needs Pro. "all" makes the whole
 // track free. Must match apps/web/src/content/<track>.ts (its first group, or `free: "all"`)
 // — a web test (courses.test.ts) checks this.
 var freeParts = map[string]string{
-	"programming":              "all",
 	"dsa":                      "counting-the-cost",
-	"backend-first-principles": "on-the-wire",
+	"backend-first-principles": "backend-mindset",
 	"operating-system":         "under-the-hood",
 	"networking":               "first-hello",
 	"devops-cloud":             "linux-for-servers",

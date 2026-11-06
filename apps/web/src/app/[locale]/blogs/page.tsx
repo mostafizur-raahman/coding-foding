@@ -23,12 +23,12 @@ export default async function BlogIndex({ params }: Props) {
 
   return (
     <section className="mx-auto max-w-4xl px-6 pt-28 pb-24 md:pt-36">
-      <p className="font-mono text-xs tracking-[0.25em] text-[var(--accent-2)] uppercase">{t("eyebrow")}</p>
+      <p className="text-xs text-[var(--accent-1)] font-medium">{t("eyebrow")}</p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">{t("title")}</h1>
       <p className="mt-4 max-w-2xl text-lg text-[var(--muted)]">{t("sub")}</p>
 
       {posts.length === 0 ? (
-        <p className="mt-14 rounded-2xl border-2 border-dashed border-[var(--border)] p-8 text-center text-[var(--muted)]">
+        <p className="mt-14 rounded-lg border-2 border-dashed border-[var(--border)] p-8 text-center text-[var(--muted)]">
           {t("empty")}
         </p>
       ) : (

@@ -5,6 +5,23 @@ import type { ReactNode } from "react";
  * doodles: 100×100, stroke-only, so every theme recolours them through currentColor.
  */
 const DOODLES: Record<string, ReactNode> = {
+  // two ledgers, tied together
+  transactions: (
+    <>
+      <path d="M12 26 h 30 v 48 h -30 Z M 58 26 h 30 v 48 h -30 Z" />
+      <path d="M42 42 C 48 36, 52 36, 58 42 M42 58 C 48 64, 52 64, 58 58" />
+      <path d="M20 40 h 14 M 20 52 h 14 M 66 40 h 14 M 66 52 h 14" />
+    </>
+  ),
+  // a bucket with drops rationed out
+  "rate-limiting": (
+    <>
+      <path d="M26 34 L 34 80 L 66 80 L 74 34 Z" />
+      <path d="M22 34 h 56" />
+      <path d="M50 8 v 8 M 50 22 v 4" />
+      <path d="M50 80 v 6 M 50 92 v 2" strokeDasharray="2 4" />
+    </>
+  ),
   // envelope on its way
   "http-cors": (
     <>
@@ -1587,6 +1604,31 @@ const DOODLES: Record<string, ReactNode> = {
   ),
 };
 
+/** Backend First Principles lessons that reuse a doodle drawn for the earlier outline. */
+const ALIASES: Record<string, string> = {
+  "backend-first-principles/cors": "http-cors",
+  "backend-first-principles/http-request": "http-cors",
+  "backend-first-principles/json-serialization": "serialization",
+  "backend-first-principles/controllers": "controllers-services-middlewares",
+  "backend-first-principles/middleware": "controllers-services-middlewares",
+  "backend-first-principles/authn-vs-authz": "auth",
+  "backend-first-principles/rest": "rest-api-design",
+  "backend-first-principles/threads-goroutines": "concurrency",
+  "backend-first-principles/files-vs-db": "databases",
+  "backend-first-principles/transactions-acid": "transactions",
+  "backend-first-principles/background-jobs": "task-queues",
+  "backend-first-principles/env-config": "configuration",
+  "backend-first-principles/error-exception-failure": "error-handling",
+  "backend-first-principles/testing-boundaries": "testing",
+  "backend-first-principles/threat-modeling": "security",
+  "backend-first-principles/message-queues": "kafka",
+};
+const find = (course: string, slug: string) =>
+  DOODLES[`${course}/${slug}`] ?? DOODLES[ALIASES[`${course}/${slug}`] ?? ""] ?? DOODLES[slug];
+
+/** Whether a chapter has its own doodle (by course/slug, or a same-named one from another course). */
+export const hasDoodle = (course: string, slug: string) => Boolean(find(course, slug));
+
 export function ChapterDoodle({
   course,
   slug,
@@ -1596,7 +1638,7 @@ export function ChapterDoodle({
   slug: string;
   className?: string;
 }) {
-  const art = DOODLES[`${course}/${slug}`] ?? DOODLES[slug];
+  const art = find(course, slug);
   if (!art) return null;
   return (
     <svg

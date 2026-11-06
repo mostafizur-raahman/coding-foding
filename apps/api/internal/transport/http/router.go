@@ -54,6 +54,8 @@ var (
 	limitPractice = redis.Limit{Capacity: 60, Rate: 60.0 / 60}
 	// Liking projects; a like is final, so an honest learner sends only a handful.
 	limitLike = redis.Limit{Capacity: 30, Rate: 30.0 / 60}
+	// One review per learner; a few rewrites an hour is plenty.
+	limitReview = redis.Limit{Capacity: 5, Rate: 5.0 / 3600}
 )
 
 func NewRouter(d Deps) http.Handler {
@@ -142,6 +144,8 @@ func NewRouter(d Deps) http.Handler {
 		r.Get("/topics", h.Topics)
 		// Public like counts; a signed-in viewer also learns their own likes (never cached).
 		r.Get("/likes/{collection}", h.Likes)
+		// Published learner reviews for the home page; a publish shows up within a minute.
+		r.With(middleware.PublicCache(30, 60)).Get("/reviews", h.PublishedReviews)
 
 		r.Group(func(r chi.Router) {
 			r.Use(middleware.RequireAuth)
@@ -151,6 +155,8 @@ func NewRouter(d Deps) http.Handler {
 			r.With(middleware.RateLimit(d.RateLimiter, "avatar", limitAvatar)).Post("/me/avatar", h.UploadAvatar)
 			r.Delete("/me/avatar", h.DeleteAvatar)
 			r.Get("/me/applications", h.MyApplications)
+			r.Get("/me/review", h.MyReview)
+			r.With(middleware.RateLimit(d.RateLimiter, "review", limitReview)).Put("/me/review", h.SaveMyReview)
 			r.Get("/me/practice/{collection}", h.MyPractice)
 			r.Group(func(r chi.Router) {
 				r.Use(middleware.RateLimit(d.RateLimiter, "practice", limitPractice))
@@ -206,6 +212,8 @@ func NewRouter(d Deps) http.Handler {
 			r.Put("/topics/{topicID}", h.AdminUpdateTopic)
 			r.Get("/jobs", h.AdminJobs)
 			r.Put("/jobs/{jobID}/published", h.AdminSetJobPublished)
+			r.Get("/reviews", h.AdminReviews)
+			r.Put("/reviews/{reviewID}/published", h.AdminSetReviewPublished)
 			r.Get("/audit", h.AdminAudit)
 		})
 	})

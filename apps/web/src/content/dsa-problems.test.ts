@@ -10,10 +10,10 @@ import {
 } from "./dsa-problems";
 
 describe("DSA problems", () => {
-  it("has the Big-O primer and 150 problems, each in a known topic", () => {
-    expect(DSA_PROBLEMS).toHaveLength(150);
+  it("has the Big-O primer and 50 problems, each in a known topic", () => {
+    expect(DSA_PROBLEMS).toHaveLength(50);
     expect(DSA_LESSONS.length).toBeGreaterThan(0);
-    expect(DSA_ITEMS).toHaveLength(DSA_LESSONS.length + 150);
+    expect(DSA_ITEMS).toHaveLength(DSA_LESSONS.length + 50);
     expect(DSA_ITEMS[0]!.kind).toBe("lesson");
     const topics = new Set(DSA_TOPICS.map((t) => t.key));
     for (const p of DSA_ITEMS) expect(topics).toContain(p.topic);

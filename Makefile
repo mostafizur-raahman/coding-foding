@@ -30,7 +30,7 @@ migrate: ## apply database migrations
 content: ## sync lesson metadata (ids, XP, sections) into the database
 	@$(API) content
 
-seed-demo: ## load demo companies + jobs for the careers portal
+seed-demo: ## load demo companies + jobs and the 12 starter reviews
 	@$(API) seed-demo
 
 admin: ## make EMAIL an admin, creating the account if needed: make admin EMAIL=you@x.com [REVOKE=1]

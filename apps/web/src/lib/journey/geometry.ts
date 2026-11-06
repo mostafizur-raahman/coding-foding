@@ -1,13 +1,7 @@
 /**
- * Journey path geometry — a faithful interpretation of the hand-drawn sketch.
- *
- * Landscape canvas (desktop), left → right:
- *   why? (bottom-left) ─straight diagonal→ C/C++ (first hill) ─curve→ DSA (deepest valley)
- *   → OS (climbing) → dome peak (highest hill) → Network (descending) → shallow dip
- *   → Sys design → near-vertical climb → T-bar finish (summit / goal).
- *
- * Every milestone sits exactly on a segment endpoint, so dot positions are exact and
- * the same segments render both orientations (an axis swap is affine, so Béziers stay Béziers).
+ * Journey path geometry: a signal-like wave, unsure wobbles first, then bigger swings.
+ * Every turning point is crossed with a flat tangent, so each segment is a smooth half-wave.
+ * Desktop and mobile are separate compositions, each with its own viewBox.
  */
 
 export type Pt = { x: number; y: number };
@@ -24,76 +18,76 @@ export const MILESTONE_IDS = [
 ] as const;
 export type MilestoneId = (typeof MILESTONE_IDS)[number];
 
-export const LANDSCAPE = { width: 2600, height: 820 } as const;
-export const PORTRAIT = { width: 420, height: 2380 } as const;
+export type Orientation = "landscape" | "portrait";
+type SegmentMode = "h" | "v" | "vh";
 
-const START: Pt = { x: 140, y: 600 };
+export const LANDSCAPE = { width: 2400, height: 780 } as const;
+export const PORTRAIT = { width: 400, height: 1640 } as const;
 
-/** Straight segment expressed as a cubic (controls at thirds) so all segments share one type. */
-function line(from: Pt, to: Pt): Cubic {
-  return {
-    c1: { x: from.x + (to.x - from.x) / 3, y: from.y + (to.y - from.y) / 3 },
-    c2: { x: from.x + ((to.x - from.x) * 2) / 3, y: from.y + ((to.y - from.y) * 2) / 3 },
-    to,
-  };
+const K = 0.38; // control-point reach; ~0.36 is a true sine half-wave
+const r1 = (n: number) => Math.round(n * 10) / 10;
+const pts = (list: [number, number][]): Pt[] => list.map(([x, y]) => ({ x, y }));
+
+type Layout = {
+  points: Pt[];
+  /** Index into `points` of each milestone, in MILESTONE_IDS order. */
+  milestones: number[];
+  mode: SegmentMode;
+  /** The last segment may arrive differently, e.g. flat onto the ground. */
+  lastMode: SegmentMode;
+  /** The skyline at the goal: the path's end meets its ground line. */
+  skyline: Pt & { scale: number };
+};
+
+const LAYOUTS: Record<Orientation, Layout> = {
+  landscape: {
+    // Wider than most screens on purpose: the line slides left as the walker advances.
+    points: pts([[225, 520], [267, 511], [312, 530], [363, 503], [423, 542], [495, 476], [660, 590], [990, 380], [1320, 610], [1650, 300], [1980, 625], [2235, 230]]),
+    milestones: [0, 6, 7, 8, 9, 10, 11],
+    mode: "h",
+    lastMode: "h",
+    skyline: { x: 2261, y: 230, scale: 1.3 },
+  },
+  portrait: {
+    points: pts([[212, 200], [192, 236], [214, 270], [186, 304], [218, 340], [128, 440], [282, 660], [92, 880], [318, 1100], [70, 1320], [210, 1560]]),
+    milestones: [0, 5, 6, 7, 8, 9, 10],
+    mode: "v",
+    lastMode: "vh",
+    skyline: { x: 268, y: 1560, scale: 1.25 },
+  },
+};
+
+function segment(a: Pt, b: Pt, mode: SegmentMode): Cubic {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  if (mode === "h") return { c1: { x: r1(a.x + K * dx), y: a.y }, c2: { x: r1(b.x - K * dx), y: b.y }, to: b };
+  if (mode === "v") return { c1: { x: a.x, y: r1(a.y + K * dy) }, c2: { x: b.x, y: r1(b.y - K * dy) }, to: b };
+  // "vh": leave vertically, arrive horizontally
+  return { c1: { x: a.x, y: r1(a.y + 0.62 * dy) }, c2: { x: r1(b.x - 0.62 * dx), y: b.y }, to: b };
 }
 
-const PROGRAMMING: Pt = { x: 620, y: 230 };
+function segments(o: Orientation): Cubic[] {
+  const L = LAYOUTS[o];
+  return L.points.slice(1).map((to, i) => segment(L.points[i]!, to, i === L.points.length - 2 ? L.lastMode : L.mode));
+}
 
-/** Segment i ends at milestone i+1 (milestone 0 = START). */
-export const SEGMENTS: readonly Cubic[] = [
-  line(START, PROGRAMMING), // the sketch's straight first climb
-  { c1: { x: 705, y: 165 }, c2: { x: 930, y: 640 }, to: { x: 1060, y: 640 } }, // over the hill, down into DSA
-  { c1: { x: 1185, y: 640 }, c2: { x: 1270, y: 420 }, to: { x: 1330, y: 330 } }, // out of the valley to OS
-  { c1: { x: 1400, y: 215 }, c2: { x: 1640, y: 70 }, to: { x: 1765, y: 300 } }, // over the dome to Network
-  { c1: { x: 1840, y: 430 }, c2: { x: 2060, y: 470 }, to: { x: 2120, y: 360 } }, // shallow dip to Sys design
-  { c1: { x: 2152, y: 300 }, c2: { x: 2171, y: 210 }, to: { x: 2172, y: 90 } }, // the final near-vertical push
-];
+export function milestonePoint(id: MilestoneId, o: Orientation): Pt {
+  const L = LAYOUTS[o];
+  return L.points[L.milestones[MILESTONE_IDS.indexOf(id)]!]!;
+}
 
-export const MILESTONE_POINTS: Record<MilestoneId, Pt> = Object.fromEntries(
-  MILESTONE_IDS.map((id, i) => [id, i === 0 ? START : SEGMENTS[i - 1]!.to]),
-) as Record<MilestoneId, Pt>;
+export function skylinePlacement(o: Orientation) {
+  return LAYOUTS[o].skyline;
+}
 
-/** The T-shaped finish bar from the sketch + flag pole. */
-export const FINISH_BAR = { from: { x: 2110, y: 90 }, to: { x: 2290, y: 90 } };
-export const FLAG_POLE = { from: { x: 2272, y: 90 }, to: { x: 2272, y: 18 } };
-
-/** Highest point of the dome (smallest y) — where the walker celebrates. */
+/** Fractions index of OS: the highest point after it is where the walker celebrates. */
 export const PEAK_SEGMENT_INDEX = 3;
 
-export type Orientation = "landscape" | "portrait";
-
-/**
- * Portrait mapping for mobile: progress runs top → bottom, "height" becomes
- * horizontal offset (higher = further right), so the same ups/downs survive.
- */
-export function project(p: Pt, o: Orientation): Pt {
-  if (o === "landscape") return p;
-  const yMin = 18;
-  const yMax = 640;
-  const x = 50 + ((yMax - p.y) / (yMax - yMin)) * (PORTRAIT.width - 110);
-  const y = 70 + (p.x - START.x) * 1.0;
-  return { x: round(x), y: round(y) };
-}
-
-const round = (n: number) => Math.round(n * 100) / 100;
-
 export function pathD(o: Orientation): string {
-  const s = project(START, o);
+  const s = LAYOUTS[o].points[0]!;
   const parts = [`M ${s.x} ${s.y}`];
-  for (const seg of SEGMENTS) {
-    const c1 = project(seg.c1, o);
-    const c2 = project(seg.c2, o);
-    const to = project(seg.to, o);
-    parts.push(`C ${c1.x} ${c1.y} ${c2.x} ${c2.y} ${to.x} ${to.y}`);
-  }
+  for (const seg of segments(o)) parts.push(`C ${seg.c1.x} ${seg.c1.y} ${seg.c2.x} ${seg.c2.y} ${seg.to.x} ${seg.to.y}`);
   return parts.join(" ");
-}
-
-export function lineD(a: Pt, b: Pt, o: Orientation): string {
-  const pa = project(a, o);
-  const pb = project(b, o);
-  return `M ${pa.x} ${pa.y} L ${pb.x} ${pb.y}`;
 }
 
 /** Point on a cubic Bézier at t ∈ [0,1]. */
@@ -114,25 +108,26 @@ export function cubicAt(p0: Pt, s: Cubic, t: number): Pt {
  * fraction (so dot pops sync with the drawn stroke) without touching the DOM.
  */
 export function buildArcTable(o: Orientation, samplesPerSegment = 80) {
-  const pts: Pt[] = [project(START, o)];
+  const L = LAYOUTS[o];
+  const pointsOut: Pt[] = [L.points[0]!];
   const lens: number[] = [0];
-  const segEnd: number[] = [];
-  let prev0 = START;
-  for (const seg of SEGMENTS) {
+  const pointEnd: number[] = [0];
+  let prev = L.points[0]!;
+  for (const seg of segments(o)) {
     for (let i = 1; i <= samplesPerSegment; i++) {
-      const p = project(cubicAt(prev0, seg, i / samplesPerSegment), o);
-      const last = pts[pts.length - 1]!;
+      const p = cubicAt(prev, seg, i / samplesPerSegment);
+      const last = pointsOut[pointsOut.length - 1]!;
       lens.push(lens[lens.length - 1]! + Math.hypot(p.x - last.x, p.y - last.y));
-      pts.push(p);
+      pointsOut.push(p);
     }
-    segEnd.push(lens[lens.length - 1]!);
-    prev0 = seg.to;
+    pointEnd.push(lens[lens.length - 1]!);
+    prev = seg.to;
   }
   const total = lens[lens.length - 1]!;
   return {
     total,
     /** Length fraction (0..1) at which each milestone is reached. */
-    milestoneFractions: MILESTONE_IDS.map((_, i) => (i === 0 ? 0 : segEnd[i - 1]! / total)),
+    milestoneFractions: L.milestones.map((i) => pointEnd[i]! / total),
     /** Point + direction angle (deg, 0 = right, negative = uphill on screen) at fraction f. */
     at(f: number): Pt & { angle: number } {
       const target = Math.min(Math.max(f, 0), 1) * total;
@@ -144,8 +139,8 @@ export function buildArcTable(o: Orientation, samplesPerSegment = 80) {
         else hi = mid;
       }
       const i = Math.max(1, lo);
-      const a = pts[i - 1]!;
-      const b = pts[i]!;
+      const a = pointsOut[i - 1]!;
+      const b = pointsOut[i]!;
       const span = lens[i]! - lens[i - 1]! || 1;
       const t = (target - lens[i - 1]!) / span;
       return {
@@ -200,24 +195,55 @@ export function buildTimeWarp(dsaFraction: number, width = 0.07, slowdown = 2.2,
   };
 }
 
-/**
- * Hand-drawn version of the path with the wobble *baked into the geometry*.
- * An SVG turbulence filter looked the same but re-rasterised on every scroll frame
- * (the stroke-dashoffset changes), halving the frame rate. Smooth multi-frequency
- * noise is applied perpendicular to the path, tapered to zero at both ends.
- */
-export function sketchyPathD(o: Orientation, samples = 360, amplitude = 2.6): string {
-  const table = buildArcTable(o);
-  const noise = (s: number) => Math.sin(s * 0.045) * 0.55 + Math.sin(s * 0.13 + 1.3) * 0.3 + Math.sin(s * 0.31 + 2.1) * 0.15;
-  const parts: string[] = [];
-  for (let i = 0; i <= samples; i++) {
-    const f = i / samples;
-    const pt = table.at(f);
-    const a = (pt.angle * Math.PI) / 180;
-    const off = noise(f * table.total) * amplitude * Math.sin(Math.PI * f);
-    const x = pt.x - Math.sin(a) * off;
-    const y = pt.y + Math.cos(a) * off;
-    parts.push(`${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`);
+/** The noise behind the path: random tutorials and tangles that fade out as the path begins. */
+export type Noise = {
+  fade: [number, number, number, number];
+  /** cx, cy, radius, seed, points */
+  scribbles: [number, number, number, number, number][];
+  /** x, y, rotation, scale */
+  plays: [number, number, number, number][];
+};
+
+export const NOISE: Record<Orientation, Noise> = {
+  landscape: {
+    fade: [0, 0, 960, 0],
+    scribbles: [[142, 170, 58, 3, 9], [390, 96, 46, 7, 8], [660, 150, 52, 11, 9], [93, 410, 40, 5, 7], [450, 330, 44, 13, 8], [810, 300, 34, 17, 7]],
+    plays: [[270, 250, -10, 1], [548, 250, 8, 0.9], [732, 82, 14, 0.8], [63, 296, -6, 0.85], [321, 420, 6, 0.8], [606, 416, -12, 0.95], [198, 70, 4, 0.75], [862, 205, -8, 0.7]],
+  },
+  portrait: {
+    fade: [0, 230, 0, 470],
+    scribbles: [[70, 92, 44, 3, 8], [330, 82, 46, 7, 8], [58, 300, 34, 5, 7], [342, 292, 36, 11, 7], [200, 30, 26, 13, 6]],
+    plays: [[132, 36, -8, 0.8], [290, 180, 10, 0.85], [96, 186, -6, 0.85], [330, 372, 8, 0.7], [56, 386, -10, 0.7], [262, 28, 6, 0.7]],
+  },
+};
+
+/** Seeded, so the scribbles look the same on every visit and on the server. */
+function rng(seed: number) {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Tangled scribble: random points in a blob joined by a loose Catmull-Rom. */
+export function scribbleD(cx: number, cy: number, r: number, seed: number, n: number): string {
+  const R = rng(seed);
+  const p: [number, number][] = [];
+  for (let i = 0; i < n; i++) {
+    const a = R() * Math.PI * 2;
+    const dist = r * (0.25 + 0.75 * Math.sqrt(R()));
+    p.push([cx + Math.cos(a) * dist * 1.25, cy + Math.sin(a) * dist * 0.85]);
   }
-  return parts.join(" ");
+  let d = `M${r1(p[0]![0])},${r1(p[0]![1])}`;
+  const t = 4; // lower = loopier
+  for (let i = 0; i < p.length - 1; i++) {
+    const p1 = p[i]!;
+    const p2 = p[i + 1]!;
+    const p0 = p[i - 1] ?? p1;
+    const p3 = p[i + 2] ?? p2;
+    d += ` C${r1(p1[0] + (p2[0] - p0[0]) / t)},${r1(p1[1] + (p2[1] - p0[1]) / t)} ${r1(p2[0] - (p3[0] - p1[0]) / t)},${r1(p2[1] - (p3[1] - p1[1]) / t)} ${r1(p2[0])},${r1(p2[1])}`;
+  }
+  return d;
 }

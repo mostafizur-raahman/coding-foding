@@ -63,7 +63,7 @@ func TestParseRejects(t *testing.T) {
 
 // The real chapter must always parse: CI catches a broken heading before deploy.
 func TestRealContentParses(t *testing.T) {
-	raw, err := os.ReadFile("../../../../content/backend-first-principles/bn/http-cors.md")
+	raw, err := os.ReadFile("../../../../content/operating-system/bn/what-an-os-does.md")
 	if err != nil {
 		t.Skip("content folder not available")
 	}
@@ -72,7 +72,7 @@ func TestRealContentParses(t *testing.T) {
 		t.Fatal(err)
 	}
 	if len(l.Sections) < 5 || l.XP != 10 {
-		t.Fatalf("http-cors: %d sections, xp %d", len(l.Sections), l.XP)
+		t.Fatalf("what-an-os-does: %d sections, xp %d", len(l.Sections), l.XP)
 	}
 	for _, s := range l.Sections {
 		if s.MinReadSeconds <= 0 {

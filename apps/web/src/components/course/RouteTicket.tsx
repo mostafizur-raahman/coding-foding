@@ -30,7 +30,7 @@ export function RouteTicket({ course: slug }: { course: string }) {
   return (
     <div className="ticket w-full max-w-md">
       <div className="p-6">
-        <p className="flex items-center justify-between font-mono text-[11px] tracking-[0.25em] text-muted uppercase">
+        <p className="flex items-center justify-between text-xs text-muted font-medium">
           <span>{t("ticket")}</span>
           <span aria-hidden="true">{course.code}</span>
         </p>

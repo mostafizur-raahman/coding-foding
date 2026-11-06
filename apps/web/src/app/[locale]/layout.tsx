@@ -3,11 +3,9 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
-import { DoodleDefs } from "@/components/decor/Doodles";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SiteChrome } from "@/components/layout/SiteChrome";
-import { ScrollShade } from "@/components/layout/ScrollShade";
 import { Providers } from "@/components/providers/Providers";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/theme/fonts";
@@ -47,8 +45,8 @@ export async function generateMetadata({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0E0F1A" },
-    { media: "(prefers-color-scheme: light)", color: "#FBF8F1" },
+    { media: "(prefers-color-scheme: dark)", color: "#191919" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
   ],
 };
 
@@ -66,8 +64,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      data-theme="midnight"
-      data-font="default"
+      data-theme="paper"
       suppressHydrationWarning // the boot script sets data-theme before React hydrates
       className={fontVariables}
     >
@@ -80,12 +77,10 @@ export default async function LocaleLayout({
         className="min-h-screen bg-[var(--bg)] text-[var(--fg)]"
         suppressHydrationWarning
       >
-        <DoodleDefs />
         <NextIntlClientProvider>
           <Providers>
             <SiteChrome>
               <Navbar />
-              <ScrollShade />
             </SiteChrome>
             <main id="main">{children}</main>
             <SiteChrome>

@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { Walker } from "@/components/journey/Walker";
 import { Link } from "@/i18n/navigation";
 import { fetchPlans, formatTaka, isPro, percentOff, PLANS_KEY, type PlanId } from "@/lib/billing";
 
@@ -53,7 +52,7 @@ export function PricingPlans() {
       <div className="mx-auto mt-12 grid max-w-4xl items-stretch gap-6 md:grid-cols-2">
         {/* Free */}
         <section className="card flex flex-col p-7 md:p-8">
-          <p className="font-mono text-xs tracking-[0.2em] text-muted uppercase">{t("freeName")}</p>
+          <p className="text-xs text-muted font-medium">{t("freeName")}</p>
           <p className="mt-4 flex items-baseline gap-2">
             <span className="text-5xl font-bold tracking-tight">{fmt(0)}</span>
             <span className="text-muted">{t("forever")}</span>
@@ -76,11 +75,8 @@ export function PricingPlans() {
         </section>
 
         {/* Pro */}
-        <section className="pricing-pro relative flex flex-col rounded-3xl p-7 md:p-8">
-          <svg aria-hidden="true" viewBox="-30 -70 60 80" className="absolute -top-14 right-8 h-20 w-16 overflow-visible">
-            <Walker x={0} y={0} scale={0.55} expressive pose="is-flexing" />
-          </svg>
-          <p className="flex items-center gap-2 font-mono text-xs tracking-[0.2em] text-accent-1 uppercase">
+        <section className="pricing-pro relative flex flex-col rounded-lg p-7 md:p-8">
+          <p className="flex items-center gap-2 text-xs text-accent-1 font-medium">
             {t("proName")}
             <span className="rounded-full bg-accent-1 px-2 py-0.5 text-[10px] tracking-normal text-[var(--on-accent)] normal-case">
               {t("popular")}
@@ -120,7 +116,7 @@ export function PricingPlans() {
           </ul>
           <Link
             href={`/checkout?plan=${period}`}
-            className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-[linear-gradient(90deg,var(--accent-1),var(--accent-2))] font-semibold text-[var(--on-accent)] shadow-[0_10px_30px_-12px_var(--glow)] transition hover:brightness-110"
+            className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-[var(--accent-1)] font-semibold text-[var(--on-accent)] transition hover:opacity-90"
           >
             {pro ? t("renewCta") : t("proCta")}
           </Link>
@@ -150,7 +146,7 @@ export function PricingPlans() {
 
       <section className="mx-auto mt-20 max-w-3xl">
         <h2 className="text-center text-3xl font-bold tracking-tight">{t("faqTitle")}</h2>
-        <div className="mt-8 divide-y divide-[var(--border)] rounded-2xl border border-line">
+        <div className="mt-8 divide-y divide-[var(--border)] rounded-lg border border-line">
           {(["faq1", "faq2", "faq3", "faq4"] as const).map((k) => (
             <details key={k} className="group px-6 py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold">

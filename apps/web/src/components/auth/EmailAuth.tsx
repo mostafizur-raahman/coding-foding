@@ -11,12 +11,10 @@ import { DISTRICTS_BY_DIVISION, DIVISIONS, INTERESTS } from "@/lib/geo";
 import { MILESTONE_IDS } from "@/lib/journey/geometry";
 import { PATH_STATS_KEY } from "@/lib/stats";
 import { useAuth } from "./AuthProvider";
-import { PeekingLearner } from "./AuthArt";
 import { inputClass, primaryButton } from "./AuthShell";
 import { authErrorField, authErrorKey } from "./errors";
 import { Field } from "./Field";
 import { PasswordInput } from "./PasswordInput";
-import { RotatingPill } from "./RotatingPill";
 
 export const DEFAULT_AFTER_AUTH = "/learn/backend-first-principles";
 const RESEND_AFTER_S = 30;
@@ -46,14 +44,9 @@ export function AuthHeading({ sub }: { sub: string }) {
         <Logo compact />
       </div>
       <h1 className="mt-8 text-center text-[1.65rem] leading-tight font-bold tracking-tight">
-        <span className="sr-only">
-          {t("titleBefore")} {words.join(", ")} {t("titleAfter")}
-        </span>
-        <span aria-hidden="true">
-          {t("titleBefore")} <RotatingPill words={words} /> {t("titleAfter")}
-        </span>
+        {t("titleBefore")} <span className="text-[var(--accent-1)]">{words[0]}</span> {t("titleAfter")}
       </h1>
-      <p className="mt-2 text-center text-[1.15rem] font-semibold text-muted">{sub}</p>
+      <p className="mt-2 text-center text-muted">{sub}</p>
     </>
   );
 }
@@ -180,7 +173,6 @@ function EmailStep({ onSent }: { onSent: (email: string) => void }) {
       {error && <ErrorBox>{error}</ErrorBox>}
       <div className="relative">
         {/* head above the button, fingers on its top edge */}
-        <PeekingLearner className="pointer-events-none absolute -top-[31px] right-6 w-16" />
         <button
           type="submit"
           disabled={busy || !email.trim()}

@@ -1,133 +1,54 @@
 @import "tailwindcss";
+@source "../../../../packages/ui/src";
 
 /* ───────── Design tokens ─────────
+   Two themes only, calm like a notebook app: pure white, and Notion-style dark (#191919).
+   One accent (blue) for links and actions; green only for status (free, done, live).
    Every theme defines the same variables; components only ever read tokens.
-   Text/background pairs are chosen to pass WCAG AA (≥4.5:1 body, ≥3:1 large/UI). */
+   Text/background pairs pass WCAG AA (≥4.5:1 body, ≥3:1 large/UI). */
 :root,
 [data-theme="midnight"] {
-  --bg: #0e0f1a;
-  --bg-elev: #161827;
-  --bg-elev-2: #1d2033;
-  --fg: #e8e9f3;
-  --muted: #a3a7bd;
-  --border: #2a2d45;
-  --accent-1: #9b85ff;
-  --accent-2: #00d4a6;
-  --on-accent: #0e0f1a;
-  --glow: rgb(124 92 255 / 0.55);
+  --bg: #191919;
+  --bg-elev: #202020;
+  --bg-elev-2: #2a2a2a;
+  --fg: #e3e2e0;
+  --muted: #9b9a97;
+  --border: #2f2f2f;
+  --accent-1: #529cca;
+  --accent-2: #4dab9a;
+  --on-accent: #ffffff;
+  --glow: transparent;
   --path-from: var(--accent-1);
-  --path-to: var(--accent-2);
-  --path-ghost: rgb(232 233 243 / 0.12);
-  --path-glow: 1;
-  --grid: rgb(255 255 255 / 0.035);
-  --danger: #ff7a90;
-  color-scheme: dark;
-}
-
-/* True-black OLED dark with warm amber accents. */
-[data-theme="obsidian"] {
-  --bg: #000000;
-  --bg-elev: #0d0d0f;
-  --bg-elev-2: #17171a;
-  --fg: #f4f1ea;
-  --muted: #a8a49c;
-  --border: #26252a;
-  --accent-1: #ff9f5a;
-  --accent-2: #ffd66b;
-  --on-accent: #120a02;
-  --glow: rgb(255 159 90 / 0.45);
-  --path-ghost: rgb(244 241 234 / 0.12);
-  --path-glow: 1;
-  --grid: rgb(255 255 255 / 0.03);
-  --danger: #ff7a7a;
+  --path-to: var(--accent-1);
+  --path-ghost: rgb(255 255 255 / 0.1);
+  --path-glow: 0;
+  --grid: transparent;
+  --danger: #ff7369;
   color-scheme: dark;
 }
 
 [data-theme="paper"] {
-  --bg: #fbf8f1;
+  --bg: #ffffff;
   --bg-elev: #ffffff;
-  --bg-elev-2: #f3eee2;
-  --fg: #1f2330;
-  --muted: #5a5f70;
-  --border: #e3dccb;
-  --accent-1: #5b3fe0;
-  --accent-2: #00806a;
+  --bg-elev-2: #f7f7f5;
+  --fg: #37352f;
+  --muted: #787774;
+  --border: #e9e9e7;
+  --accent-1: #2383e2;
+  --accent-2: #0f7b6c;
   --on-accent: #ffffff;
-  --glow: rgb(91 63 224 / 0.25);
-  --path-ghost: rgb(31 35 48 / 0.12);
+  --glow: transparent;
+  --path-from: var(--accent-1);
+  --path-to: var(--accent-1);
+  --path-ghost: rgb(55 53 47 / 0.12);
   --path-glow: 0;
-  /* ink pen on notebook paper */
-  --path-from: #26304f;
-  --path-to: #3d3aa8;
-  --grid: rgb(70 110 200 / 0.12); /* notebook ruling */
-  --danger: #c0264a;
+  --grid: transparent;
+  --danger: #e03e3e;
   color-scheme: light;
 }
 
-[data-theme="dracula"] {
-  --bg: #282a36;
-  --bg-elev: #303241;
-  --bg-elev-2: #383a4c;
-  --fg: #f8f8f2;
-  --muted: #b9bdd6;
-  --border: #44475a;
-  --accent-1: #bd93f9;
-  --accent-2: #50fa7b;
-  --on-accent: #1d1e27;
-  --glow: rgb(189 147 249 / 0.5);
-  --path-ghost: rgb(248 248 242 / 0.12);
-  --path-glow: 1;
-  --grid: rgb(255 255 255 / 0.03);
-  --danger: #ff5555;
-  color-scheme: dark;
-}
-
-[data-theme="solarized"] {
-  --bg: #002b36;
-  --bg-elev: #073642;
-  --bg-elev-2: #0b4050;
-  --fg: #fdf6e3;
-  --muted: #a7b5b5;
-  --border: #1d4f5c;
-  --accent-1: #9ea3f0;
-  --accent-2: #2aa198;
-  --on-accent: #002b36;
-  --glow: rgb(42 161 152 / 0.45);
-  --path-ghost: rgb(253 246 227 / 0.12);
-  --path-glow: 1;
-  --grid: rgb(255 255 255 / 0.03);
-  --danger: #ff6f6b;
-  color-scheme: dark;
-}
-
-[data-theme="matrix"] {
-  --bg: #020a04;
-  --bg-elev: #06140a;
-  --bg-elev-2: #0a1e10;
-  --fg: #b7f5c4;
-  --muted: #6fd08a;
-  --border: #13361d;
-  --accent-1: #00ff66;
-  --accent-2: #7cffb2;
-  --on-accent: #020a04;
-  --glow: rgb(0 255 102 / 0.5);
-  --path-ghost: rgb(0 255 102 / 0.12);
-  --path-glow: 1;
-  --grid: rgb(0 255 102 / 0.05);
-  --danger: #ff6b6b;
-  color-scheme: dark;
-}
-
-/* ───────── User-selectable fonts (Latin family first, Bangla family second) ───────── */
-:root,
-[data-font="default"] { --font-ui: var(--font-inter), var(--font-hind); }
-[data-font="friendly"] { --font-ui: var(--font-nunito), var(--font-baloo); }
-[data-font="anek"] { --font-ui: var(--font-anek-latin), var(--font-anek-bangla); }
-[data-font="bookish"] { --font-ui: var(--font-source-serif), var(--font-tiro); }
-[data-font="terminal"] { --font-ui: var(--font-jetbrains), var(--font-hind); }
-[data-font="fira"] { --font-ui: var(--font-fira), var(--font-hind); }
-[data-font="plex-mono"] { --font-ui: var(--font-plex-mono), var(--font-hind); }
-[data-font="space-mono"] { --font-ui: var(--font-space-mono), var(--font-anek-bangla); }
+/* One typeface for reading: Inter for Latin, Hind Siliguri for Bangla. */
+:root { --font-ui: var(--font-inter), var(--font-hind); }
 
 @theme inline {
   --color-bg: var(--bg);
@@ -140,7 +61,8 @@
   --color-accent-2: var(--accent-2);
   --font-sans: var(--font-ui), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
-  --font-hand: var(--font-caveat), var(--font-hind), cursive;
+  /* No handwriting face: notes read in the same calm type as everything else. */
+  --font-hand: var(--font-ui), ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
@@ -152,7 +74,6 @@ html {
 body {
   font-family: var(--font-sans);
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 /* Bangla glyphs carry matra/kar above and below the line — give them room. */
 html[lang="bn"] body {
@@ -160,10 +81,6 @@ html[lang="bn"] body {
 }
 html[lang="bn"] :is(h1, h2, h3) {
   line-height: 1.35;
-}
-/* Matrix goes mono by default, but an explicit font choice wins. */
-[data-theme="matrix"][data-font="default"] body {
-  font-family: var(--font-mono);
 }
 
 ::selection {
@@ -176,31 +93,20 @@ html[lang="bn"] :is(h1, h2, h3) {
   border-radius: 6px;
 }
 
+/* Kept as a class name for existing markup; now a plain accent colour, no gradient. */
 .text-gradient {
-  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent-1);
 }
 
+/* Plain page background: no grid, no ruled lines, nothing behind the text. */
 .bg-grid {
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-/* Paper theme: ruled notebook lines + red margin instead of a grid. */
-[data-theme="paper"] .bg-grid {
-  background-image:
-    linear-gradient(90deg, transparent 63px, rgb(220 80 80 / 0.25) 63px, rgb(220 80 80 / 0.25) 65px, transparent 65px),
-    linear-gradient(var(--grid) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 32px;
+  background: var(--bg);
 }
 
 .card {
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 12px;
 }
 
 /* View-transition theme switch: the new snapshot is revealed by a clip-path circle. */
@@ -210,62 +116,7 @@ html[lang="bn"] :is(h1, h2, h3) {
   mix-blend-mode: normal;
 }
 
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-.logo-draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 1.4s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-@keyframes pop {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-.logo-pop {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-/* Logo inside a link (navbar, footer): the journey redraws on hover/focus. */
-@keyframes redraw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-a:is(:hover, :focus-visible) .logo-mark .logo-stroke {
-  stroke-dasharray: 1;
-  animation: redraw 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
-}
-@keyframes dot-hop {
-  40% {
-    transform: translateY(-0.22em);
-  }
-}
-a:is(:hover, :focus-visible) .wm-dot {
-  animation: dot-hop 0.5s 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* ───────── Corner doodles: a slow, lazy drift (transform only) ───────── */
-@keyframes doodle-float {
-  from { transform: translateY(0) rotate(-2deg); }
-  to { transform: translateY(-8px) rotate(3deg); }
-}
-.doodle { animation: doodle-float 6s ease-in-out infinite alternate; }
-.doodle-rock { transform-origin: 50% 70%; animation: doodle-rock 3.2s ease-in-out infinite alternate; }
-@keyframes doodle-rock { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
-.doodle-sway { transform-origin: 50% 0; animation: doodle-sway 2.6s ease-in-out infinite alternate; }
-@keyframes doodle-sway { from { transform: rotate(-9deg) translateX(-4px); } to { transform: rotate(7deg) translateX(4px); } }
-@media (prefers-reduced-motion: reduce) { .doodle-rock, .doodle-sway { animation: none; } }
+/* The logo is drawn still: no draw-in, no redraw on hover. */
 
 /* ───────── "You vs You" story (leaderboard) ───────── */
 .yvy .yvy-other .walker-body { stroke: var(--who, var(--accent-1)); }
@@ -311,30 +162,9 @@ a:is(:hover, :focus-visible) .wm-dot {
   color: var(--fg);
 }
 
-/* ───────── "Before → After" section ───────── */
-@keyframes tile-jitter {
-  0%, 100% { transform: translate(0, 0) rotate(var(--r, 0deg)); }
-  50% { transform: translate(2px, -3px) rotate(calc(var(--r, 0deg) + 4deg)); }
-}
-.yt-tile { transform-box: fill-box; transform-origin: center; animation: tile-jitter 2.4s ease-in-out infinite; }
-.step-node circle,
-.step-node text {
-  transition: fill 0.3s ease, stroke 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.step-node .node-core { fill: var(--accent-2); stroke: var(--accent-2); }
-.step-node .node-num { fill: var(--on-accent); }
-.step-node .node-halo { fill: color-mix(in oklab, var(--accent-2) 22%, transparent); }
-.step-node[data-reached="false"] .node-core { fill: var(--bg-elev); stroke: var(--border); transform: scale(0.85); }
-.step-node[data-reached="false"] .node-num { fill: var(--muted); }
-.step-node[data-reached="false"] .node-halo { transform: scale(0); }
 .walker .mouth-sad { opacity: 0; }
 .walker[data-mood="sad"] .mouth-sad { opacity: 1; }
 .walker[data-mood="sad"] .mouth-happy { opacity: 0; }
-.understood-label { transition: opacity 0.4s ease, transform 0.4s ease; }
-[data-done="false"] .understood-label { opacity: 0.35; }
-[data-done="true"] .understood-label { opacity: 1; }
 
 /* ───────── Sticky note (journey side panel) ───────── */
 /* A real paper note: same yellow in every theme, dark ink, tape, soft curl shadow. */
@@ -374,20 +204,68 @@ a:is(:hover, :focus-visible) .wm-dot {
 .sticky-in { animation: sticky-in 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
 .sticky-out { animation: sticky-out 0.42s ease-in forwards; pointer-events: none; }
 
-/* ───────── Journey dots ───────── */
-.journey-dot .dot-core,
-.journey-dot .dot-ring {
+/* ───────── Journey line art ───────── */
+.journey-art { --journey-accent: #3cf2c8; }
+[data-theme="paper"] .journey-art { --journey-accent: var(--accent-2); }
+.journey-art .ln { fill: none; stroke: var(--fg); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.journey-art .path-ghost { fill: none; stroke: var(--fg); stroke-opacity: 0.22; stroke-width: 1.1; stroke-dasharray: 2 7; stroke-linecap: round; }
+.journey-art .path-glow { fill: none; stroke: var(--journey-accent); stroke-width: 6; stroke-linecap: round; opacity: 0.22; }
+.journey-art .path-active { fill: none; stroke: var(--journey-accent); stroke-width: 1.75; stroke-linecap: round; }
+.journey-art .scribble { fill: none; stroke: var(--fg); stroke-width: 1; stroke-linecap: round; opacity: 0.5; }
+.journey-art .play :is(rect, path) { fill: none; stroke: var(--fg); stroke-width: 1.1; stroke-linejoin: round; }
+.journey-art .marks path { fill: none; stroke: var(--fg); stroke-opacity: 0.35; stroke-width: 1; }
+.journey-art .ms-ring { fill: var(--bg); stroke: var(--fg); stroke-width: 1.4; }
+.journey-art .ms-icon { fill: none; stroke: var(--fg); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.journey-art .ms-glow { opacity: 0.35; }
+.journey-art .dot-core { fill: var(--journey-accent); }
+.journey-art .journey-label { font-family: var(--font-mono), var(--font-hind), monospace; font-weight: 500; fill: var(--fg); }
+.journey-art .journey-tag { font-family: var(--font-mono), var(--font-hind), monospace; fill: color-mix(in oklab, var(--fg) 66%, transparent); }
+
+/* Milestones stay hidden until the walker arrives, then pop in. */
+.journey-art .ms-body, .journey-art .ms-glow {
   transform-box: fill-box;
   transform-origin: center;
-  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease, fill 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.34, 1.9, 0.64, 1), opacity 0.3s ease;
 }
-.journey-dot .dot-core { fill: var(--accent-2); }
-.journey-dot .dot-ring { opacity: 0.55; }
-.journey-dot text { transition: opacity 0.35s ease; }
-.journey-dot[data-reached="false"] .dot-core { fill: var(--muted); transform: scale(0.7); }
-.journey-dot[data-reached="false"] .dot-ring { opacity: 0; transform: scale(0.3); }
-.journey-dot[data-reached="false"] text { opacity: 0.5; }
-.journey-dot[data-reached="true"] .dot-ring { filter: drop-shadow(0 0 10px var(--glow)); }
+.journey-art :is(.journey-label, .journey-tag) { transition: opacity 0.4s ease, transform 0.4s ease; }
+.journey-art [data-reached="false"] .ms-body { opacity: 0; transform: scale(0); }
+.journey-art [data-reached="false"] .ms-glow { opacity: 0; transform: scale(0.3); }
+.journey-art [data-reached="false"] :is(.journey-label, .journey-tag) { opacity: 0; transform: translateY(12px); }
+
+/* The skyline draws in as the walker arrives. */
+.journey-skyline path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 0.8s ease-in-out, opacity 0.2s ease; }
+[data-animated="true"]:not([data-zone="finish"]) .journey-skyline path { stroke-dashoffset: 1; opacity: 0; }
+.journey-art [data-look="student"].is-cheering [data-arm-free] { opacity: 0; }
+
+/* Idle motion: the learner's halo pulses. */
+@keyframes journey-halo { to { transform: scale(1.4); opacity: 0.55; } }
+@keyframes journey-fade-in { from { opacity: 0; } }
+.journey-art .dot-halo { transform-box: fill-box; transform-origin: center; animation: journey-halo 1.5s ease-in-out infinite alternate; }
+[data-animated="true"] .journey-art :is(.journey-noise-wrap, .marks, .path-ghost) { animation: journey-fade-in 1.4s ease-out both; }
+
+/* The one blueprint grid behind the home page; drifts slowly, transform only. */
+.journey-grid {
+  --grid-a: color-mix(in oklab, var(--fg) 2.8%, transparent);
+  --grid-b: color-mix(in oklab, var(--fg) 5.5%, transparent);
+  position: fixed;
+  inset: -96px;
+  pointer-events: none; /* no negative z-index: that would sit under <body>'s own background */
+  background-image:
+    linear-gradient(var(--grid-b) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-b) 1px, transparent 1px),
+    linear-gradient(var(--grid-a) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-a) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .journey-grid { animation: journey-grid-drift 90s linear infinite; will-change: transform; }
+}
+@keyframes journey-grid-drift { to { transform: translate3d(-96px, -96px, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .journey-art .dot-halo { animation: none; }
+}
+/* Whatever is off screen doesn't animate (see HomeBackdrop). */
+[data-offscreen] *, [data-offscreen] *::before, [data-offscreen] *::after { animation-play-state: paused !important; }
 
 .journey-zone-hint { opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
 [data-zone="dsa"] .journey-zone-hint[data-zone-for="dsa"],
@@ -409,10 +287,116 @@ a:is(:hover, :focus-visible) .wm-dot {
 .nav-pop { animation: nav-pop 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both; transform-origin: top center; }
 @media (prefers-reduced-motion: reduce) { .nav-pop { animation: none; } }
 
+/* ───────── Page head shared with the roadmap ───────── */
+.lost, .rm { padding: clamp(96px, 14vw, 180px) clamp(20px, 4vw, 56px) 0; }
+.lost-wrap { position: relative; max-width: 1240px; margin: 0 auto; }
+.lost-head { max-width: 760px; margin-bottom: clamp(48px, 7vw, 88px); }
+.lost-title { margin: 12px 0 0; font-weight: 600; letter-spacing: -0.035em; line-height: 1.02; font-size: clamp(36px, 5.4vw, 68px); }
+html[lang="bn"] .lost-title { letter-spacing: 0; line-height: 1.3; }
+
+/* ───────── Roadmap ───────── */
+.rm { --rm-hair: color-mix(in oklab, var(--fg) 14%, transparent); --rm-accent: #3cf2c8; --rm-dim: color-mix(in oklab, var(--fg) 66%, transparent); }
+[data-theme="paper"] .rm { --rm-accent: var(--accent-2); }
+.rm [data-stage="shipped"], .rm [data-stage="next"] { --rm-c: var(--rm-accent); }
+.rm [data-stage="horizon"] { --rm-c: var(--accent-1); }
+.rm [data-stage="plan"] { --rm-c: var(--muted); }
+.rm-sub { margin: 22px 0 0; font-size: clamp(17px, 1.5vw, 20px); color: var(--rm-dim); max-width: 36em; }
+.rm-board { position: relative; }
+
+/* The signal line and its nodes: wide screens only, where they sit over the columns. */
+.rm-wave { position: absolute; inset: 0 0 auto; width: 100%; height: 60px; overflow: visible; display: none; }
+/* Only the dotted route ignores the stretch: a non-scaling stroke measures dashes in screen
+   pixels, which would stop the pathLength-based line short of its node. */
+.rm-wave path { fill: none; stroke-linecap: round; }
+.rm-wave-ghost { vector-effect: non-scaling-stroke; stroke: var(--fg); stroke-opacity: 0.28; stroke-width: 1.1; stroke-dasharray: 2 7; }
+.rm-wave-line { stroke: var(--rm-accent); stroke-width: 1.75; }
+.rm-wave-glow { stroke: var(--rm-accent); stroke-width: 6; opacity: 0.14; }
+.rm-node-slot { position: relative; height: 60px; display: none; }
+.rm-node {
+  display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--bg); border: 1.4px solid var(--rm-c); color: var(--rm-c);
+}
+.rm-node-slot .rm-node { position: absolute; left: 3px; translate: 0 -50%; }
+[data-stage="shipped"] .rm-node { background: var(--rm-c); color: var(--bg); }
+[data-stage="next"] .rm-node::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--rm-c); }
+[data-stage="next"] .rm-node::after {
+  content: ""; position: absolute; inset: -1.4px; border-radius: 50%; border: 1.4px solid var(--rm-c);
+  animation: rm-ping 2.2s ease-out infinite;
+}
+.rm-node--inline { position: relative; flex-shrink: 0; }
+[data-stage="plan"] .rm-node { border-style: dashed; }
+@keyframes rm-ping { to { transform: scale(2.6); opacity: 0; } }
+@media (min-width: 1024px) {
+  .rm-wave { display: block; }
+  .rm-node-slot { display: block; }
+  .rm-node--inline { display: none; }
+}
+
+.rm-grid { display: grid; gap: 40px 20px; align-items: start; }
+@media (min-width: 640px) { .rm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .rm-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.rm-col { min-width: 0; }
+.rm-col-head { display: flex; align-items: center; gap: 12px; margin: 10px 0 18px; }
+.rm-col-head h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
+.rm-col-head p { margin-top: 2px; font-size: 13px; line-height: 1.4; color: var(--rm-dim); }
+.rm-list { display: flex; flex-direction: column; gap: 12px; }
+.rm-empty { padding: 16px; border: 1px dashed var(--rm-hair); border-radius: 14px; font-size: 14px; color: var(--rm-dim); }
+
+/* Every card is the same size: its height fits a two-line title, three lines of text and the
+   footer row, whatever the content. Longer text is cut with an ellipsis. Still, shadcn-style:
+   flat surface, hairline border, only colour changes on hover. */
+.rm-card {
+  --lh-title: 1.4;
+  --lh-desc: 1.5;
+  height: calc(34px + 30px + 12px + 2 * var(--lh-title) * 17px + 6px + 3 * var(--lh-desc) * 14px + 14px + 30px);
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  padding: 16px; border: 1px solid var(--border); border-radius: 16px;
+  background: var(--bg-elev);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  transition: border-color 0.2s ease;
+}
+html[lang="bn"] .rm-card { --lh-title: 1.5; --lh-desc: 1.7; }
+/* Stage shows as a thin top rule in the stage's colour. */
+.rm-card::after { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: var(--rm-c); opacity: 0.85; }
+[data-stage="plan"] .rm-card { border-style: dashed; background: transparent; box-shadow: none; }
+[data-stage="plan"] .rm-card::after { display: none; }
+.rm-card:hover { border-color: color-mix(in oklab, var(--rm-c) 45%, var(--border)); }
+
+/* The kind's icon in a soft chip up top, and as a faint still watermark in the corner. */
+.rm-kind { display: flex; align-items: center; gap: 10px; height: 30px; font: 500 11px/1 var(--font-mono), var(--font-hind), monospace; letter-spacing: 0.04em; color: var(--rm-dim); }
+.rm-kind-icon {
+  display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; border-radius: 9px; color: var(--rm-c);
+  border: 1px solid color-mix(in oklab, var(--rm-c) 30%, var(--border));
+  background: color-mix(in oklab, var(--rm-c) 10%, var(--bg-elev));
+}
+.rm-kind-icon svg { width: 16px; height: 16px; }
+.rm-mark { position: absolute; right: -14px; top: -10px; z-index: -1; width: 92px; height: 92px; color: var(--rm-c); opacity: 0.07; rotate: 10deg; }
+.rm-mark svg { width: 100%; height: 100%; }
+.rm-card-title, .rm-card-desc { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.rm-card-title { margin-top: 12px; -webkit-line-clamp: 2; flex-shrink: 0; font-size: 17px; letter-spacing: -0.01em; font-weight: 600; line-height: var(--lh-title); }
+.rm-card-desc { margin-top: 6px; -webkit-line-clamp: 3; flex-shrink: 0; font-size: 14px; line-height: var(--lh-desc); color: var(--rm-dim); }
+.rm-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-shrink: 0; height: 30px; margin-top: auto; font: 400 11px/1.2 var(--font-mono), var(--font-hind), monospace; }
+.rm-shipped { color: var(--rm-accent); min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.rm-open { margin-left: auto; flex-shrink: 0; font-weight: 600; color: var(--rm-c); }
+.rm-open:hover { text-decoration: underline; }
+.rm-progress { width: 100%; }
+.rm-progress-label { display: flex; justify-content: space-between; color: var(--rm-dim); }
+.rm-progress-label span:last-child { font-weight: 600; color: var(--rm-c); }
+.rm-progress-track { height: 5px; margin-top: 6px; border-radius: 99px; background: var(--rm-hair); }
+.rm-progress-fill { position: relative; height: 100%; border-radius: 99px; background: var(--rm-c); }
+.rm-feedback { margin-top: 32px; font-size: 14px; color: var(--rm-dim); }
+.rm-feedback a { font-weight: 600; color: var(--rm-accent); }
+.rm-feedback a:hover { text-decoration: underline; }
+@media (prefers-reduced-motion: reduce) {
+  [data-stage="next"] .rm-node::after { animation: none; opacity: 0; }
+  .rm-card { transition: none; }
+}
+
 /* ───────── Journey stick figure ───────── */
 /* Pivot limbs at the hip / shoulder in the figure's own user units. */
 .walker .leg { transform-box: view-box; transform-origin: 0 -42px; }
 .walker .arm { transform-box: view-box; transform-origin: 0 -66px; }
+.walker[data-look="student"] .leg { transform-origin: -1px -50px; }
 @keyframes leg-a {
   0%, 100% { transform: rotate(-14deg); }
   50% { transform: rotate(26deg); }
@@ -475,160 +459,13 @@ a:is(:hover, :focus-visible) .wm-dot {
   }
 }
 
-/* ───────── Course route: a winding path, one station per chapter ───────── */
-/* Each part sets --line; badges, pins and cards on that stretch read it. */
-.route-part { --line: var(--accent-1); }
-
-/* Path (drawn by RouteCanvas): dotted ghost trail + the solid stretch walked so far. */
-.route-ghost { stroke: var(--path-ghost); stroke-width: 4; stroke-dasharray: 1 10; }
-.route-progress { filter: drop-shadow(0 0 6px var(--glow)); }
-[data-theme="paper"] .route-progress { filter: none; }
-
-.route-badge,
-.station-pin {
-  position: relative;
-  z-index: 30; /* above the route walker (z-20), so it never hides a station number */
-  border: 3px solid var(--line);
-  background: var(--bg);
-  color: var(--fg);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-}
-.route-badge[data-reached="true"],
-.station-pin[data-reached="true"],
-.station[data-done="true"] .station-pin { background: var(--line); color: var(--on-accent); }
-.route-badge[data-reached="true"] { box-shadow: 0 0 0 8px color-mix(in oklab, var(--line) 18%, transparent); }
-
-/* Pins sit in the lane beside their card; mobile wiggles them so the path still bends. */
-.station-pin {
-  position: absolute;
-  top: 26px;
-  left: 2px;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 9999px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-.station[data-side="right"] .station-pin { left: 12px; }
-@media (min-width: 768px) {
-  .station[data-side="left"] .station-pin { left: calc(50% - 100px + 22px); }
-  .station[data-side="right"] .station-pin { left: calc(50% + 100px - 58px); }
-}
-
-.station-card {
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease, translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.station:is(:hover, :focus-within) .station-card {
-  transform: translateY(-4px) rotate(var(--tilt, -0.6deg));
-  border-color: var(--line);
-  box-shadow: 0 26px 50px -30px color-mix(in oklab, var(--line) 75%, transparent);
-}
-.station[data-side="right"] { --tilt: 0.6deg; }
-.station:is(:hover, :focus-within) .station-pin { transform: scale(1.15); }
-
-/* Organic blob behind each doodle; the doodle wiggles on hover. */
-.station-doodle {
-  color: var(--line);
-  background: color-mix(in oklab, var(--line) 13%, transparent);
-  border-radius: 42% 58% 63% 37% / 45% 40% 60% 55%;
-  transform: rotate(-4deg);
-}
-.station:is(:hover, :focus-within) .station-doodle svg { animation: doodle-wiggle 0.6s ease-in-out; }
-@keyframes doodle-wiggle {
-  25% { transform: rotate(-8deg) scale(1.08); }
-  60% { transform: rotate(6deg) scale(1.08); }
-}
-.station-tag {
-  border-radius: 6px;
-  padding: 0.1rem 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  background: color-mix(in oklab, var(--line) 12%, transparent);
-}
-.station-numeral {
-  position: absolute;
-  top: -1.9rem;
-  right: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 5rem;
-  font-weight: 800;
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1.5px color-mix(in oklab, var(--line) 30%, transparent);
-  pointer-events: none;
-  user-select: none;
-}
-@media (min-width: 768px) { .station-numeral { font-size: 7rem; top: -2.6rem; } }
-.station-go { opacity: 0; transform: translateX(-4px); transition: opacity 0.25s ease, transform 0.25s ease; }
-.station:is(:hover, :focus-within) .station-go { opacity: 1; transform: none; }
-
-/* Scroll reveal, only once RouteCanvas is running (no JS → everything visible). */
-[data-route-armed] .station:not([data-shown="true"]) .station-card { opacity: 0; translate: 0 32px; }
-@media (min-width: 768px) {
-  [data-route-armed] .station[data-side="left"]:not([data-shown="true"]) .station-card { translate: -40px 16px; }
-  [data-route-armed] .station[data-side="right"]:not([data-shown="true"]) .station-card { translate: 40px 16px; }
-}
-
-/* Hand-written encouragement in the empty column beside some stations (RouteQuote). */
-.route-quote { transition: opacity 0.8s ease 0.25s, translate 0.8s ease 0.25s; }
-.route-quote-mark {
-  position: absolute;
-  top: -2.6rem;
-  left: -1.4rem;
-  font-family: var(--font-source-serif), serif;
-  font-size: 6rem;
-  line-height: 1;
-  color: color-mix(in oklab, var(--line) 22%, transparent);
-  pointer-events: none;
-}
-.route-quote-underline {
-  stroke: var(--line);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.8s;
-}
-[data-route-armed] .station:not([data-shown="true"]) .route-quote { opacity: 0; translate: 0 18px; }
-[data-route-armed] .station:not([data-shown="true"]) .route-quote-underline { stroke-dashoffset: 1; }
-
-/* The learner's speech bubble (RouteCanvas positions it above their head). */
-.walk-bubble {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 50;
-  padding: 0.45rem 0.9rem;
-  border: 2px solid var(--fg);
-  border-radius: 18px 18px 4px 18px; /* tail corner points down at the learner */
-  background: var(--bg-elev);
-  color: var(--fg);
-  font-family: var(--font-hand);
-  font-size: 1.25rem;
-  line-height: 1.25;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.walk-bubble[data-show="true"] { opacity: 1; }
-
 /* Route ticket: punched stub with half-circle notches. */
 .ticket {
   position: relative;
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  transform: rotate(-1.5deg);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 30px 60px -36px var(--glow);
+  border-radius: 8px;
 }
-.ticket:hover { transform: rotate(0deg); }
 .ticket-stub { position: relative; border-top: 2px dashed var(--border); }
 .ticket-stub::before,
 .ticket-stub::after {
@@ -1319,11 +1156,8 @@ a:is(:hover, :focus-visible) .wm-dot {
   background-size: 50px 50px;
 }
 /* Lines draw in one after another (--i = line index). */
-.metro-line {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 1.1s calc(var(--i) * 180ms) cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
+/* Lines are drawn complete: no draw-in (the site is still). */
+.metro-line { stroke-dasharray: none; stroke-dashoffset: 0; }
 .metro-dot { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .metro-station:focus-visible .metro-dot { transform: scale(1.25); }
 .metro-station:hover .metro-label,
@@ -1549,7 +1383,7 @@ a:is(:hover, :focus-visible) .wm-dot {
 .art-ptr-r { animation: art-ptr-r 4s ease-in-out infinite; }
 @keyframes art-ptr-l { 0%, 15% { transform: none; } 45%, 70% { transform: translateX(68px); } 100% { transform: none; } }
 @keyframes art-ptr-r { 0%, 15% { transform: none; } 45%, 70% { transform: translateX(-68px); } 100% { transform: none; } }
-.art-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: art-draw 5s ease-in-out infinite; }
+.art-draw { stroke-dasharray: none; stroke-dashoffset: 0; }
 .art-draw-2 { animation-delay: 0.6s; }
 @keyframes art-draw { 0% { stroke-dashoffset: 1; } 35%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
 .art-point { transform-box: view-box; transform-origin: 0 -66px; animation: art-wave 1.6s ease-in-out infinite alternate; }
@@ -1562,3 +1396,157 @@ a:is(:hover, :focus-visible) .wm-dot {
   .metro-pulse { animation: none; opacity: 0; }
   :is(.train-pillars, .train-skyline, .train-clouds, .train-wheel, .train-ride, .train-rider, .train-flag) { animation: none; }
 }
+
+/* Interactive labs in lessons (components/lesson/Lab.tsx) */
+.lab { margin: 2em 0; padding: 1.1rem 1.2rem; border: 1px solid color-mix(in oklab, var(--accent-1) 35%, var(--border)); border-radius: 16px; background: var(--bg-elev); }
+.lab > * + * { margin-top: 0.8rem; }
+.lab-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem; }
+.lab-tag { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-1); }
+.lesson .lab-title { margin: 0; font-size: 1rem; font-weight: 700; }
+.lab-q { font-weight: 600; }
+.lab-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lab-option, .lab-btn { min-height: 2.5rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--fg); font-size: 0.92rem; text-align: left; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+.lab-option:hover, .lab-btn:hover:not(:disabled) { border-color: var(--accent-1); }
+.lab-option:focus-visible, .lab-btn:focus-visible, .lab-input:focus-visible { outline: 2px solid var(--accent-1); outline-offset: 2px; }
+.lab-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.lab-btn[data-main] { border-color: var(--accent-1); background: var(--accent-1); color: var(--bg); font-weight: 700; }
+.lab-option[data-state="active"] { border-color: var(--accent-1); background: color-mix(in oklab, var(--accent-1) 16%, var(--bg)); }
+.lab-option[data-state="ok"] { border-color: var(--accent-2); background: color-mix(in oklab, var(--accent-2) 16%, var(--bg)); }
+.lab-option[data-state="bad"] { border-color: var(--danger); background: color-mix(in oklab, var(--danger) 14%, var(--bg)); }
+.lab-option[data-state="idle"] { opacity: 0.6; }
+.lab-why { padding: 0.7rem 0.9rem; border-left: 4px solid var(--border); border-radius: 8px; background: var(--bg); font-size: 0.95rem; }
+.lab-why[data-good="1"] { border-left-color: var(--accent-2); }
+.lab-why[data-good="0"] { border-left-color: var(--danger); }
+.lab-why > * + * { margin-top: 0.45rem; }
+.lab-link { margin-left: 0.5rem; color: var(--accent-1); text-decoration: underline; cursor: pointer; }
+.lab-steptitle { font-weight: 700; }
+.lab-count, .lab-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+.lab-scroll { overflow-x: auto; }
+.lab-track { position: relative; display: grid; gap: 0.4rem; padding-top: 1.1rem; }
+.lab-node { display: grid; place-items: center; min-height: 2.6rem; padding: 0.25rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; text-align: center; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+.lab-node[data-on] { border-color: var(--accent-1); background: var(--accent-1); color: var(--bg); font-weight: 700; }
+.lab-token { position: absolute; top: 0; width: 0.7rem; height: 0.7rem; margin-left: -0.35rem; border-radius: 50%; background: var(--accent-2); transition: left 0.35s ease; }
+.lab-state { display: grid; gap: 0.2rem; font-family: var(--font-mono); font-size: 0.8rem; }
+.lab-state > div { display: grid; grid-template-columns: minmax(6rem, 30%) 1fr; gap: 0.6rem; padding: 0.2rem 0; border-top: 1px dashed var(--border); }
+.lab-state dt { color: var(--muted); overflow-wrap: anywhere; }
+.lab-state dd { margin: 0; overflow-wrap: anywhere; }
+.lab-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lesson pre.lab-out { margin: 0.8rem 0 0; padding: 0.7rem 0.9rem; overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.55; white-space: pre; }
+.lab-inputs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lab-input { min-height: 2.5rem; padding: 0.4rem 0.7rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--fg); font-family: var(--font-mono); font-size: 0.85rem; }
+.lab-grow { flex: 1 1 12rem; width: 100%; }
+.lab-field { display: grid; gap: 0.35rem; font-size: 0.88rem; }
+.lesson ul.lab-rows { display: grid; gap: 0.25rem; margin: 0.8rem 0 0; padding: 0; list-style: none; font-size: 0.85rem; }
+.lesson ul.lab-rows li { margin: 0; padding: 0.3rem 0.6rem; border: 1px solid transparent; border-radius: 8px; }
+.lesson ul.lab-rows li[data-on] { border-color: var(--accent-2); background: color-mix(in oklab, var(--accent-2) 14%, var(--bg)); }
+.lab-slots { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; padding: 0; list-style: none; }
+.lesson .lab-slots li { margin: 0; }
+.lab-slot { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); font-family: var(--font-mono); font-size: 0.85rem; }
+.lab-slot-sm { width: 2.1rem; height: 1.8rem; font-size: 0.7rem; }
+.lab-slot[data-on] { border-color: var(--accent-2); background: color-mix(in oklab, var(--accent-2) 22%, var(--bg)); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .lab-token, .lab-node, .lab-option { transition: none; } }
+
+/* Utilization bar for the server-capacity lab. */
+.lab-meter { height: 0.6rem; overflow: hidden; border: 1px solid var(--border); border-radius: 99px; background: var(--bg); }
+.lab-meter > span { display: block; height: 100%; border-radius: inherit; background: var(--accent-2); transition: width 0.25s ease, background 0.25s ease; }
+.lab-meter > span[data-zone="warn"] { background: #e7a33e; }
+.lab-meter > span:is([data-zone="bad"], [data-zone="over"]) { background: var(--danger); }
+@media (prefers-reduced-motion: reduce) { .lab-meter > span { transition: none; } }
+
+/* ───────── Calm UI: no decorative motion ─────────
+   Nothing moves on its own while people read. Allowed: loading skeletons and spinners, and a
+   lesson diagram only while its reader pressed Play (.dg-playing). Hover colour changes stay. */
+*:not(.animate-pulse, .animate-spin, .dg, .dg *, .hero-anim *, .dot-morph *, .crumbs .crumb),
+*:not(.dg *, .hero-anim *)::before,
+*:not(.dg *, .hero-anim *)::after {
+  animation: none !important;
+}
+/* Diagrams hold their first frame (not `none`, which would drop moving parts out of place). */
+.dg:not(.dg-playing) *,
+.dg:not(.dg-playing) *::before,
+.dg:not(.dg-playing) *::after {
+  animation-play-state: paused !important;
+}
+.dg-scroll { position: relative; }
+.dg-play {
+  position: absolute; top: 0.6rem; right: 0.6rem; z-index: 1;
+  display: inline-flex; align-items: center; gap: 0.35rem; height: 1.9rem; padding: 0 0.7rem;
+  border: 1px solid var(--border); border-radius: 6px; background: var(--bg);
+  color: var(--muted); font-size: 0.78rem; font-weight: 500; cursor: pointer;
+}
+.dg-play:hover { color: var(--fg); background: var(--bg-elev-2); }
+.dg-play svg { width: 0.75rem; height: 0.75rem; fill: currentColor; }
+html { scroll-behavior: auto; }
+
+/* Home project sketches: notebook drawings in the theme's ink. A card's lines draw in once,
+   like a pen, when it comes to the front; then everything is still. */
+.sketch-paper {
+  background-color: var(--bg);
+  background-image: radial-gradient(color-mix(in oklab, var(--fg) 13%, transparent) 1px, transparent 1.3px);
+  background-size: 16px 16px;
+}
+.sketchbook .sk-ink { fill: none; stroke: color-mix(in oklab, var(--fg) 85%, transparent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sketchbook .sk-ink.sk-accent { stroke: var(--accent-1); fill: color-mix(in oklab, var(--accent-1) 10%, transparent); }
+.sketchbook path.sk-ink.sk-accent:not([d*="Z"]) { fill: none; }
+.sketchbook .sk-ink.sk-soft { stroke: color-mix(in oklab, var(--fg) 14%, transparent); stroke-width: 1.2; }
+.sketchbook .sk-note { font-family: var(--font-sketch), var(--font-hind), cursive; fill: color-mix(in oklab, var(--fg) 88%, transparent); }
+.sketchbook .sk-note.sk-accent { fill: var(--accent-1); }
+.sketchbook .sk-note.sk-muted { fill: var(--muted); }
+
+@keyframes sk-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes sk-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sk-enter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes sk-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.sketchbook .sk-enter { animation: sk-enter 0.35s ease-out both; }
+.sketchbook .sk-ink { stroke-dasharray: 1; animation: sk-draw 0.6s ease-out both; animation-delay: calc(var(--d) * 0.09s + 0.15s); }
+.sketchbook .sk-ink.sk-dash { stroke-dasharray: 0.02 0.03; animation: sk-fade 0.5s ease-out both; animation-delay: calc(var(--d) * 0.09s + 0.15s); }
+.sketchbook .sk-note { animation: sk-fade 0.4s ease-out both; animation-delay: calc(var(--d) * 0.09s + 0.35s); }
+.sketchbook .sk-progress { transform-origin: left; animation: sk-progress 6.5s linear both; }
+.sketchbook .sk-hold { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .sketchbook .sk-ink, .sketchbook .sk-note, .sketchbook .sk-enter { animation: none !important; stroke-dashoffset: 0; opacity: 1; }
+  .sketchbook .sk-ink:not(.sk-dash) { stroke-dasharray: none; }
+  .sketchbook .sk-progress { animation: none !important; transform: scaleX(1); }
+}
+
+/* ───────── Dot morph button (after SmoothUI): the dot is the state ───────── */
+.dot-morph {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  height: 2.75rem; padding: 0 1.25rem 0 1rem; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-elev); color: var(--fg);
+  font-weight: 600; white-space: nowrap; transition: border-color .2s, background-color .2s;
+}
+.dot-morph:hover:not(:disabled) { border-color: color-mix(in oklab, var(--dm) 55%, var(--border)); }
+.dot-morph:disabled { cursor: not-allowed; }
+.dot-morph:disabled:not([data-state="loading"], [data-state="success"]) { opacity: .5; }
+.dot-morph:focus-visible { outline: 2px solid var(--dm); outline-offset: 2px; }
+.dot-morph { font-size: 0.875rem; text-decoration: none; }
+.dot-morph-primary { background: var(--dm); border-color: var(--dm); color: var(--on-accent, #fff); }
+.dot-morph-primary:hover:not(:disabled) { border-color: var(--dm); filter: brightness(1.08); }
+.dot-morph-primary .dot-morph-dot { background: var(--on-accent, #fff); }
+.dot-morph-dot {
+  position: relative; display: grid; place-items: center; flex: none;
+  width: 8px; height: 8px; border-radius: 999px; background: var(--dm);
+  border: 2px solid transparent;
+  transition: width .25s cubic-bezier(.3,1.4,.5,1), height .25s cubic-bezier(.3,1.4,.5,1), background-color .2s, border-color .2s;
+}
+.dot-morph:hover:not(:disabled) .dot-morph-dot { width: 7px; height: 18px; }
+.dot-morph-dot svg { width: 12px; height: 12px; fill: none; stroke: var(--on-accent, #fff); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 14; stroke-dashoffset: 14; transition: stroke-dashoffset .3s .15s ease; }
+.dot-morph[data-state="loading"] .dot-morph-dot {
+  width: 16px; height: 16px; background: transparent;
+  border-color: color-mix(in oklab, var(--dm) 25%, transparent); border-top-color: var(--dm);
+  animation: dm-spin .7s linear infinite;
+}
+.dot-morph[data-state="success"] { border-color: color-mix(in oklab, var(--dm) 55%, var(--border)); color: var(--dm); }
+.dot-morph[data-state="success"] .dot-morph-dot { width: 18px; height: 18px; }
+.dot-morph[data-state="success"] .dot-morph-dot svg { stroke-dashoffset: 0; }
+@keyframes dm-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .dot-morph-dot, .dot-morph-dot svg { transition: none; }
+  .dot-morph[data-state="loading"] .dot-morph-dot { animation-duration: 1.6s; }
+}
+
+/* ───────── Breadcrumb (after SmoothUI): crumbs fade in one after another, once ───────── */
+.crumbs .crumb { animation: crumb-in .32s ease-out both; animation-delay: calc(var(--i) * 60ms); }
+@keyframes crumb-in { from { opacity: 0; transform: translateX(-4px); } }
+@media (prefers-reduced-motion: reduce) { .crumbs .crumb { animation: none; } }

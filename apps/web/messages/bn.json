@@ -28,10 +28,6 @@
             "label": "Backend First Principles",
             "desc": "Request, storage, concurrency — একদম গোড়া থেকে"
           },
-          "programming": {
-            "label": "Programming",
-            "desc": "একটা language নাও, fluent হও"
-          },
           "dsa": {
             "label": "DSA",
             "desc": "Pattern, problem, visualizer"
@@ -132,7 +128,8 @@
           "cta": "Vote দাও"
         }
       }
-    }
+    },
+    "home": "হোম"
   },
   "theme": {
     "system": "System",
@@ -254,10 +251,7 @@
       "label": "এখন",
       "caption": "Step by step, learn how to learn",
       "desc": "একটা path, ছোট ছোট step, আর সবসময় জানো পরের step কোনটা।"
-    },
-    "sad": "sad",
-    "understood": "understood",
-    "steps": "Step {n}"
+    }
   },
   "leaderboard": {
     "eyebrow": "Top 1% in BD 🇧🇩",
@@ -299,12 +293,13 @@
     "unavailable": "এই মুহূর্তে leaderboard load করা যাচ্ছে না। একটু পরে আবার দেখো।"
   },
   "mostNeeded": {
-    "eyebrow": "Most needed",
+    "eyebrow": "Most wanted",
     "title": "এরপর কী বানাব?",
     "sub": "Community vote দেয়। সবচেয়ে বেশি vote পাওয়া topic আগে লেখা হয়।",
     "upvote": "{topic} এ upvote দাও",
-    "votes": "{count} vote",
+    "votes": "{count, plural, other {# vote}}",
     "voted": "তুমি {topic} এ vote দিয়েছো",
+    "topVoted": "সবচেয়ে বেশি vote",
     "already": "এটায় তুমি আগেই vote দিয়েছো। প্রত্যেকে একবারই, আর সেটা থেকে যায়।",
     "thanks": "ধন্যবাদ! তোমার vote গোনা হয়েছে।",
     "failed": "Vote save করা গেল না",
@@ -344,7 +339,7 @@
     },
     "progress": "Progress",
     "feedback": "কোনোটা আগে চাও?",
-    "feedbackCta": "Most needed এ vote দাও",
+    "feedbackCta": "Most wanted এ vote দাও",
     "empty": "এখানে এখনো কিছু নেই।",
     "loadError": "Roadmap load করা গেল না, একটু পরে আবার দেখো।",
     "shippedOn": "Shipped · {date}",
@@ -355,24 +350,7 @@
     "learners": "জন learner path এ আছে",
     "problems": "টা problem solve হয়েছে",
     "lessons": "টা lesson, bn + en এ",
-    "hired": "জন job পেয়েছে",
-    "testimonials": [
-      {
-        "quote": "আগে এক tutorial থেকে আরেকটায় লাফাতাম। Path টা প্রথমবার বলে দিল এরপর কী করব — আর DSA আর impossible লাগে না।",
-        "name": "Nusrat J.",
-        "role": "Intern → Junior SWE"
-      },
-      {
-        "quote": "তিন বছর code ship করার পরেও যে gap গুলো ছিল, OS আর networking deep-dive গুলো সেগুলো ধরিয়ে দিল।",
-        "name": "Tanvir A.",
-        "role": "Backend Engineer"
-      },
-      {
-        "quote": "এখানে mentoring করলে নিজেও sharp থাকি। System design case study গুলো অনেক paid course এর চেয়ে ভালো।",
-        "name": "Farhana R.",
-        "role": "Senior Engineer"
-      }
-    ]
+    "hired": "জন job পেয়েছে"
   },
   "cta": {
     "title": "তোমার path শুরু হয় একটা প্রশ্ন দিয়ে: why?",
@@ -453,34 +431,77 @@
       "শুরু করার best সময় ছিল গতকাল, আর তারপরের best সময় হলো *এখন*।",
       "Error message টা মন দিয়ে পড়ো, ওটা তোমাকে *help* করতেই এসেছে।",
       "বড় dream দেখো, ছোট করে শুরু করো, আজই *ship* করো।"
-    ]
+    ],
+    "syllabus": "পুরো route",
+    "syllabusSub": "{parts} টা part · {stations} টা station · {hours} ঘণ্টা",
+    "expandAll": "সব খোলো",
+    "collapseAll": "সব বন্ধ করো",
+    "stationsN": "{n} টা station",
+    "labsN": "{n} টা lab",
+    "sectionsN": "{n} টা section",
+    "free": "Free",
+    "pro": "Pro",
+    "soon": "লেখা চলছে",
+    "partDone": "{done}/{total} শেষ",
+    "continueTitle": "যেখানে থেমেছিলে সেখান থেকে",
+    "continueStart": "Route শুরু করো",
+    "continueNext": "পরেরটা: {title}",
+    "continueDone": "তুমি terminal এ পৌঁছে গেছো 🎉",
+    "continueCta": "চালিয়ে যাও →",
+    "startCta": "Part 1 শুরু করো →",
+    "noteTitle": "আজকের কথা",
+    "lessonsN": "{n} টা lesson"
   },
   "bfp": {
     "eyebrow": "Course",
     "title": "Backend First Principles",
-    "sub": "একটা request কে follow করো, socket এ তার bytes পৌঁছানো থেকে শুরু করে একশো machine থেকে serve হওয়া পর্যন্ত। প্রতিটা stop এ শুধু how না, why ও — code সহ।",
-    "note": "একটা request, শুরু থেকে শেষ ↓",
-    "from": "একটা socket",
-    "to": "planet scale",
+    "sub": "Solution এর আগে problem বোঝো, abstraction এর আগে machine। দশটা module যা তোমাকে backend কেন আছে থেকে production এ চালানো পর্যন্ত নিয়ে যাবে।",
+    "note": "বোঝো, design করো, বানাও, debug করো, চালাও ↓",
+    "from": "একজন user",
+    "to": "production",
+    "finish": "পুরো route শেষ করলে তুমি tutorial দেখে না, trade-off মেপে backend এর সিদ্ধান্ত নেবে।",
     "groups": {
-      "on-the-wire": {
-        "title": "On the Wire",
-        "sub": "bytes এর stream কীভাবে এমন request হয় যার উত্তর তোমার code দিতে পারে"
+      "backend-mindset": {
+        "title": "Backend Mindset",
+        "sub": "software system এর পেছনের সমস্যাগুলো বোঝা"
       },
-      "memory-and-muscle": {
-        "title": "Memory & Muscle",
-        "sub": "data কোথায় থাকে, আর কোন worker রা সেটা নড়াচড়া করে"
+      "machines-communicate": {
+        "title": "Machine গুলো কীভাবে কথা বলে",
+        "sub": "একদম গোড়া থেকে networking"
       },
-      "living-in-prod": {
-        "title": "Living in Prod",
-        "sub": "আসল traffic আসলেও visible, safe আর fast থাকা"
+      "language-of-web": {
+        "title": "Web এর ভাষা",
+        "sub": "HTTP, API আর communication contract"
       },
-      "beyond-one-machine": {
-        "title": "Beyond One Machine",
-        "sub": "অনেক service কে package করা, test করা আর জোড়া লাগানো"
+      "inside-runtime": {
+        "title": "Backend Runtime এর ভেতরে",
+        "sub": "আসা request থেকে চলা code পর্যন্ত"
+      },
+      "designing-app": {
+        "title": "Application Design করা",
+        "sub": "business সমস্যাকে software architecture এ রূপ দেওয়া"
+      },
+      "data-and-storage": {
+        "title": "Data আর Storage বোঝা",
+        "sub": "application কীভাবে জিনিস মনে রাখে"
+      },
+      "reliability": {
+        "title": "Reliability আর Failure Engineering",
+        "sub": "যা ভুল হবে তার জন্য design করা"
+      },
+      "beyond-one-server": {
+        "title": "একটা Server এর বাইরে",
+        "sub": "asynchronous processing আর distributed system"
+      },
+      "security-and-trust": {
+        "title": "Security আর Trust",
+        "sub": "user, data আর system কে রক্ষা করা"
+      },
+      "production": {
+        "title": "Production এ Backend চালানো",
+        "sub": "চলা code থেকে আসল engineering"
       }
-    },
-    "finish": "পুরো line টা ঘুরে আসো, তারপর কোনো backend আর জাদু মনে হবে না।"
+    }
   },
   "auth": {
     "brand": "Coding Foding",
@@ -776,7 +797,7 @@
     "payWith": "bKash বা Nagad দিয়ে pay করো",
     "perks": {
       "free1": "Roadmap আর journey path",
-      "free2": "পুরো Programming course, আর বাকি প্রতিটা course এর Part 1",
+      "free2": "প্রতিটা course এর Part 1",
       "free3": "Streak, আর leaderboard এ নাম",
       "free4": "Careers portal এ job দেখা আর apply",
       "pro1": "প্রতিটা course এর সব part, নতুনগুলোও",
@@ -903,7 +924,8 @@
       "overview": "Dashboard",
       "topics": "Topics",
       "jobs": "Jobs",
-      "activity": "Activity"
+      "activity": "Activity",
+      "reviews": "Reviews"
     },
     "settings": {
       "title": "Payment number",
@@ -1152,6 +1174,23 @@
       "system": "System",
       "newer": "নতুনগুলো",
       "older": "পুরনোগুলো"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "sub": "Home page এর learner review। Publish না করা পর্যন্ত কিছুই দেখায় না; edit করা review আবার এখানে ফিরে আসে।",
+      "empty": "এখনো কোনো review নেই।",
+      "demo": "demo",
+      "waiting": "অপেক্ষায়",
+      "live": "Live",
+      "publish": "Publish",
+      "unpublish": "সরিয়ে নাও",
+      "published": "{name} এর review publish হয়েছে।",
+      "unpublished": "{name} এর review সরানো হয়েছে।",
+      "updated": "Update {date}",
+      "failed": "কিছু একটা গড়বড় হয়েছে।",
+      "filterAll": "সব",
+      "filterWaiting": "অপেক্ষায়",
+      "filterLive": "Live"
     }
   },
   "comingSoon": {
@@ -1475,7 +1514,7 @@
   "dsaProblems": {
     "eyebrow": "Practice",
     "title": "DSA Problems",
-    "sub": "Big-O depot থেকে শুরু, তারপর ১৮ টা topic জুড়ে ১৫০ টা interview problem, আমাদের নিজেদের সাজানো order এ, যাতে প্রতিটা topic আগেরটার উপর দাঁড়ায়। প্রতিটা problem এর write-up থাকবে: intuition, diagram, brute force থেকে optimal, ছয় ভাষায় code, আর বাস্তব app এ idea টা কোথায় কাজে লাগে।",
+    "sub": "Big-O দিয়ে শুরু করো, তারপর 8টা topic এ 50টা interview problem, এমন ক্রমে যেখানে প্রতিটা topic আগেরটার ওপর দাঁড়ায়। প্রতিটা problem এর write-up: intuition, diagram, brute force থেকে optimal, আর code।",
     "roadmap": "DSA Metro",
     "howTitle": "প্রতিটা problem যেভাবে solve করা হয়",
     "outline": [
@@ -1532,26 +1571,26 @@
     "doneNote": "দারুণ! এটা তোমার progress এ যোগ হয়েছে।",
     "groups": {
       "complexity": "Big-O Basics",
-      "arrays-hashing": "Arrays & Hash Maps",
+      "arrays-hashing": "Arrays, Strings আর Hashing",
       "two-pointers": "Two Pointers",
       "sliding-window": "Sliding Window",
-      "stack": "Stack Tricks",
+      "stack": "Stacks, Queues আর Binary Search",
       "binary-search": "Binary Search",
       "linked-list": "Linked Lists",
-      "trees": "Trees & BST",
+      "trees": "Trees আর Binary Search Trees",
       "tries": "Prefix Trees",
-      "heap": "Heaps",
+      "heap": "Heaps, Greedy Algorithms আর Intervals",
       "intervals": "Intervals & Sweeps",
       "greedy": "Greedy Choices",
-      "backtracking": "Backtracking",
-      "graphs": "BFS & DFS",
+      "backtracking": "Recursion আর Backtracking",
+      "graphs": "Graphs",
       "advanced-graphs": "Weighted Graphs",
-      "dp-1d": "DP on a Line",
+      "dp-1d": "Dynamic Programming",
       "dp-2d": "DP on a Grid",
       "bit-manipulation": "Bit Tricks",
       "math-geometry": "Math & Matrices"
     },
-    "roadmapHint": "চারটা line, ১৮ টা station। একটা line ধরে station এর পর station এগোও, আর যেখানে line মিলেছে সেখানে line বদলাও। Solve করলে ring ভরতে থাকে; কোনো station এ click করলে তার পরের problem এ উঠে যাবে।",
+    "roadmapHint": "চারটা line, ৯ টা station। একটা line ধরে station এর পর station এগোও, আর যেখানে line মিলেছে সেখানে line বদলাও। Solve করলে ring ভরতে থাকে; কোনো station এ click করলে তার পরের problem এ উঠে যাবে।",
     "lines": {
       "array": "Array Line",
       "tree": "Tree Line",
@@ -1654,42 +1693,20 @@
       "bit-manipulation": "একটা XOR, একটা bit উল্টে গেল।",
       "math-geometry": "Matrix ঘোরাও: একবারে এক চতুর্থাংশ।"
     },
-    "sceneTitle": "এই station এ"
-  },
-  "prog": {
-    "eyebrow": "Course",
-    "title": "Programming From Zero",
-    "sub": "কখনো code লেখোনি? এখান থেকে শুরু করো। প্রতিটা ধারণা একবার শেখানো হয়, আর পাশাপাশি ছয়টা language এ দেখানো হয়: C++, Go, Rust, Python, JavaScript আর Java। নিজের tab বেছে নাও; ভাবনাটা একই।",
-    "note": "এক ধারণা, ছয় language ↓",
-    "from": "তোমার প্রথম লাইন",
-    "to": "তোমার নিজের tool",
-    "finish": "পুরো line ঘুরে তোমার বাছাই করা language এ একটা বাস্তব tool বানাও: disk এ save হয়, test আছে, নিজের একটা ছোট API ও আছে।",
-    "groups": {
-      "first-steps": {
-        "title": "প্রথম পা",
-        "sub": "code কীভাবে চলে, variable, সিদ্ধান্ত, loop, function"
-      },
-      "shapes-of-data": {
-        "title": "Data এর আকার",
-        "sub": "লেখা, list, map, নিজের type, আর memory"
-      },
-      "when-things-go-wrong": {
-        "title": "যখন কিছু ভুল হয়",
-        "sub": "recursion, error, file আর debugging"
-      },
-      "building-bigger": {
-        "title": "বড় করে বানানো",
-        "sub": "package, object, generics, functional style, test"
-      },
-      "real-world": {
-        "title": "বাস্তব দুনিয়া",
-        "sub": "concurrency, internet, CLI tool, গতি"
-      },
-      "build-it": {
-        "title": "বানিয়ে ফেলো",
-        "sub": "একটা বাস্তব tool, শুরু থেকে শেষ"
-      }
-    }
+    "sceneTitle": "এই station এ",
+    "topicSub": {
+      "arrays-hashing": "যার ওপর বাকি সব দাঁড়িয়ে: array আর string ঘোরা, two pointers, sliding window, আর তাৎক্ষণিক খোঁজার জন্য hash map।",
+      "linked-list": "Linked list এ data থাকে node এ, প্রতিটা node পরেরটার সাথে জোড়া। এখানে node যোগ আর বাদ দেওয়া আর তাদের link বদলানো শিখবে।",
+      "stack": "Stack আর queue data কে একটা নির্দিষ্ট ক্রমে রাখে; binary search sorted data তে দ্রুত element খোঁজে। একসাথে এরা দক্ষভাবে data সামলানো আর খোঁজা শেখায়।",
+      "trees": "Tree হলো parent আর child node এর একটা ক্রমবিন্যাস। এখানে tree traversal, node এর গভীরতা, আর node গুলোর সম্পর্ক।",
+      "graphs": "Graph node আর edge দিয়ে দেখায় জিনিসগুলো একে অপরের সাথে কীভাবে যুক্ত। এখানে traversal (BFS, DFS) আর node এর সম্পর্ক।",
+      "backtracking": "Recursion একটা সমস্যাকে ছোট ছোট অংশে ভাগ করে নিজেকেই ডাকে। Backtracking একটা একটা করে উপায় চেষ্টা করে, আর কানাগলিতে পড়লে পিছিয়ে আসে।",
+      "dp-1d": "Dynamic programming বারবার আসা ছোট সমস্যার উত্তর জমিয়ে রাখে, তাই কিছুই দুবার হিসাব হয় না আর কঠিন সমস্যাও দ্রুত হয়।",
+      "heap": "Priority দেখে বাছাই, একটার ওপর আরেকটা পড়া interval সামলানো, আর প্রতি ধাপে ঠিক অপশন বাছা: Top-K, scheduling আর interval merge।"
+    },
+    "topicsTitle": "Topics",
+    "topicsSub": "আটটা topic, শেখার ক্রমে। প্রতিটা আগেরটার ওপর দাঁড়ায়।",
+    "problemCount": "{n} টা problem"
   },
   "hire": {
     "eyebrow": "Practice",
@@ -1801,5 +1818,94 @@
     "crown": "সবচেয়ে পছন্দের #{n}",
     "liked": "তুমি এটা বানাতে চাও ♥",
     "alreadyLiked": "এটায় তুমি আগেই ♥ দিয়েছো। একবার দিলে আর তোলা যায় না।"
+  },
+  "reviews": {
+    "eyebrow": "Reviews",
+    "title": "Learner রা কী বলছে",
+    "sub": "পথে হাঁটা মানুষদের নিজের কথা। প্রতিটা review home page এ যাওয়ার আগে আমরা পড়ে দেখি।",
+    "write": "Review লেখো",
+    "edit": "তোমার review edit করো",
+    "showMore": "সব {count} টা review দেখো",
+    "showLess": "কম দেখাও",
+    "empty": "এখনো কোনো review নেই — প্রথমটা তুমিই লেখো।",
+    "error": "এই মুহূর্তে review load করা যাচ্ছে না।",
+    "form": {
+      "title": "তোমার review",
+      "sub": "পরের learner কে বলো কোনটা তোমাকে সাহায্য করেছে। Home page এ দেখানোর আগে আমরা প্রতিটা review পড়ি।",
+      "name": "যে নামে দেখাবে",
+      "nameHint": "তোমার profile এর নাম থেকে।",
+      "role": "তুমি কে",
+      "rolePlaceholder": "যেমন: CSE student, Junior Backend Engineer",
+      "quote": "তোমার review",
+      "quotePlaceholder": "কী বদলেছে? কোন chapter বা feature সবচেয়ে কাজে লেগেছে?",
+      "count": "{n} / 600",
+      "tooShort": "কমপক্ষে 20 অক্ষর।",
+      "submit": "Review এর জন্য পাঠাও",
+      "update": "Review update করো",
+      "saving": "পাঠানো হচ্ছে…",
+      "cancel": "বাদ দাও",
+      "saved": "ধন্যবাদ! একবার পড়ে দেখেই publish করে দেব।",
+      "failed": "কিছু একটা গড়বড় হয়েছে। আবার চেষ্টা করো।",
+      "statusPending": "Review এর অপেক্ষায়",
+      "statusLive": "Home page এ দেখাচ্ছে",
+      "editNote": "Edit করলে আবার পড়ে দেখা পর্যন্ত home page থেকে সরে যাবে।"
+    }
+  },
+  "home": {
+    "eyebrow": "Coding Foding",
+    "title": "জিনিসগুলো আসলে কীভাবে কাজ করে, শেখো।",
+    "sub": "Backend, DevOps আর system design, সাথে DSA practice — একদম গোড়া থেকে, বাংলা আর English এ, চালিয়ে দেখার মতো code সহ।",
+    "start": "Free তে শুরু করো",
+    "browse": "Course গুলো দেখো",
+    "previewLabel": "শেখা চালিয়ে যাও",
+    "previewCourse": "Backend First Principles",
+    "previewPart": "Part 1 · Backend Mindset",
+    "previewDone": "শেষ",
+    "previewNow": "এরপর",
+    "previewSoon": "পরে",
+    "coursesEyebrow": "Courses",
+    "coursesTitle": "সব কিছু ক্রমে, এক course এক course করে",
+    "coursesSub": "যেখান থেকে খুশি শুরু করো। প্রতিটা course এর Part 1 free।",
+    "chapters": "{n} টা chapter",
+    "hours": "{range} ঘণ্টা",
+    "free": "Free",
+    "freeAll": "পুরোটা free",
+    "pro": "Part 1 free",
+    "open": "Course খোলো",
+    "label": "একদম গোড়া থেকে · বাংলা আর English এ",
+    "titleA": "",
+    "titleMark": "নিচে",
+    "titleB": " কী আছে, সেটা শেখো।",
+    "stackTitle": "তুমি “Save” চাপলে, নিচে:",
+    "replay": "আবার দেখো",
+    "layers": {
+      "app": [
+        "তোমার app",
+        "একটা function call"
+      ],
+      "http": [
+        "HTTP",
+        "plain text এ একটা request"
+      ],
+      "tcp": [
+        "TCP",
+        "একটা নির্ভরযোগ্য connection"
+      ],
+      "ip": [
+        "IP",
+        "packet নিজের পথ খুঁজে নেয়"
+      ],
+      "wire": [
+        "Wire",
+        "শেষে, শুধু bit"
+      ]
+    },
+    "buildTitle": "যে project গুলো তুমি বানাবে",
+    "openProject": "Project খোলো",
+    "level": {
+      "easy": "সহজ",
+      "medium": "মাঝারি",
+      "hard": "কঠিন"
+    }
   }
 }

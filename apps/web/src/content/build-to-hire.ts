@@ -73,7 +73,7 @@ export const HIRE_LEVEL_COLOR: Record<HireLevel, string> = {
 
 const HTTP = {
   label: "HTTP & status codes",
-  href: "/learn/backend-first-principles/http-cors",
+  href: "/learn/backend-first-principles/http-request",
 };
 const LINUX = {
   label: "Linux terminal",
@@ -357,10 +357,6 @@ export const HIRE_PROJECTS: HireProject[] = [
       },
     ],
     prereqs: [
-      {
-        label: "Prefix Trees (DSA)",
-        href: "/problems/dsa/build-a-prefix-tree",
-      },
       { label: "Big-O Basics", href: "/problems/dsa/big-o-plain-words" },
       HTTP,
     ],
@@ -1824,7 +1820,7 @@ export const HIRE_PROJECTS: HireProject[] = [
     ],
     prereqs: [
       { label: "Python" },
-      { label: "Counting the Cost (Big-O)", href: "/learn/dsa/big-o" },
+      { label: "Big-O Basics", href: "/problems/dsa/big-o-plain-words" },
       { label: "Basic calculus: derivatives and the chain rule" },
     ],
   },
@@ -2002,7 +1998,7 @@ export const HIRE_PROJECTS: HireProject[] = [
     ],
     prereqs: [
       { label: "Train a Neural Network From Scratch", href: "/build-to-hire/nn-from-scratch" },
-      { label: "Always Know the Smallest (heaps)", href: "/learn/dsa/heaps" },
+      { label: "Kth Largest Element (heaps)", href: "/problems/dsa/kth-largest-overall" },
       { label: "Design YouTube", href: "/problems/system-design/video-streaming" },
     ],
   },

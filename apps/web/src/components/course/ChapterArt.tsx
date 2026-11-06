@@ -290,7 +290,7 @@ export function ChapterArt({ course, slug }: { course: string; slug: string }) {
   const Scene = SCENES[`${course}/${slug}`];
   if (!Scene) return null;
   return (
-    <div className="mt-10 overflow-hidden rounded-2xl border border-[var(--border)] bg-[color-mix(in_oklab,var(--line)_5%,var(--bg-elev))] px-4 pt-4 sm:px-8">
+    <div className="mt-10 overflow-hidden rounded-lg border border-[var(--border)] bg-[color-mix(in_oklab,var(--line)_5%,var(--bg-elev))] px-4 pt-4 sm:px-8">
       <Scene />
     </div>
   );

@@ -444,6 +444,19 @@ type PracticeProgress struct {
 	SolvedAt   time.Time
 }
 
+type Review struct {
+	ID          uuid.UUID
+	UserID      uuid.NullUUID
+	AuthorName  string
+	AuthorRole  string
+	Quote       string
+	IsPublished bool
+	IsDemo      bool
+	PublishedAt *time.Time
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
 type RoadmapItem struct {
 	ID        uuid.UUID
 	Stage     RoadmapStage

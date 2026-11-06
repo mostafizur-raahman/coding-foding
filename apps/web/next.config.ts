@@ -12,7 +12,7 @@ const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ["@cf/ui"],
-  experimental: { optimizePackageImports: ["gsap"] },
+  experimental: { optimizePackageImports: ["lucide-react"] },
   // Same-origin API: refresh cookie stays first-party, no CORS preflights.
   async rewrites() {
     return [

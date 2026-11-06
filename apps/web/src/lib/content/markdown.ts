@@ -29,8 +29,12 @@ import { SKIP, visit } from "unist-util-visit";
  *   request-response               name, the rest is its caption
  *   Caption text
  *   ```
+ *   ```lab                         an interactive lab (components/lesson/Lab.tsx); the
+ *   kind: predict                  body is YAML, parsed here so a typo fails the build
+ *   ```
  *   ```c tabs                      consecutive code blocks marked `tabs` become one block
- *   ```go tabs                     with a tab per language (the reader's pick is remembered)
+ *   ```go tabs                     with a tab per language (the reader's pick is remembered);
+ *                                  `label=Node.js` in the meta renames that tab
  *
  * Code blocks are highlighted at build time by Shiki with VS Code's own grammars and
  * Dark+/Light+ themes.
@@ -166,6 +170,24 @@ function remarkDiagrams() {
   };
 }
 
+/** ```lab blocks → <cf-lab spec="{json}">; gray-matter is the YAML parser we already ship. */
+function remarkLabs() {
+  return (tree: MdastRoot) => {
+    visit(tree, "code", (node: Code, index, parent) => {
+      if (node.lang !== "lab" || !parent || index === undefined) return;
+      const spec = matter(`---\n${node.value}\n---\n`, {}).data;
+      parent.children[index] = {
+        type: "paragraph",
+        children: [],
+        data: {
+          hName: "cf-lab",
+          hProperties: { spec: JSON.stringify(spec) },
+        },
+      };
+    });
+  };
+}
+
 /** Whether this chapter has been written in any locale, without parsing it. */
 export async function lessonExists(
   course: string,
@@ -246,6 +268,7 @@ export async function loadLesson(
     .use(remarkSectionIds(sections))
     .use(remarkCallouts)
     .use(remarkDiagrams)
+    .use(remarkLabs)
     .use(remarkCodeTabs)
     .use(remarkRehype)
     .use(rehypeShiki, {
@@ -267,16 +290,48 @@ export async function loadLesson(
         "csharp",
         "sql",
         "yaml",
+        "dockerfile",
+        "proto",
         "ini",
       ],
       transformers: [
         {
           pre(node) {
             node.properties["data-lang"] = this.options.lang;
+            // ```javascript tabs label=Node.js → the tab says "Node.js" instead of "JavaScript".
+            const raw = (this.options.meta as { __raw?: string } | undefined)?.__raw;
+            const label = raw?.match(/(?:^|\s)label=(\S+)/)?.[1];
+            if (label) node.properties["data-label"] = label;
           },
         },
       ],
     });
   const tree = (await processor.run(processor.parse(content))) as HastRoot;
   return { frontmatter: data, tree, sections };
+}
+
+/** What a chapter holds, for the course syllabus: its sections (h2s) and hands-on labs. */
+export type LessonStats = { written: boolean; sections: number; labs: number };
+
+/**
+ * Counts a chapter's h2 sections and ```lab blocks from its markdown (the reader's locale
+ * first, else any locale). Only numbers leave here, never text, so it's safe for Pro chapters.
+ */
+export async function lessonStats(course: string, locale: string, slug: string): Promise<LessonStats> {
+  const locales = [locale, ...(await fs.readdir(path.join(CONTENT_ROOT, course)).catch(() => [] as string[]))];
+  for (const l of locales) {
+    const raw = await fs.readFile(path.join(CONTENT_ROOT, course, l, `${slug}.md`), "utf8").catch(() => null);
+    if (raw === null) continue;
+    let fence = false;
+    let sections = 0;
+    let labs = 0;
+    for (const line of matter(raw).content.split("\n")) {
+      if (line.startsWith("```")) {
+        if (!fence && line.trim() === "```lab") labs++;
+        fence = !fence;
+      } else if (!fence && line.startsWith("## ")) sections++;
+    }
+    return { written: true, sections, labs };
+  }
+  return { written: false, sections: 0, labs: 0 };
 }

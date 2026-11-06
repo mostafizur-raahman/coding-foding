@@ -215,7 +215,7 @@ export function AdminRoadmap() {
                   ),
                 )}
                 {list.data && items.length === 0 && (
-                  <li className="rounded-2xl border border-dashed border-line p-4 text-sm text-muted">
+                  <li className="rounded-lg border border-dashed border-line p-4 text-sm text-muted">
                     {t("empty")}
                   </li>
                 )}

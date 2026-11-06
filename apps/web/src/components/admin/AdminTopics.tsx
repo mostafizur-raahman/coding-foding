@@ -63,7 +63,7 @@ export function AdminTopics() {
           Array.from({ length: 6 }, (_, i) => (
             <div
               key={i}
-              className="h-40 animate-pulse rounded-2xl border border-line bg-elev"
+              className="h-40 animate-pulse rounded-lg border border-line bg-elev"
             />
           ))}
         {list.data?.items.map((x) => (

@@ -125,7 +125,7 @@ export function AdminUsers() {
         </span>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-elev">
+      <div className="mt-4 overflow-hidden rounded-lg border border-line bg-elev">
         {list.isPending ? (
           <div className="space-y-px">
             {Array.from({ length: 6 }, (_, i) => (

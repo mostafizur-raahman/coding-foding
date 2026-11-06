@@ -7,9 +7,9 @@ import { useTranslations } from "next-intl";
 export function ForCompanies() {
   const t = useTranslations("careers");
   return (
-    <aside className="relative rotate-1 rounded-2xl border-2 border-dashed border-line bg-elev p-6">
+    <aside className="relative rotate-1 rounded-lg border-2 border-dashed border-line bg-elev p-6">
       <span aria-hidden="true" className="absolute -top-3 left-6 h-6 w-16 -rotate-3 rounded-sm bg-[color-mix(in_oklab,var(--accent-1)_30%,transparent)]" />
-      <p className="font-mono text-xs tracking-[0.2em] text-accent-1 uppercase">{t("companiesEyebrow")}</p>
+      <p className="text-xs text-accent-1 font-medium">{t("companiesEyebrow")}</p>
       <p className="mt-2 text-lg font-bold">{t("companiesTitle")}</p>
       <ul className="mt-3 space-y-1.5 text-sm text-muted">
         <li>→ {t("companiesPost")}</li>

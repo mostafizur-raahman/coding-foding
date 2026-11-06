@@ -34,7 +34,7 @@ function Stat({
   icon: ReactNode;
 }) {
   const body = (
-    <div className="flex h-full items-start gap-4 rounded-2xl border border-line bg-elev p-5 transition hover:border-[color-mix(in_oklab,var(--accent-2)_45%,var(--border))]">
+    <div className="flex h-full items-start gap-4 rounded-lg border border-line bg-elev p-5 transition hover:border-[color-mix(in_oklab,var(--accent-2)_45%,var(--border))]">
       <span
         className="grid size-10 shrink-0 place-items-center rounded-xl"
         style={{
@@ -107,7 +107,7 @@ export function AdminOverview() {
           {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
-              className="h-28 animate-pulse rounded-2xl border border-line bg-elev"
+              className="h-28 animate-pulse rounded-lg border border-line bg-elev"
             />
           ))}
         </div>
@@ -116,7 +116,7 @@ export function AdminOverview() {
           {s.pending_payments > 0 && (
             <Link
               href="/admin/payments"
-              className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-[color-mix(in_oklab,#e7a33e_45%,var(--border))] bg-[color-mix(in_oklab,#e7a33e_10%,var(--bg-elev))] px-5 py-3 text-sm"
+              className="mb-4 flex items-center justify-between gap-3 rounded-lg border border-[color-mix(in_oklab,#e7a33e_45%,var(--border))] bg-[color-mix(in_oklab,#e7a33e_10%,var(--bg-elev))] px-5 py-3 text-sm"
             >
               <span>
                 <span className="font-semibold">
@@ -313,7 +313,7 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-line bg-elev p-5">
+    <section className="rounded-lg border border-line bg-elev p-5">
       <div className="mb-3 flex items-center justify-between">
         <h2 className="font-semibold">{title}</h2>
         <Link
